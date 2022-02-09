@@ -1,5 +1,6 @@
 package com.shubhamgupta16.wallpaperapp.network
 
+import com.shubhamgupta16.wallpaperapp.BuildConfig
 import com.shubhamgupta16.wallpaperapp.models.app.WallpaperPageModel
 import okhttp3.OkHttpClient
 import retrofit2.Response
@@ -17,13 +18,13 @@ interface ApiService {
             val client = OkHttpClient.Builder().addInterceptor { chain ->
                 val request = chain.request().newBuilder()
                     .header("Accept", "application/json")
-                    .header("Authorization", "Bearer ${Config.clientKey}")
+                    .header("Authorization", "Bearer ${BuildConfig.API_KEY}")
                     .build()
                 chain.proceed(request)
             }.build()
 
             val retrofit = Retrofit.Builder()
-                .baseUrl(Config.apiUrl)
+                .baseUrl(BuildConfig.BASE_URL)
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)

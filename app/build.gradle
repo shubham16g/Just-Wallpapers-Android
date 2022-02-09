@@ -20,6 +20,17 @@ android {
         viewBinding true
     }
 
+    def secretProperties = new Properties()
+    secretProperties.load(new FileInputStream(rootProject.file("secret.properties")))
+
+    android {
+        defaultConfig {
+            buildConfigField("String", "API_KEY", secretProperties['API_KEY'])
+            buildConfigField("String", "BASE_URL", secretProperties['BASE_URL'])
+        }
+    }
+
+
     buildTypes {
         release {
             minifyEnabled false
