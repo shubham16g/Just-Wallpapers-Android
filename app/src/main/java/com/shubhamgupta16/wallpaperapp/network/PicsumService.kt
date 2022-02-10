@@ -12,7 +12,7 @@ interface PicsumService {
     companion object {
         fun getInstance() : PicsumService {
             val retrofit = Retrofit.Builder()
-                .baseUrl(Config.demoUrl)
+                .baseUrl("https://picsum.photos/v2/")
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()

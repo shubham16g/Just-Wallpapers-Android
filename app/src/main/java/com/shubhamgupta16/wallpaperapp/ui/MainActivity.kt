@@ -1,4 +1,4 @@
-package com.shubhamgupta16.wallpaperapp
+package com.shubhamgupta16.wallpaperapp.ui
 
 import android.os.Bundle
 import android.util.Log
