@@ -9,4 +9,6 @@ data class WallModelLite(
     var color: String,
     @SerializedName("urls")
     var urls: AdminUrls,
+    @SerializedName("rotation")
+    val rotation: Int?
 ):Serializable

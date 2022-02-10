@@ -49,7 +49,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupViewPager() {
 
-        adapter = SingleImageAdapter(this, list)
+        adapter = SingleImageAdapter(this, list){
+
+        }
         binding.viewPager2.adapter = adapter
         binding.viewPager2.apply3DSwiper()
 //        binding.viewPager2.offscreenPageLimit = 1

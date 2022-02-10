@@ -20,4 +20,5 @@
     <color name="textPrimary">#111111</color>
     <color name="textSecondary">#444444</color>
     <color name="textTertiary">#707070</color>
+    <color name="white">#ffffff</color>
 </resources>
