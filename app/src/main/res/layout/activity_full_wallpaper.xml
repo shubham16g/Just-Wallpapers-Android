@@ -135,6 +135,7 @@
                     android:layout_weight="6" />
 
                 <ImageButton
+                    android:id="@+id/set_wallpaper"
                     android:layout_width="@dimen/action_icon_size"
                     android:layout_height="@dimen/action_icon_size"
                     android:background="@drawable/round_btn_dark"

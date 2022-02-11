@@ -6,9 +6,8 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.View
-import android.view.animation.AccelerateDecelerateInterpolator
-import android.view.animation.AccelerateInterpolator
 import android.view.animation.DecelerateInterpolator
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.animation.PathInterpolatorCompat
@@ -29,6 +28,7 @@ class FullWallpaperActivity : AppCompatActivity() {
     private val viewModel: PagerViewModel by viewModels()
     private var adapter: SingleImageAdapter? = null
     private var screenMeasure: ScreenMeasure? = null
+    private var currentPosition = 0
     private fun initScreenMeasure() {
         if (screenMeasure == null) {
             screenMeasure = ScreenMeasure(this)
@@ -80,12 +80,31 @@ class FullWallpaperActivity : AppCompatActivity() {
             }
         }
 
+        binding.setWallpaper.setOnClickListener {
+            val model = viewModel.list[currentPosition]
+            Glide.with(this).asBitmap().load(model.urls.regular)
+                .transform(RotationTransform((model.rotation ?: 0).toFloat()))
+                .addBitmapListener { isReady, resource, e ->
+                    if (isReady)
+                        resource?.let { it1 ->
+                            setWallpaper(
+                                it1,
+                                it1.width,
+                                it1.height
+                            )
+                        }
+                }.submit()
+            Toast.makeText(this, "Loading...", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Wallpaper Set Successfully!", Toast.LENGTH_SHORT).show()
+        }
+
         val h = Handler(Looper.getMainLooper())
 //        binding.viewPager2.reduceDragSensitivity(-10)
 
         binding.viewPager2.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
+                currentPosition = position
                 if (position == viewModel.list.lastIndex)
                     viewModel.fetch()
                 val wallModel = viewModel.list[position]
