@@ -1,23 +1,32 @@
 package com.shubhamgupta16.wallpaperapp.ui
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
+import android.view.animation.AccelerateInterpolator
 import android.view.animation.DecelerateInterpolator
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
+import androidx.core.view.animation.PathInterpolatorCompat
 import androidx.viewpager2.widget.ViewPager2
+import com.bumptech.glide.Glide
 import com.shubhamgupta16.wallpaperapp.adapters.SingleImageAdapter
 import com.shubhamgupta16.wallpaperapp.databinding.ActivityFullWallpaperBinding
+import com.shubhamgupta16.wallpaperapp.models.app.Author
+import com.shubhamgupta16.wallpaperapp.models.app.WallModelList
+import com.shubhamgupta16.wallpaperapp.network.ListCase
 import com.shubhamgupta16.wallpaperapp.utils.*
-import com.shubhamgupta16.wallpaperapp.viewmodels.ListingViewModel
+import com.shubhamgupta16.wallpaperapp.viewmodels.PagerViewModel
+import jp.wasabeef.glide.transformations.CropCircleWithBorderTransformation
 
 class FullWallpaperActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityFullWallpaperBinding
-    private lateinit var viewModel: ListingViewModel
-
+    private val viewModel: PagerViewModel by viewModels()
     private var adapter: SingleImageAdapter? = null
     private var screenMeasure: ScreenMeasure? = null
     private fun initScreenMeasure() {
@@ -29,42 +38,65 @@ class FullWallpaperActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel =
-            ViewModelProvider(this, SingletonNameViewModelFactory())[ListingViewModel::class.java]
         binding = ActivityFullWallpaperBinding.inflate(layoutInflater)
         fitFullScreen()
         setTransparentStatusBar()
         setContentView(binding.root)
 
         val position = intent.getIntExtra("position", 0)
-        /*val list = intent.getSerializableExtra("list") as WallModelList
-        list.list.add(null)
-        list.list.add(null)
-        list.list.add(null)
-        finish()
-        return*/
+        val wallModelList = intent.getSerializableExtra("list") as WallModelList
+
+        viewModel.init(
+            wallModelList.list,
+            intent.getIntExtra("page", 1),
+            intent.getIntExtra("lastPage", 1),
+            query = intent.getStringExtra("query"),
+            color = intent.getStringExtra("color"),
+            category = intent.getStringExtra("category"),
+        )
 
         val navigationHeight = getNavigationBarHeight()
-
         binding.navigationOverlay.setPadding(0, 0, 0, navigationHeight)
-
         setupViewPager()
         binding.viewPager2.currentItem = position
+
+        viewModel.listObserver.observe(this) {
+            it?.let {
+                when (it.case) {
+                    ListCase.LOADING -> {
+                    }
+                    ListCase.UPDATED -> {
+                        adapter?.notifyItemChanged(it.at)
+                    }
+                    ListCase.ADDED -> {
+                        adapter?.notifyItemRangeInserted(it.from, it.itemCount)
+                    }
+                    ListCase.REMOVED -> {
+                        adapter?.notifyItemRangeRemoved(it.from, it.itemCount)
+                    }
+                    ListCase.NO_CHANGE -> {
+                    }
+                }
+            }
+        }
+
         val h = Handler(Looper.getMainLooper())
 //        binding.viewPager2.reduceDragSensitivity(-10)
 
         binding.viewPager2.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
-                val wallModel = viewModel.list[position] ?: return
-
+                if (position == viewModel.list.lastIndex)
+                    viewModel.fetch()
+                val wallModel = viewModel.list[position]
+                updateAuthor(wallModel.author)
 //                Glide.get(this@FullWallpaperActivity).clearMemory()
 //                val drawable = BitmapDrawable(resources, getBitmapFromView(binding.imageView))
 //                Glide.with(this@FullWallpaperActivity).clear(binding.imageView)
 
-                h.post {
-                    binding.imageView.fadeImage(darkenColor(wallModel.color,200))
-                }
+//                h.post {
+//                    binding.imageView.fadeImage(darkenColor(wallModel.color,200))
+//                }
 
                 /*h.post {
                     val multiTransformation = MultiTransformation(
@@ -107,9 +139,11 @@ class FullWallpaperActivity : AppCompatActivity() {
     private var isZoom = false
     private fun animateZoom() {
         initScreenMeasure()
+        val interpolatorCompat = PathInterpolatorCompat.create(0.4f,-0.03f,.26f,1.1f)
+//        val interpolatorCompat = PathInterpolatorCompat.create(0.32f,0.41f,1f,.26f)
         isZoom = true
         binding.viewPager2.animate().scaleX(screenMeasure!!.scale()).scaleY(screenMeasure!!.scale())
-            .setInterpolator(AccelerateDecelerateInterpolator())
+            .setInterpolator(interpolatorCompat)
             .setDuration(200).start()
         binding.viewPager2.isUserInputEnabled = false
         animateActionCard(false)
@@ -137,14 +171,37 @@ class FullWallpaperActivity : AppCompatActivity() {
         }
     }
 
-//    private fun updateAuthor(author: AdminAuthor?) {
-//        if (author == null) {
-//            binding.authorContainer.visibility = View.INVISIBLE
-//            return
-//        }
-//        binding.authorContainer.visibility = View.VISIBLE
-//        binding.authorName.text = author.name
-//        Picasso.get().load(author.image).transform(CropCircleTransformation())
-//            .into(binding.authorProfile)
-//    }
+    private fun updateAuthor(author: Author?) {
+        if (author == null) {
+            binding.authorContainer.visibility = View.INVISIBLE
+            return
+        }
+        binding.authorContainer.visibility = View.VISIBLE
+        binding.authorName.text = author.name
+        Glide.with(this).load(author.image).transform(CropCircleWithBorderTransformation())
+            .into(binding.authorProfile)
+    }
+
+    companion object {
+        fun getLaunchingIntent(
+            context: Context,
+            list: WallModelList,
+            position: Int,
+            page: Int,
+            lastPage: Int,
+            query: String? = null,
+            color: String? = null,
+            category: String? = null
+        ): Intent {
+            val intent = Intent(context, FullWallpaperActivity::class.java)
+            intent.putExtra("list", list)
+            intent.putExtra("position", position)
+            intent.putExtra("page", page)
+            intent.putExtra("lastPage", lastPage)
+            intent.putExtra("query", query)
+            intent.putExtra("color", color)
+            intent.putExtra("category", category)
+            return intent
+        }
+    }
 }

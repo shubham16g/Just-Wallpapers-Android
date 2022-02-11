@@ -5,7 +5,7 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.shubhamgupta16.wallpaperapp.adapters.SingleImageAdapter
 import com.shubhamgupta16.wallpaperapp.databinding.ActivityMainBinding
-import com.shubhamgupta16.wallpaperapp.models.app.WallModelLite
+import com.shubhamgupta16.wallpaperapp.models.app.WallModel
 import com.shubhamgupta16.wallpaperapp.network.ApiService
 import com.shubhamgupta16.wallpaperapp.utils.apply3DSwiper
 import kotlinx.coroutines.CoroutineScope
@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
     }
     private lateinit var binding:ActivityMainBinding
 
-    private val list = ArrayList<WallModelLite>()
+    private val list = ArrayList<WallModel>()
     private var adapter :SingleImageAdapter?= null
 
     override fun onCreate(savedInstanceState: Bundle?) {

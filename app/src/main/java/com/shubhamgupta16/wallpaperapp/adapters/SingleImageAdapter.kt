@@ -1,18 +1,20 @@
 package com.shubhamgupta16.wallpaperapp.adapters
 
 import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.shubhamgupta16.wallpaperapp.databinding.ItemWallClientBinding
-import com.shubhamgupta16.wallpaperapp.models.app.WallModelLite
+import com.shubhamgupta16.wallpaperapp.models.app.WallModel
 import com.shubhamgupta16.wallpaperapp.utils.RotationTransform
 
 
 class SingleImageAdapter(
     private val context: Context,
-    private val list: List<WallModelLite?>,
+    private val list: List<WallModel?>,
     private val listener: ()->Unit
 ) :
     RecyclerView.Adapter<SingleImageAdapter.ItemViewHolder>() {
@@ -20,10 +22,10 @@ class SingleImageAdapter(
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         val model = list[position] ?: return
 
-        Glide.with(context).asBitmap()
+        Glide.with(context)
             .load(model.urls.regular ?: model.urls.small)
             .thumbnail()
-            .centerCrop()
+            .placeholder(ColorDrawable(Color.parseColor(model.color)))
             .transform(RotationTransform(model.rotation?.toFloat() ?: 0f))
             .into(holder.binding.imageView)
 

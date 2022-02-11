@@ -10,8 +10,8 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.shubhamgupta16.wallpaperapp.R
 import com.shubhamgupta16.wallpaperapp.adapters.ImagesAdapter
 import com.shubhamgupta16.wallpaperapp.databinding.FragmentListingBinding
+import com.shubhamgupta16.wallpaperapp.network.ListCase
 import com.shubhamgupta16.wallpaperapp.utils.PaginationController
-import com.shubhamgupta16.wallpaperapp.viewmodels.ListCase
 import com.shubhamgupta16.wallpaperapp.viewmodels.ListingViewModel
 
 class ListingFragment : Fragment() {
@@ -47,7 +47,7 @@ class ListingFragment : Fragment() {
             it?.let {
                 when (it.case) {
                     ListCase.UPDATED -> {
-                        adapter?.notifyItemChanged(it.from)
+                        adapter?.notifyItemChanged(it.at)
                     }
                     ListCase.ADDED -> {
                         adapter?.notifyItemRangeInserted(it.from, it.itemCount)

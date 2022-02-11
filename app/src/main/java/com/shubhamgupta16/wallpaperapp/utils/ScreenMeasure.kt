@@ -19,7 +19,7 @@ class ScreenMeasure(activity: Activity) {
     private val actionCardHeight: Float
     private val navigationHeight: Int = activity.getNavigationBarHeight()
 
-    fun actionCollapsedY() = actionCardHeight + navigationHeight - 15.dp
+    fun actionCollapsedY() = actionCardHeight + navigationHeight + 15.dp
     fun scale() = scale
     fun pivot() = pivot
 

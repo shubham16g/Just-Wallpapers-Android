@@ -10,12 +10,12 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.shubhamgupta16.wallpaperapp.R
-import com.shubhamgupta16.wallpaperapp.models.app.WallModelLite
+import com.shubhamgupta16.wallpaperapp.models.app.WallModel
 import com.shubhamgupta16.wallpaperapp.utils.RotationTransform
 
 class ImagesAdapter(
-    private val list: List<WallModelLite?>,
-    private val listener: (wallModel: WallModelLite, i: Int) -> Unit
+    private val list: List<WallModel?>,
+    private val listener: (wallModel: WallModel, i: Int) -> Unit
 ) :
     RecyclerView.Adapter<ImagesAdapter.ItemViewHolder>() {
 

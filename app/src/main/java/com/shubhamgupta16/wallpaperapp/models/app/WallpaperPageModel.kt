@@ -8,7 +8,7 @@ data class WallpaperPageModel(
     @SerializedName("current_page")
     val currentPage: Int,
     @SerializedName("data")
-    val data: List<WallModelLite>,
+    val data: List<WallModel>,
     @SerializedName("from")
     val from: Int,
     @SerializedName("last_page")
