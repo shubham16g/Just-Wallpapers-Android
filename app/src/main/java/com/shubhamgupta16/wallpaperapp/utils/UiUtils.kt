@@ -14,6 +14,7 @@ import android.os.Looper
 import android.util.DisplayMetrics
 import android.util.Log
 import android.view.View
+import android.view.WindowInsetsController
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
@@ -124,16 +125,19 @@ fun ImageView.fadeImage(color: Int) {
         td.startTransition(200)
     }
 }
+fun Activity.fitFullScreen(){
+    WindowCompat.setDecorFitsSystemWindows(window, false)
+}
 
 fun Activity.setTransparentStatusBar() {
-    WindowCompat.setDecorFitsSystemWindows(window, false)
+    WindowInsetsControllerCompat(window, window.decorView).isAppearanceLightStatusBars = false
     window.statusBarColor = Color.TRANSPARENT
     window.navigationBarColor = Color.parseColor("#01ffffff")
 }
 fun Activity.setNormalStatusBar() {
-    WindowCompat.setDecorFitsSystemWindows(window, true)
+    WindowInsetsControllerCompat(window, window.decorView).isAppearanceLightStatusBars = true
     window.statusBarColor = ContextCompat.getColor(this, R.color.status_bar)
-    window.navigationBarColor = Color.BLACK
+//    window.navigationBarColor = Color.BLACK
 }
 
 fun Activity.hideSystemUI() {

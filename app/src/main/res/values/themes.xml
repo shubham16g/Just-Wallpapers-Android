@@ -10,6 +10,7 @@
         <item name="android:statusBarColor">@color/status_bar</item>
         <!-- Customize your theme here. -->
         <item name="android:colorEdgeEffect">@color/toolbar</item>
+        <item name="android:windowLayoutInDisplayCutoutMode" tools:targetApi="o_mr1">shortEdges</item>
     </style>
 
     <style name="Theme.WallpaperUI.FullWallpaper" parent="Theme.MaterialComponents.Light.NoActionBar">

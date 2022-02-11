@@ -12,8 +12,6 @@
 
     <color name="fullWallpaperBackground">#14232C</color>
 
-    <color name="status_bar_light">#ffffff</color>
-
     <color name="toolbar">#ffffff</color>
     <color name="onToolbar">#111111</color>
     <color name="status_bar">#e0e0e0</color>

@@ -10,7 +10,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import com.shubhamgupta16.wallpaperapp.adapters.SingleImageAdapter
 import com.shubhamgupta16.wallpaperapp.databinding.ActivityFullWallpaperBinding
-import com.shubhamgupta16.wallpaperapp.models.app.WallModelList
 import com.shubhamgupta16.wallpaperapp.utils.*
 import com.shubhamgupta16.wallpaperapp.viewmodels.ListingViewModel
 
@@ -33,6 +32,7 @@ class FullWallpaperActivity : AppCompatActivity() {
         viewModel =
             ViewModelProvider(this, SingletonNameViewModelFactory())[ListingViewModel::class.java]
         binding = ActivityFullWallpaperBinding.inflate(layoutInflater)
+        fitFullScreen()
         setTransparentStatusBar()
         setContentView(binding.root)
 

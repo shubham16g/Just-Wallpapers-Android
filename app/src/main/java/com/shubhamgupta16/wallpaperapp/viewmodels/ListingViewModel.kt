@@ -17,7 +17,7 @@ class ListingViewModel : ViewModel() {
     val listObserver: LiveData<ListObserver> = _listObserver
 
     private val _list = ArrayList<WallModelLite?>()
-    val list: ArrayList<WallModelLite?> = _list
+    val list: List<WallModelLite?> = _list
 
     private var page = 1
     private var lastPage = 1
