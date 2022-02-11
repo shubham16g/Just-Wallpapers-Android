@@ -21,5 +21,6 @@
         <item name="colorOnSecondary">@color/onSecondary</item>
         <item name="android:statusBarColor">@color/status_bar</item>
         <item name="android:windowLayoutInDisplayCutoutMode" tools:targetApi="o_mr1">shortEdges</item>
+        <item name="android:windowBackground">@color/fullWallpaperBackground</item>
     </style>
 </resources>

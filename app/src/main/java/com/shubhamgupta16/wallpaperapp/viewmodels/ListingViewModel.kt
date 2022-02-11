@@ -17,7 +17,7 @@ class ListingViewModel : ViewModel() {
     val listObserver: LiveData<ListObserver> = _listObserver
 
     private val _list = ArrayList<WallModelLite?>()
-    val list: List<WallModelLite?> = _list
+    val list: ArrayList<WallModelLite?> = _list
 
     private var page = 1
     private var lastPage = 1
@@ -48,10 +48,11 @@ class ListingViewModel : ViewModel() {
                         _list.add(null)
                     page++
                     if (_list.isNotEmpty())
-                        _listObserver.postValue(ListObserver(ListCase.UPDATED, size - 1, 0))
-                    _listObserver.postValue(ListObserver(ListCase.ADDED, size, _list.size))
+                        _listObserver.postValue(ListObserver(ListCase.UPDATED, at = size - 1))
+                    _listObserver.postValue(ListObserver(ListCase.ADDED, from = size, itemCount = _list.size))
                 }
-            }
+            } else
+                _listObserver.postValue(ListObserver(ListCase.NO_CHANGE))
         }
     }
 
@@ -83,12 +84,14 @@ class ListingViewModel : ViewModel() {
 
 data class ListObserver(
     val case: ListCase,
-    val from: Int,
-    val itemCount: Int
+    val from: Int = -1,
+    val itemCount: Int = -1,
+    val at: Int = -1
 )
 
 enum class ListCase {
     REMOVED,
     UPDATED,
-    ADDED
+    ADDED,
+    NO_CHANGE
 }

@@ -2,6 +2,7 @@ package com.shubhamgupta16.wallpaperapp.models.app
 
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class WallpaperPageModel(
     @SerializedName("current_page")
@@ -18,4 +19,4 @@ data class WallpaperPageModel(
     val to: Int,
     @SerializedName("total")
     val total: Int
-)
+):Serializable

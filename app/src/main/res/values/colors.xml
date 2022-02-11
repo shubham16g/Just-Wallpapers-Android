@@ -10,9 +10,12 @@
     <color name="secondaryVariant">#FF018786</color>
     <color name="onSecondary">#000000</color>
 
+    <color name="fullWallpaperBackground">#14232C</color>
+
     <color name="status_bar_light">#ffffff</color>
 
     <color name="toolbar">#ffffff</color>
+    <color name="onToolbar">#111111</color>
     <color name="status_bar">#e0e0e0</color>
     <color name="dark_ripple">#999999</color>
 

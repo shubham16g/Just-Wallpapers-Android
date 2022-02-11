@@ -1,6 +1,5 @@
 package com.shubhamgupta16.wallpaperapp.ui
 
-import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -9,16 +8,11 @@ import android.view.animation.DecelerateInterpolator
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.MultiTransformation
 import com.shubhamgupta16.wallpaperapp.adapters.SingleImageAdapter
 import com.shubhamgupta16.wallpaperapp.databinding.ActivityFullWallpaperBinding
+import com.shubhamgupta16.wallpaperapp.models.app.WallModelList
 import com.shubhamgupta16.wallpaperapp.utils.*
 import com.shubhamgupta16.wallpaperapp.viewmodels.ListingViewModel
-import jp.wasabeef.glide.transformations.BlurTransformation
-import jp.wasabeef.glide.transformations.ColorFilterTransformation
-import jp.wasabeef.glide.transformations.gpu.BrightnessFilterTransformation
-
 
 class FullWallpaperActivity : AppCompatActivity() {
 
@@ -43,6 +37,12 @@ class FullWallpaperActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val position = intent.getIntExtra("position", 0)
+        /*val list = intent.getSerializableExtra("list") as WallModelList
+        list.list.add(null)
+        list.list.add(null)
+        list.list.add(null)
+        finish()
+        return*/
 
         val navigationHeight = getNavigationBarHeight()
 
@@ -50,26 +50,38 @@ class FullWallpaperActivity : AppCompatActivity() {
 
         setupViewPager()
         binding.viewPager2.currentItem = position
+        val h = Handler(Looper.getMainLooper())
+//        binding.viewPager2.reduceDragSensitivity(-10)
+
         binding.viewPager2.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
                 val wallModel = viewModel.list[position] ?: return
+
 //                Glide.get(this@FullWallpaperActivity).clearMemory()
-                val multiTransformation = MultiTransformation(
-                    RotationTransform((wallModel.rotation ?: 0f).toFloat()),
-                    BrightnessFilterTransformation(0.5f),
-                    ColorFilterTransformation(darkenColor(Color.parseColor(wallModel.color), 156)),
-                    BlurTransformation(25, 1)
-                )
+//                val drawable = BitmapDrawable(resources, getBitmapFromView(binding.imageView))
+//                Glide.with(this@FullWallpaperActivity).clear(binding.imageView)
 
-                Glide.with(this@FullWallpaperActivity).asBitmap().load(wallModel.urls.small)
-                    .thumbnail(0.4f)
-                    .transform(multiTransformation)
-                    .addBitmapListener { isReady, resource, e ->
-                        if (isReady)
-                            binding.imageView.fadeImage(resource)
-                    }.submit()
+                h.post {
+                    binding.imageView.fadeImage(darkenColor(wallModel.color,200))
+                }
 
+                /*h.post {
+                    val multiTransformation = MultiTransformation(
+                        RotationTransform((wallModel.rotation ?: 0f).toFloat()),
+                        FastBlurTransform(),
+                        BrightnessFilterTransformation(0.2f),
+                        ColorFilterTransformation(darkenColor(wallModel.color,156))
+                    )
+
+                    Glide.with(this@FullWallpaperActivity).load(wallModel.urls.small)
+//                        .thumbnail(0.2f)
+//                        .placeholder(BitmapDrawable(resources, getBitmapFromView(binding.imageView)))
+                        .transform(multiTransformation)
+                        .transition(DrawableTransitionOptions.withCrossFade())
+                        .into(binding.imageView)
+
+                }*/
             }
         })
     }

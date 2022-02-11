@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="24dp"
-    android:height="24dp"
+    android:width="22dp"
+    android:height="22dp"
     android:viewportWidth="400.004"
+    android:tint="@color/onToolbar"
     android:viewportHeight="400.004">
 
     <path
