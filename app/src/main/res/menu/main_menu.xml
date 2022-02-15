@@ -2,7 +2,19 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:icon="@drawable/ic_arrow_back_asset"
+        android:icon="@drawable/ic_baseline_wallpaper_24"
         android:title="Home"
         android:id="@+id/action_home"/>
+
+
+    <item
+        android:icon="@drawable/ic_baseline_rotate_90_degrees_ccw_24"
+        android:title="Categories"
+        android:id="@+id/action_category"/>
+
+
+    <item
+        android:icon="@drawable/ic_baseline_favorite_border_24"
+        android:title="Favorites"
+        android:id="@+id/action_fav"/>
 </menu>

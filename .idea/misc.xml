@@ -3,26 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/drawable/background_card.xml" value="0.128" />
-        <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/drawable/background_status_bar.xml" value="0.128" />
-        <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/drawable/ic_arrow_back_asset.xml" value="0.1315" />
-        <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/drawable/ic_baseline_keyboard_arrow_down_24.xml" value="0.128" />
-        <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/drawable/ic_baseline_search_24.xml" value="0.128" />
-        <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/drawable/round_btn.xml" value="0.128" />
-        <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/drawable/round_btn_dark.xml" value="0.128" />
-        <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/drawable/three_dots.xml" value="0.128" />
-        <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/activity_full_wallpaper.xml" value="0.2" />
-        <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/activity_listing.xml" value="0.2" />
-        <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/activity_main.xml" value="0.25" />
-        <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/activity_splash.xml" value="0.2" />
-        <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/fragment_blank.xml" value="0.2" />
-        <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/fragment_full_wallpaper.xml" value="0.2" />
-        <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/fragment_home.xml" value="0.1" />
-        <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/fragment_listing.xml" value="0.2" />
-        <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/item_image.xml" value="0.2" />
+        <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/activity_main.xml" value="0.2" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/item_loader.xml" value="0.2" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/item_wall_client.xml" value="0.2" />
-        <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/menu/main_menu.xml" value="0.2" />
       </map>
     </option>
   </component>

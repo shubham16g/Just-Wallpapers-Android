@@ -13,7 +13,6 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.shubhamgupta16.wallpaperapp.R
 import com.shubhamgupta16.wallpaperapp.models.app.WallModel
 import com.shubhamgupta16.wallpaperapp.utils.RotationTransform
-import com.shubhamgupta16.wallpaperapp.utils.dp
 import com.shubhamgupta16.wallpaperapp.utils.px
 
 class ImagesAdapter(
@@ -69,8 +68,15 @@ class ImagesAdapter(
 
     class ItemViewHolder(itemView: View, viewType: Int, isHorizontal: Boolean) : RecyclerView.ViewHolder(itemView) {
         init {
-            if (isHorizontal && viewType == 1)
-                (itemView as ConstraintLayout).maxWidth = 112.px
+            if (isHorizontal) {
+                (itemView as ConstraintLayout).apply {
+                    maxWidth = if (viewType == 0) {
+                        removeAllViews()
+                        0
+                    } else
+                        112.px
+                }
+            }
         }
         val imageView: ImageView? =
             if (viewType == 1) itemView.findViewById(R.id.image_view) else null

@@ -14,6 +14,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private lateinit var binding: ActivityMainBinding
+    private var currentFrag = R.id.action_home
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,21 +22,24 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        swapFragment(HomeFragment(), false)
+        swapFragment(R.id.action_home, HomeFragment(), false)
 
         binding.bottomNav.setOnItemSelectedListener {
+            if (currentFrag == it.itemId) return@setOnItemSelectedListener false
             when (it.itemId) {
                 R.id.action_home -> {
-                    swapFragment(HomeFragment())
+                    swapFragment(it.itemId, HomeFragment())
                 }
+                else -> false
             }
-            true
         }
     }
 
-    private fun swapFragment(frag: Fragment, animate: Boolean = true) {
+    private fun swapFragment(id:Int,frag: Fragment, animate: Boolean = true): Boolean {
+        currentFrag = id
 //        todo animation
         supportFragmentManager.beginTransaction().replace(binding.container.id, frag).commit()
+        return true
     }
 
 
