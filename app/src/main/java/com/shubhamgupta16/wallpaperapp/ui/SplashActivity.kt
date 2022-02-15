@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import com.shubhamgupta16.wallpaperapp.R
+import com.shubhamgupta16.wallpaperapp.ui.main.MainActivity
 
 @SuppressLint("CustomSplashScreen")
 class SplashActivity : AppCompatActivity() {
@@ -15,7 +16,7 @@ class SplashActivity : AppCompatActivity() {
         setContentView(R.layout.activity_splash)
 
         Handler(Looper.getMainLooper()).postDelayed({
-            startActivity(Intent(this, ListingActivity::class.java))
+            startActivity(Intent(this, MainActivity::class.java))
             finish()
         }, 1000)
     }

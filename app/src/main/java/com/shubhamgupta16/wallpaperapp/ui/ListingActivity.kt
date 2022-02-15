@@ -1,5 +1,7 @@
 package com.shubhamgupta16.wallpaperapp.ui
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -19,6 +21,7 @@ class ListingActivity : AppCompatActivity() {
         binding = ActivityListingBinding.inflate(layoutInflater)
 //        fitFullScreen()
         setContentView(binding.root)
+        binding.toolbar.setNavigationOnClickListener { onBackPressed() }
 
         showListingFragment()
     }
@@ -43,16 +46,12 @@ class ListingActivity : AppCompatActivity() {
             viewModel.category
         )
         startActivity(intent)
-        /*val intent = Intent(this, FullWallpaperActivity::class.java)
-        intent.putExtra("position", position)
-        intent.putExtra("list", WallModelList(viewModel.list.filterNotNull()))
-        startActivity(intent)*/
-        /*supportFragmentManager.beginTransaction()
-            .add(binding.container.id, FullWallpaperFragment.getInstance(position))
-            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-            .addToBackStack(null)
-            .commit()*/
     }
 
+    companion object {
+        fun open(context: Context) {
+            context.startActivity(Intent(context, ListingActivity::class.java))
+        }
+    }
 
 }
