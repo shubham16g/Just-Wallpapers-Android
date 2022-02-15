@@ -57,7 +57,11 @@ class HorizontalListingFragment : Fragment() {
                 }
             }
         }
-        viewModel.fetch()
+    }
+
+    fun fetch(query: String? = null, category: String? = null, color: String? = null) {
+        if (viewModel.list.isEmpty())
+            viewModel.fetch()
     }
 
     private fun setupRecyclerView() {

@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import com.shubhamgupta16.wallpaperapp.R
 import com.shubhamgupta16.wallpaperapp.databinding.FragmentHomeBinding
 import com.shubhamgupta16.wallpaperapp.ui.ListingActivity
+import com.shubhamgupta16.wallpaperapp.ui.fragment.HorizontalListingFragment
 
 class HomeFragment : Fragment() {
 
@@ -26,6 +27,8 @@ class HomeFragment : Fragment() {
         binding.moreBtn.setOnClickListener {
             ListingActivity.open(requireContext())
         }
+
+        (childFragmentManager.findFragmentById(binding.latestWallpaperFragment.id) as HorizontalListingFragment).fetch()
 //        todo ui work
     }
 }
