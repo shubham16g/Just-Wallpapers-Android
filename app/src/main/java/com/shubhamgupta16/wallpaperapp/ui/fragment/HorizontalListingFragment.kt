@@ -6,21 +6,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.shubhamgupta16.wallpaperapp.R
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.shubhamgupta16.wallpaperapp.adapters.ImagesAdapter
 import com.shubhamgupta16.wallpaperapp.databinding.FragmentListingBinding
+import com.shubhamgupta16.wallpaperapp.models.app.WallModelList
 import com.shubhamgupta16.wallpaperapp.network.ListCase
-import com.shubhamgupta16.wallpaperapp.utils.PaginationController
+import com.shubhamgupta16.wallpaperapp.ui.FullWallpaperActivity
 import com.shubhamgupta16.wallpaperapp.viewmodels.ListingViewModel
 
-class ListingFragment : Fragment() {
+class HorizontalListingFragment : Fragment() {
 
     private lateinit var viewModel: ListingViewModel
-    var listener: ((position: Int) -> Unit)? = null
     private lateinit var binding: FragmentListingBinding
-
-    private var paginationController: PaginationController? = null
     private var adapter: ImagesAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,14 +47,13 @@ class ListingFragment : Fragment() {
                     }
                     ListCase.ADDED -> {
                         adapter?.notifyItemRangeInserted(it.from, it.itemCount)
-                        paginationController?.notifyDataFetched(true)
                     }
                     ListCase.REMOVED -> {
                         adapter?.notifyItemRangeRemoved(it.from, it.itemCount)
                     }
                     ListCase.NO_CHANGE -> {
-                        paginationController?.notifyDataFetched(true)
                     }
+                    else -> {}
                 }
             }
         }
@@ -65,21 +61,23 @@ class ListingFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        val manager = StaggeredGridLayoutManager(
-            resources.getInteger(R.integer.card_span_count),
-            StaggeredGridLayoutManager.VERTICAL
-        )
+        val manager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         binding.recyclerView.layoutManager = manager
-        adapter = ImagesAdapter(viewModel.list) { wallModel, i ->
-            listener?.let { it(i) }
-            /*val intent = Intent(this, FullWallpaperActivity::class.java)
-            intent.putExtra("position", i)
-            intent.putExtra("list", WallModelList(viewModel.list))
-            startActivity(intent)*/
+        adapter = ImagesAdapter(viewModel.list, true) { wallModel, i ->
+            showFullWallpaperFragment(i)
         }
         binding.recyclerView.adapter = adapter
-        paginationController = PaginationController(binding.recyclerView, manager) {
-            viewModel.fetch()
-        }
+    }
+
+    private fun showFullWallpaperFragment(position: Int) {
+        val intent = FullWallpaperActivity.getLaunchingIntent(
+            requireContext(), WallModelList(viewModel.list.filterNotNull()), position,
+            viewModel.page,
+            viewModel.lastPage,
+            viewModel.query,
+            viewModel.color,
+            viewModel.category
+        )
+        startActivity(intent)
     }
 }

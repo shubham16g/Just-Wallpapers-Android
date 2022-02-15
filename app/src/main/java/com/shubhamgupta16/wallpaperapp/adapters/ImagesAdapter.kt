@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.bumptech.glide.Glide
@@ -12,9 +13,12 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.shubhamgupta16.wallpaperapp.R
 import com.shubhamgupta16.wallpaperapp.models.app.WallModel
 import com.shubhamgupta16.wallpaperapp.utils.RotationTransform
+import com.shubhamgupta16.wallpaperapp.utils.dp
+import com.shubhamgupta16.wallpaperapp.utils.px
 
 class ImagesAdapter(
     private val list: List<WallModel?>,
+    private val isHorizontal:Boolean = false,
     private val listener: (wallModel: WallModel, i: Int) -> Unit
 ) :
     RecyclerView.Adapter<ImagesAdapter.ItemViewHolder>() {
@@ -23,9 +27,11 @@ class ImagesAdapter(
         holder.imageView?.requestLayout()
         val model = list[position]
         if (model == null) {
-            val layoutParams =
-                holder.itemView.layoutParams as StaggeredGridLayoutManager.LayoutParams
-            layoutParams.isFullSpan = true
+            if (!isHorizontal) {
+                val layoutParams =
+                    holder.itemView.layoutParams as StaggeredGridLayoutManager.LayoutParams
+                layoutParams.isFullSpan = true
+            }
         } else {
 
 
@@ -58,10 +64,14 @@ class ImagesAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ItemViewHolder(
         LayoutInflater.from(parent.context).inflate(
             if (viewType == 1) R.layout.item_image else R.layout.item_loader, parent, false
-        ), viewType
+        ), viewType, isHorizontal
     )
 
-    class ItemViewHolder(itemView: View, viewType: Int) : RecyclerView.ViewHolder(itemView) {
+    class ItemViewHolder(itemView: View, viewType: Int, isHorizontal: Boolean) : RecyclerView.ViewHolder(itemView) {
+        init {
+            if (isHorizontal && viewType == 1)
+                (itemView as ConstraintLayout).maxWidth = 112.px
+        }
         val imageView: ImageView? =
             if (viewType == 1) itemView.findViewById(R.id.image_view) else null
         /*
