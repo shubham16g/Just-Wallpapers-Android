@@ -20,8 +20,9 @@ import com.shubhamgupta16.wallpaperapp.models.app.WallModelList
 import com.shubhamgupta16.wallpaperapp.network.ListCase
 import com.shubhamgupta16.wallpaperapp.utils.*
 import com.shubhamgupta16.wallpaperapp.viewmodels.PagerViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import jp.wasabeef.glide.transformations.CropCircleWithBorderTransformation
-
+@AndroidEntryPoint
 class FullWallpaperActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityFullWallpaperBinding

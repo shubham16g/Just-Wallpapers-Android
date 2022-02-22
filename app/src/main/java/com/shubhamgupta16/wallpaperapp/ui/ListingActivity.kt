@@ -9,7 +9,9 @@ import com.shubhamgupta16.wallpaperapp.databinding.ActivityListingBinding
 import com.shubhamgupta16.wallpaperapp.models.app.WallModelList
 import com.shubhamgupta16.wallpaperapp.ui.fragment.ListingFragment
 import com.shubhamgupta16.wallpaperapp.viewmodels.ListingViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ListingActivity : AppCompatActivity() {
     private lateinit var binding: ActivityListingBinding
 

@@ -6,8 +6,9 @@ import androidx.fragment.app.Fragment
 import com.shubhamgupta16.wallpaperapp.R
 import com.shubhamgupta16.wallpaperapp.databinding.ActivityMainBinding
 import com.shubhamgupta16.wallpaperapp.ui.main.fragments.HomeFragment
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     companion object {
         private const val TAG = "MainActivity"

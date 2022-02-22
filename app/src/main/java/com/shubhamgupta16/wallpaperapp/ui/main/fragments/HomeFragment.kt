@@ -9,7 +9,9 @@ import com.shubhamgupta16.wallpaperapp.R
 import com.shubhamgupta16.wallpaperapp.databinding.FragmentHomeBinding
 import com.shubhamgupta16.wallpaperapp.ui.ListingActivity
 import com.shubhamgupta16.wallpaperapp.ui.fragment.HorizontalListingFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class HomeFragment : Fragment() {
 
     private lateinit var binding:FragmentHomeBinding
@@ -24,9 +26,9 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.moreBtn.setOnClickListener {
-            ListingActivity.open(requireContext())
-        }
+//        binding.moreBtn.setOnClickListener {
+//            ListingActivity.open(requireContext())
+//        }
 
         (childFragmentManager.findFragmentById(binding.latestWallpaperFragment.id) as HorizontalListingFragment).fetch()
 //        todo ui work
