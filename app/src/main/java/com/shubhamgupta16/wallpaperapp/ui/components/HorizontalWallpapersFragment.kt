@@ -34,7 +34,6 @@ class HorizontalWallpapersFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        Toast.makeText(requireContext(), "$tag", Toast.LENGTH_SHORT).show()
         setupRecyclerView()
         viewModel.listObserver.observe(viewLifecycleOwner) {
             it?.let {
