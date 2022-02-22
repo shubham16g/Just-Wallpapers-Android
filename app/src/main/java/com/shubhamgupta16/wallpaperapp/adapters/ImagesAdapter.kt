@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.shubhamgupta16.wallpaperapp.R
-import com.shubhamgupta16.wallpaperapp.models.app.WallModel
+import com.shubhamgupta16.wallpaperapp.models.wallpapers.WallModel
 import com.shubhamgupta16.wallpaperapp.utils.RotationTransform
 import com.shubhamgupta16.wallpaperapp.utils.px
 

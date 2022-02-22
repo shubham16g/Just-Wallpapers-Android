@@ -8,6 +8,7 @@
     tools:context=".ui.main.fragments.HomeFragment">
 
     <com.shubhamgupta16.wallpaperapp.customviews.HeaderView
+        android:id="@+id/newly_added_header"
         android:layout_width="match_parent"
         app:title="Newly Added"
         app:moreButtonVisible="true"

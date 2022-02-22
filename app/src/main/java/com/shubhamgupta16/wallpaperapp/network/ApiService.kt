@@ -1,7 +1,8 @@
 package com.shubhamgupta16.wallpaperapp.network
 
 import com.shubhamgupta16.wallpaperapp.BuildConfig
-import com.shubhamgupta16.wallpaperapp.models.app.WallpaperPageModel
+import com.shubhamgupta16.wallpaperapp.models.init.InitModel
+import com.shubhamgupta16.wallpaperapp.models.wallpapers.WallpaperPageModel
 import okhttp3.OkHttpClient
 import retrofit2.Response
 import retrofit2.Retrofit
@@ -42,4 +43,7 @@ interface ApiService {
         @Query("category") category: String? = null,
         @Query("color") color: String? = null,
     ): Response<WallpaperPageModel>
+
+    @GET("init")
+    suspend fun getInitData(): Response<InitModel>
 }

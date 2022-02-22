@@ -15,8 +15,8 @@ import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.shubhamgupta16.wallpaperapp.adapters.SingleImageAdapter
 import com.shubhamgupta16.wallpaperapp.databinding.ActivityFullWallpaperBinding
-import com.shubhamgupta16.wallpaperapp.models.app.Author
-import com.shubhamgupta16.wallpaperapp.models.app.WallModelList
+import com.shubhamgupta16.wallpaperapp.models.wallpapers.Author
+import com.shubhamgupta16.wallpaperapp.models.wallpapers.WallModelListHolder
 import com.shubhamgupta16.wallpaperapp.network.ListCase
 import com.shubhamgupta16.wallpaperapp.utils.*
 import com.shubhamgupta16.wallpaperapp.viewmodels.PagerViewModel
@@ -45,7 +45,7 @@ class FullWallpaperActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val position = intent.getIntExtra("position", 0)
-        val wallModelList = intent.getSerializableExtra("list") as WallModelList
+        val wallModelList = intent.getSerializableExtra("list") as WallModelListHolder
 
         viewModel.init(
             wallModelList.list,
@@ -205,7 +205,7 @@ class FullWallpaperActivity : AppCompatActivity() {
     companion object {
         fun getLaunchingIntent(
             context: Context,
-            list: WallModelList,
+            listHolder: WallModelListHolder,
             position: Int,
             page: Int,
             lastPage: Int,
@@ -214,7 +214,7 @@ class FullWallpaperActivity : AppCompatActivity() {
             category: String? = null
         ): Intent {
             val intent = Intent(context, FullWallpaperActivity::class.java)
-            intent.putExtra("list", list)
+            intent.putExtra("list", listHolder)
             intent.putExtra("position", position)
             intent.putExtra("page", page)
             intent.putExtra("lastPage", lastPage)

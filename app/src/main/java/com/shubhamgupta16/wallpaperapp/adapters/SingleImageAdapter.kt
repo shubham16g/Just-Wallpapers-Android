@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.shubhamgupta16.wallpaperapp.databinding.ItemWallClientBinding
-import com.shubhamgupta16.wallpaperapp.models.app.WallModel
+import com.shubhamgupta16.wallpaperapp.models.wallpapers.WallModel
 import com.shubhamgupta16.wallpaperapp.utils.RotationTransform
 
 

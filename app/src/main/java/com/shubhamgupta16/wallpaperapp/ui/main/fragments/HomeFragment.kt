@@ -1,12 +1,13 @@
 package com.shubhamgupta16.wallpaperapp.ui.main.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.shubhamgupta16.wallpaperapp.R
+import androidx.fragment.app.Fragment
 import com.shubhamgupta16.wallpaperapp.databinding.FragmentHomeBinding
+import com.shubhamgupta16.wallpaperapp.initData
 import com.shubhamgupta16.wallpaperapp.ui.ListingActivity
 import com.shubhamgupta16.wallpaperapp.ui.fragment.HorizontalListingFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -26,11 +27,13 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        binding.moreBtn.setOnClickListener {
-//            ListingActivity.open(requireContext())
-//        }
+        binding.newlyAddedHeader.setOnMoreClickListener {
+            ListingActivity.open(requireContext())
+        }
 
         (childFragmentManager.findFragmentById(binding.latestWallpaperFragment.id) as HorizontalListingFragment).fetch()
+
+        Log.d("TAG", "InitData: ${requireActivity().application.initData}")
 //        todo ui work
     }
 }

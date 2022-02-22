@@ -6,7 +6,7 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.shubhamgupta16.wallpaperapp.databinding.ActivityListingBinding
-import com.shubhamgupta16.wallpaperapp.models.app.WallModelList
+import com.shubhamgupta16.wallpaperapp.models.wallpapers.WallModelListHolder
 import com.shubhamgupta16.wallpaperapp.ui.fragment.ListingFragment
 import com.shubhamgupta16.wallpaperapp.viewmodels.ListingViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -40,7 +40,7 @@ class ListingActivity : AppCompatActivity() {
 
     private fun showFullWallpaperFragment(position:Int) {
         val intent = FullWallpaperActivity.getLaunchingIntent(
-            this, WallModelList(viewModel.list.filterNotNull()), position,
+            this, WallModelListHolder(viewModel.list.filterNotNull()), position,
             viewModel.page,
             viewModel.lastPage,
             viewModel.query,

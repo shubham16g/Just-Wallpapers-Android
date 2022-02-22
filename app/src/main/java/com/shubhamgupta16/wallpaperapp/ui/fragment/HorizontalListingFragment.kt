@@ -4,15 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.shubhamgupta16.wallpaperapp.adapters.ImagesAdapter
 import com.shubhamgupta16.wallpaperapp.databinding.FragmentListingBinding
-import com.shubhamgupta16.wallpaperapp.models.app.WallModelList
+import com.shubhamgupta16.wallpaperapp.models.wallpapers.WallModelListHolder
 import com.shubhamgupta16.wallpaperapp.network.ListCase
 import com.shubhamgupta16.wallpaperapp.ui.FullWallpaperActivity
 import com.shubhamgupta16.wallpaperapp.viewmodels.ListingViewModel
@@ -76,7 +73,7 @@ class HorizontalListingFragment : Fragment() {
 
     private fun showFullWallpaperFragment(position: Int) {
         val intent = FullWallpaperActivity.getLaunchingIntent(
-            requireContext(), WallModelList(viewModel.list.filterNotNull()), position,
+            requireContext(), WallModelListHolder(viewModel.list.filterNotNull()), position,
             viewModel.page,
             viewModel.lastPage,
             viewModel.query,
