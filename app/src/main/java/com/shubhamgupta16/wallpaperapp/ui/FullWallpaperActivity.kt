@@ -69,10 +69,10 @@ class FullWallpaperActivity : AppCompatActivity() {
                     ListCase.UPDATED -> {
                         adapter?.notifyItemChanged(it.at)
                     }
-                    ListCase.ADDED -> {
+                    ListCase.ADDED_RANGE -> {
                         adapter?.notifyItemRangeInserted(it.from, it.itemCount)
                     }
-                    ListCase.REMOVED -> {
+                    ListCase.REMOVED_RANGE -> {
                         adapter?.notifyItemRangeRemoved(it.from, it.itemCount)
                     }
                     ListCase.NO_CHANGE -> {

@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ListingViewModel
+class WallpapersViewModel
 @Inject constructor(private val apiService: ApiService) : ViewModel() {
     private val _listObserver = MutableLiveData<ListObserver>()
     val listObserver: LiveData<ListObserver> = _listObserver
@@ -41,7 +41,7 @@ class ListingViewModel
         if (_page == 1) {
             val size = _list.size
             _list.clear()
-            _listObserver.value = ListObserver(ListCase.REMOVED, 0, size)
+            _listObserver.value = ListObserver(ListCase.REMOVED_RANGE, 0, size)
         }
         viewModelScope.launch(Dispatchers.IO) {
             val response =
@@ -59,7 +59,7 @@ class ListingViewModel
                     _page++
                     if (_list.isNotEmpty())
                         _listObserver.postValue(ListObserver(ListCase.UPDATED, at = size - 1))
-                    _listObserver.postValue(ListObserver(ListCase.ADDED, from = size, itemCount = _list.size))
+                    _listObserver.postValue(ListObserver(ListCase.ADDED_RANGE, from = size, itemCount = _list.size))
                 }
             } else
                 _listObserver.postValue(ListObserver(ListCase.NO_CHANGE))

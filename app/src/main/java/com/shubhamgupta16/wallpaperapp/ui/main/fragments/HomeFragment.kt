@@ -9,7 +9,9 @@ import androidx.fragment.app.Fragment
 import com.shubhamgupta16.wallpaperapp.databinding.FragmentHomeBinding
 import com.shubhamgupta16.wallpaperapp.initData
 import com.shubhamgupta16.wallpaperapp.ui.ListingActivity
-import com.shubhamgupta16.wallpaperapp.ui.fragment.HorizontalListingFragment
+import com.shubhamgupta16.wallpaperapp.ui.components.HorizontalCategoriesFragment
+import com.shubhamgupta16.wallpaperapp.ui.components.HorizontalColorsFragment
+import com.shubhamgupta16.wallpaperapp.ui.components.HorizontalWallpapersFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -31,7 +33,11 @@ class HomeFragment : Fragment() {
             ListingActivity.open(requireContext())
         }
 
-        (childFragmentManager.findFragmentById(binding.latestWallpaperFragment.id) as HorizontalListingFragment).fetch()
+        childFragmentManager.beginTransaction().replace(binding.colorsFragment.id, HorizontalColorsFragment()).commit()
+
+        (childFragmentManager.findFragmentById(binding.latestWallpaperFragment.id) as HorizontalWallpapersFragment).fetch()
+        (childFragmentManager.findFragmentById(binding.popularWallpaperFragment.id) as HorizontalWallpapersFragment).fetch()
+        (childFragmentManager.findFragmentById(binding.categoriesFragment.id) as HorizontalCategoriesFragment).fetch()
 
         Log.d("TAG", "InitData: ${requireActivity().application.initData}")
 //        todo ui work

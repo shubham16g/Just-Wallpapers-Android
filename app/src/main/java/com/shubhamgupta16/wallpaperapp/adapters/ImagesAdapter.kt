@@ -13,7 +13,6 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.shubhamgupta16.wallpaperapp.R
 import com.shubhamgupta16.wallpaperapp.models.wallpapers.WallModel
 import com.shubhamgupta16.wallpaperapp.utils.RotationTransform
-import com.shubhamgupta16.wallpaperapp.utils.px
 
 class ImagesAdapter(
     private val list: List<WallModel?>,
@@ -62,19 +61,20 @@ class ImagesAdapter(
     override fun getItemCount() = list.size
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ItemViewHolder(
         LayoutInflater.from(parent.context).inflate(
-            if (viewType == 1) R.layout.item_image else R.layout.item_loader, parent, false
+            when {
+                isHorizontal -> R.layout.item_wall_horizontal
+                viewType == 1 -> R.layout.item_image
+                else -> R.layout.item_loader
+            }, parent, false
         ), viewType, isHorizontal
     )
 
     class ItemViewHolder(itemView: View, viewType: Int, isHorizontal: Boolean) : RecyclerView.ViewHolder(itemView) {
         init {
-            if (isHorizontal) {
+            if (isHorizontal && viewType == 0) {
                 (itemView as ConstraintLayout).apply {
-                    maxWidth = if (viewType == 0) {
-                        removeAllViews()
-                        0
-                    } else
-                        112.px
+                    maxWidth = 0
+                    removeAllViews()
                 }
             }
         }

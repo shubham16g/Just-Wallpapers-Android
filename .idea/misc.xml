@@ -3,11 +3,18 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/activity_listing.xml" value="0.19692307692307692" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/activity_main.xml" value="0.2" />
-        <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/custom_header_view.xml" value="0.33" />
+        <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/custom_header_view.xml" value="0.25" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/fragment_home.xml" value="0.2" />
+        <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/fragment_listing.xml" value="0.19692307692307692" />
+        <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/item_category.xml" value="0.2" />
+        <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/item_category_horizontal.xml" value="0.33" />
+        <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/item_color_horizontal.xml" value="0.5" />
+        <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/item_image.xml" value="0.19692307692307692" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/item_loader.xml" value="0.2" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/item_wall_client.xml" value="0.2" />
+        <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/item_wall_horizontal.xml" value="0.33" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/menu/main_menu.xml" value="0.2" />
       </map>
     </option>

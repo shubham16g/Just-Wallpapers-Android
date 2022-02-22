@@ -16,14 +16,44 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/latest_wallpaper_fragment"
-        android:name="com.shubhamgupta16.wallpaperapp.ui.fragment.HorizontalListingFragment"
+        android:tag="latest"
+        android:name="com.shubhamgupta16.wallpaperapp.ui.components.HorizontalWallpapersFragment"
         android:layout_width="match_parent"
         android:layout_height="200dp" />
 
     <com.shubhamgupta16.wallpaperapp.customviews.HeaderView
         android:layout_width="match_parent"
-        app:title="Categories"
+        android:layout_height="wrap_content"
         app:moreButtonVisible="true"
-        android:layout_height="wrap_content"/>
+        app:title="Categories" />
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/colors_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+
+    <com.shubhamgupta16.wallpaperapp.customviews.HeaderView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:moreButtonVisible="true"
+        app:title="Categories" />
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/categories_fragment"
+        android:tag="categories_in_home"
+        android:name="com.shubhamgupta16.wallpaperapp.ui.components.HorizontalCategoriesFragment"
+        android:layout_width="match_parent"
+        android:layout_height="90dp" />
+
+    <com.shubhamgupta16.wallpaperapp.customviews.HeaderView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:moreButtonVisible="true"
+        app:title="Popular" />
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/popular_wallpaper_fragment"
+        android:tag="popular"
+        android:name="com.shubhamgupta16.wallpaperapp.ui.components.HorizontalWallpapersFragment"
+        android:layout_width="match_parent"
+        android:layout_height="200dp" />
 
 </LinearLayout>

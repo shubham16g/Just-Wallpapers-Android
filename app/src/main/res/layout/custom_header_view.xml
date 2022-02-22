@@ -2,8 +2,11 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:paddingStart="10dp"
-    android:paddingEnd="10dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:minHeight="60dp"
+    android:layout_marginTop="10dp"
+    android:paddingStart="@dimen/hor_padding"
+    android:paddingEnd="@dimen/hor_padding"
     tools:viewBindingIgnore="true"
     android:layout_height="wrap_content">
 
@@ -15,14 +18,24 @@
         android:layout_centerVertical="true"
         android:lines="1"
         android:ellipsize="end"
+        android:textSize="14sp"
         android:layout_toStartOf="@+id/custom_header_more_btn"
         android:textColor="@color/textPrimary"
-        android:textSize="20sp" />
+        android:textStyle="bold" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/custom_header_more_btn"
-        android:text="@string/more"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"/>
+        app:rippleColor="@color/primary"
+        android:layout_height="40dp"
+        android:gravity="end|center_vertical"
+        android:layout_alignParentEnd="true"
+        android:drawableEnd="@drawable/ic_baseline_keyboard_arrow_down_24"
+        android:layout_centerVertical="true"
+        android:background="@android:color/transparent"
+        android:stateListAnimator="@null"
+        android:includeFontPadding="false"
+        android:padding="0dp"
+        android:text="@string/more"
+        android:textColor="@color/primary" />
 </RelativeLayout>

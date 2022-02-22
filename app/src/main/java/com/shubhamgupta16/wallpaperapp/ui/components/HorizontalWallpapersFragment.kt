@@ -1,9 +1,10 @@
-package com.shubhamgupta16.wallpaperapp.ui.fragment
+package com.shubhamgupta16.wallpaperapp.ui.components
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -12,13 +13,13 @@ import com.shubhamgupta16.wallpaperapp.databinding.FragmentListingBinding
 import com.shubhamgupta16.wallpaperapp.models.wallpapers.WallModelListHolder
 import com.shubhamgupta16.wallpaperapp.network.ListCase
 import com.shubhamgupta16.wallpaperapp.ui.FullWallpaperActivity
-import com.shubhamgupta16.wallpaperapp.viewmodels.ListingViewModel
+import com.shubhamgupta16.wallpaperapp.viewmodels.WallpapersViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class HorizontalListingFragment : Fragment() {
+class HorizontalWallpapersFragment : Fragment() {
 
-    private val viewModel: ListingViewModel by viewModels()
+    private val viewModel: WallpapersViewModel by viewModels()
     private lateinit var binding: FragmentListingBinding
     private var adapter: ImagesAdapter? = null
 
@@ -33,6 +34,7 @@ class HorizontalListingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        Toast.makeText(requireContext(), "$tag", Toast.LENGTH_SHORT).show()
         setupRecyclerView()
         viewModel.listObserver.observe(viewLifecycleOwner) {
             it?.let {
@@ -40,10 +42,10 @@ class HorizontalListingFragment : Fragment() {
                     ListCase.UPDATED -> {
                         adapter?.notifyItemChanged(it.at)
                     }
-                    ListCase.ADDED -> {
+                    ListCase.ADDED_RANGE -> {
                         adapter?.notifyItemRangeInserted(it.from, it.itemCount)
                     }
-                    ListCase.REMOVED -> {
+                    ListCase.REMOVED_RANGE -> {
                         adapter?.notifyItemRangeRemoved(it.from, it.itemCount)
                     }
                     ListCase.NO_CHANGE -> {

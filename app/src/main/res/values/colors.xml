@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="white">#ffffff</color>
+    <color name="fullWallpaperBackground">#283E4B</color>
+
     <color name="primary">#FF6200EE</color>
     <color name="primaryVariant">#FF3700B3</color>
     <color name="onPrimary">#FFFFFF</color>
@@ -8,17 +11,19 @@
     <color name="secondaryVariant">#FF018786</color>
     <color name="onSecondary">#000000</color>
 
-    <color name="fullWallpaperBackground">#283E4B</color>
 
     <color name="toolbar">#ffffff</color>
     <color name="onToolbar">#111111</color>
     <color name="status_bar">#e0e0e0</color>
     <color name="navigation_bar">#F2F9FB</color>
-    <color name="dark_ripple">#999999</color>
+
 
 
     <color name="textPrimary">#111111</color>
     <color name="textSecondary">#444444</color>
     <color name="textTertiary">#707070</color>
-    <color name="white">#ffffff</color>
+
+    <color name="dark_ripple">#999999</color>
+
+    <color name="cardBackground">#e0e0e0</color>
 </resources>

@@ -2,13 +2,15 @@
 <resources>
     <color name="primary">#FFBB86FC</color>
 
-    <color name="textPrimary">#f0f0f0</color>
-    <color name="textSecondary">#bbbbbb</color>
-    <color name="textTertiary">#999999</color>
-
     <color name="toolbar">#111111</color>
     <color name="onToolbar">#ffffff</color>
     <color name="status_bar">#111111</color>
     <color name="navigation_bar">#090C0E</color>
+
+    <color name="textPrimary">#f0f0f0</color>
+    <color name="textSecondary">#bbbbbb</color>
+    <color name="textTertiary">#999999</color>
+
+    <color name="cardBackground">#3A3B3C</color>
 
 </resources>

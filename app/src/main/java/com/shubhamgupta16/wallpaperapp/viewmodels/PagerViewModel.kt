@@ -59,7 +59,7 @@ class PagerViewModel
                     _list.addAll(it.data)
                     page++
                     _listObserver.postValue(
-                        ListObserver(ListCase.ADDED, from = size, itemCount = _list.size)
+                        ListObserver(ListCase.ADDED_RANGE, from = size, itemCount = _list.size)
                     )
                 }
             } else
