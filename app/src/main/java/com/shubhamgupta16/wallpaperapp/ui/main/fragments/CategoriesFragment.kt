@@ -1,27 +1,25 @@
 package com.shubhamgupta16.wallpaperapp.ui.main.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.google.android.material.tabs.TabLayoutMediator
 import com.shubhamgupta16.wallpaperapp.adapters.ViewPager2Adapter
 import com.shubhamgupta16.wallpaperapp.databinding.FragmentMainCategoriesBinding
-import com.shubhamgupta16.wallpaperapp.databinding.FragmentMainHomeBinding
-import com.shubhamgupta16.wallpaperapp.initData
-import com.shubhamgupta16.wallpaperapp.ui.ListingActivity
-import com.shubhamgupta16.wallpaperapp.ui.components.HorizontalCategoriesFragment
+import com.shubhamgupta16.wallpaperapp.network.ListCase
 import com.shubhamgupta16.wallpaperapp.ui.components.HorizontalColorsFragment
-import com.shubhamgupta16.wallpaperapp.ui.components.HorizontalWallpapersFragment
-import dagger.hilt.android.AndroidEntryPoint
+import com.shubhamgupta16.wallpaperapp.ui.components.VerticalWallpapersFragment
+import com.shubhamgupta16.wallpaperapp.viewmodels.CategoriesViewModel
 
 
 class CategoriesFragment : Fragment() {
 
     private lateinit var binding: FragmentMainCategoriesBinding
-    private var adapter: ViewPager2Adapter<Fragment>? = null
+    private val viewModel: CategoriesViewModel by viewModels()
+    private var adapter: ViewPager2Adapter? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,19 +31,24 @@ class CategoriesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         adapter = ViewPager2Adapter(childFragmentManager, lifecycle)
-        adapter!!.addFragment(HorizontalColorsFragment())
-        adapter!!.addFragment(HorizontalColorsFragment())
-        adapter!!.addFragment(HorizontalColorsFragment())
-        binding.viewPager2.adapter = adapter
-        TabLayoutMediator(binding.tabLayout, binding.viewPager2) { tab, position ->
-            when (position) {
-                0 -> tab.text = "Tutors"
-                1 -> tab.text = "Courses"
-                2 -> tab.text = "e-Library"
+        viewModel.listObserver.observe(viewLifecycleOwner) {
+            it?.let {
+                when (it.case) {
+                    ListCase.ADDED_RANGE -> {
+                        adapter?.clear()
+                        viewModel.list.forEach { model->
+                            adapter?.addFragment(model.name)
+                        }
+                        binding.viewPager2.adapter = adapter
+                        TabLayoutMediator(binding.tabLayout, binding.viewPager2) { tab, position ->
+                            tab.text = viewModel.list[position].name
+                        }.attach()
+                    }
+                    else -> {}
+                }
             }
-        }.attach()
-
+        }
+        viewModel.fetch(requireActivity().application)
     }
 }

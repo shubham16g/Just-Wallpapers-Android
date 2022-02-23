@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.shubhamgupta16.wallpaperapp.adapters.ColorsHorizontalAdapter
-import com.shubhamgupta16.wallpaperapp.databinding.FragmentListingBinding
+import com.shubhamgupta16.wallpaperapp.databinding.FragmentForHorizontalListBinding
 import com.shubhamgupta16.wallpaperapp.network.ListCase
 import com.shubhamgupta16.wallpaperapp.viewmodels.ColorsViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -18,14 +18,14 @@ import dagger.hilt.android.AndroidEntryPoint
 class HorizontalColorsFragment : Fragment() {
 
     private val viewModel: ColorsViewModel by viewModels()
-    private lateinit var binding: FragmentListingBinding
+    private lateinit var binding: FragmentForHorizontalListBinding
     private var adapter: ColorsHorizontalAdapter? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentListingBinding.inflate(inflater, container, false)
+        binding = FragmentForHorizontalListBinding.inflate(inflater, container, false)
         return binding.root
     }
 

@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.main.fragments.HomeFragment">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:paddingBottom="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
     <com.shubhamgupta16.wallpaperapp.customviews.HeaderView
         android:id="@+id/newly_added_header"
@@ -55,5 +60,6 @@
         android:name="com.shubhamgupta16.wallpaperapp.ui.components.HorizontalWallpapersFragment"
         android:layout_width="match_parent"
         android:layout_height="200dp" />
+    </LinearLayout>
 
-</LinearLayout>
+</androidx.core.widget.NestedScrollView>

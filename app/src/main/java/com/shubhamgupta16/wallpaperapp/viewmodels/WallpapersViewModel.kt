@@ -38,7 +38,7 @@ class WallpapersViewModel
     fun fetch() {
         if (_page > _lastPage) return
         Log.d(TAG, "fetch: $_lastPage, $_page")
-        if (_page == 1) {
+        if (_page == 1 && _list.isNotEmpty()) {
             val size = _list.size
             _list.clear()
             _listObserver.value = ListObserver(ListCase.REMOVED_RANGE, 0, size)

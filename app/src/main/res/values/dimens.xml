@@ -3,8 +3,8 @@
     <integer name="card_span_count">3</integer>
 
     <dimen name="buttonCornerRadius">14dp</dimen>
-    <dimen name="half_gap">2dp</dimen>
-    <dimen name="card_corner_radius">8dp</dimen>
+    <dimen name="half_gap">3dp</dimen>
+    <dimen name="card_corner_radius">10dp</dimen>
 
     <dimen name="pager_top">74dp</dimen>
     <dimen name="pager_top_padding">0dp</dimen>
@@ -16,8 +16,8 @@
 
 <!--    horizontal fragments -->
     <dimen name="hor_half_gap">4dp</dimen>
-    <dimen name="hor_padding">20dp</dimen>
-    <dimen name="hor_padding_for_item">16dp</dimen>
+    <dimen name="hor_padding">16dp</dimen>
+    <dimen name="hor_padding_for_item">12dp</dimen>
 
     <dimen name="hor_category_item_height">16dp</dimen>
     <dimen name="hor_category_item_width">16dp</dimen>
