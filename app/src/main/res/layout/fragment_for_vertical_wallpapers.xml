@@ -4,11 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.recyclerview.widget.RecyclerView
+    <com.factor.bouncy.BouncyRecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:paddingStart="@dimen/half_gap"
+        android:nestedScrollingEnabled="false"
         android:paddingEnd="@dimen/half_gap"
         android:scrollbarStyle="outsideOverlay"
         android:clipToPadding="false"

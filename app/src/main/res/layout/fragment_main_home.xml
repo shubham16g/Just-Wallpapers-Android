@@ -29,8 +29,8 @@
     <com.shubhamgupta16.wallpaperapp.customviews.HeaderView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:moreButtonVisible="true"
-        app:title="Categories" />
+        app:moreButtonVisible="false"
+        app:title="Colours" />
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/colors_fragment"
         android:layout_width="match_parent"
@@ -39,7 +39,7 @@
     <com.shubhamgupta16.wallpaperapp.customviews.HeaderView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:moreButtonVisible="true"
+        app:moreButtonVisible="false"
         app:title="Categories" />
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/categories_fragment"

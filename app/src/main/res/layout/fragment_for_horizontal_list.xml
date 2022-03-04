@@ -8,6 +8,7 @@
         android:id="@+id/recycler_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:nestedScrollingEnabled="false"
         android:paddingStart="@dimen/hor_padding_for_item"
         android:paddingEnd="@dimen/hor_padding_for_item"
         android:scrollbarStyle="outsideOverlay"
