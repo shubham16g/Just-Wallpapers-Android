@@ -1,6 +1,8 @@
 package com.shubhamgupta16.wallpaperapp.adapters
 
+import android.content.Context
 import android.graphics.Color
+import android.graphics.drawable.GradientDrawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,17 +11,24 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.MultiTransformation
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.shubhamgupta16.wallpaperapp.R
 import com.shubhamgupta16.wallpaperapp.models.wallpapers.WallModel
 import com.shubhamgupta16.wallpaperapp.utils.RotationTransform
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation
+import kotlin.math.roundToInt
 
 class ImagesAdapter(
+    private val context: Context,
     private val list: List<WallModel?>,
     private val isHorizontal:Boolean = false,
     private val listener: (wallModel: WallModel, i: Int) -> Unit
 ) :
     RecyclerView.Adapter<ImagesAdapter.ItemViewHolder>() {
+
+    private val cardRadius = context.resources.getDimension(R.dimen.card_corner_radius)
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         holder.imageView?.requestLayout()
@@ -32,14 +41,22 @@ class ImagesAdapter(
             }
         } else {
 
-
-            holder.imageView?.setBackgroundColor(Color.parseColor(model.color))
-
             holder.imageView?.let {
+                val mlt = MultiTransformation(
+                    RotationTransform(model.rotation?.toFloat() ?: 0f),
+                    CenterCrop(),
+                    RoundedCornersTransformation(
+                        cardRadius.roundToInt(),
+                        0
+                    )
+                )
                 Glide.with(it.context).load(model.urls.small)
                     .thumbnail()
-                    .centerCrop()
-                    .transform(RotationTransform(model.rotation?.toFloat() ?: 0f))
+                    .placeholder(GradientDrawable().apply {
+                        setColor(Color.parseColor(model.color))
+                        cornerRadius = cardRadius
+                    })
+                    .transform(mlt)
                     .transition(DrawableTransitionOptions.withCrossFade())
                     .into(it)
             }
@@ -80,9 +97,5 @@ class ImagesAdapter(
         }
         val imageView: ImageView? =
             if (viewType == 1) itemView.findViewById(R.id.image_view) else null
-        /*
-        val cardView: CardView? =
-            if (viewType == 1) itemView.findViewById(R.id.image_card_container) else null
-        */
     }
 }

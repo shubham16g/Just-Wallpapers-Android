@@ -66,7 +66,7 @@ class HorizontalWallpapersFragment : Fragment() {
     private fun setupRecyclerView() {
         val manager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         binding.recyclerView.layoutManager = manager
-        adapter = ImagesAdapter(viewModel.list, true) { wallModel, i ->
+        adapter = ImagesAdapter(requireContext(), viewModel.list, true) { wallModel, i ->
             showFullWallpaperFragment(i)
         }
         binding.recyclerView.adapter = adapter

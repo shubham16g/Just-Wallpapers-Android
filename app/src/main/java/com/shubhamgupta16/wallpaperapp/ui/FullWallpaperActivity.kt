@@ -59,7 +59,9 @@ class FullWallpaperActivity : AppCompatActivity() {
         val navigationHeight = getNavigationBarHeight()
         binding.navigationOverlay.setPadding(0, 0, 0, navigationHeight)
         setupViewPager()
-        binding.viewPager2.currentItem = position
+        binding.viewPager2.setCurrentItem(position, true)
+        renderOtherComponents(position)
+
 
         viewModel.listObserver.observe(this) {
             it?.let {
@@ -105,11 +107,18 @@ class FullWallpaperActivity : AppCompatActivity() {
         binding.viewPager2.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
-                currentPosition = position
-                if (position == viewModel.list.lastIndex)
-                    viewModel.fetch()
-                val wallModel = viewModel.list[position]
-                updateAuthor(wallModel.author)
+                renderOtherComponents(position)
+            }
+        })
+
+
+    }
+    private fun renderOtherComponents(position: Int){
+        currentPosition = position
+        if (position == viewModel.list.lastIndex)
+            viewModel.fetch()
+        val wallModel = viewModel.list[position]
+        updateAuthor(wallModel.author)
 //                Glide.get(this@FullWallpaperActivity).clearMemory()
 //                val drawable = BitmapDrawable(resources, getBitmapFromView(binding.imageView))
 //                Glide.with(this@FullWallpaperActivity).clear(binding.imageView)
@@ -118,24 +127,22 @@ class FullWallpaperActivity : AppCompatActivity() {
 //                    binding.imageView.fadeImage(darkenColor(wallModel.color,200))
 //                }
 
-                /*h.post {
-                    val multiTransformation = MultiTransformation(
-                        RotationTransform((wallModel.rotation ?: 0f).toFloat()),
-                        FastBlurTransform(),
-                        BrightnessFilterTransformation(0.2f),
-                        ColorFilterTransformation(darkenColor(wallModel.color,156))
-                    )
+        /*h.post {
+            val multiTransformation = MultiTransformation(
+                RotationTransform((wallModel.rotation ?: 0f).toFloat()),
+                FastBlurTransform(),
+                BrightnessFilterTransformation(0.2f),
+                ColorFilterTransformation(darkenColor(wallModel.color,156))
+            )
 
-                    Glide.with(this@FullWallpaperActivity).load(wallModel.urls.small)
+            Glide.with(this@FullWallpaperActivity).load(wallModel.urls.small)
 //                        .thumbnail(0.2f)
 //                        .placeholder(BitmapDrawable(resources, getBitmapFromView(binding.imageView)))
-                        .transform(multiTransformation)
-                        .transition(DrawableTransitionOptions.withCrossFade())
-                        .into(binding.imageView)
+                .transform(multiTransformation)
+                .transition(DrawableTransitionOptions.withCrossFade())
+                .into(binding.imageView)
 
-                }*/
-            }
-        })
+        }*/
     }
 
     private fun setupViewPager() {

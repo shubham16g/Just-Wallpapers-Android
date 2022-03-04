@@ -74,7 +74,7 @@ class VerticalWallpapersFragment : Fragment() {
                     }
                     ListCase.ADDED_RANGE -> {
                         adapter?.notifyItemRangeInserted(it.from, it.itemCount)
-                        if (viewModel.list.isNotEmpty())
+                        if (viewModel.list.isNotEmpty() && it.from == 0)
                             binding.recyclerView.smoothScrollToPosition(0)
                         paginationController?.notifyDataFetched(true)
                     }
@@ -108,7 +108,7 @@ class VerticalWallpapersFragment : Fragment() {
             StaggeredGridLayoutManager.VERTICAL
         )
         binding.recyclerView.layoutManager = manager
-        adapter = ImagesAdapter(viewModel.list) { _, i ->
+        adapter = ImagesAdapter(requireContext(), viewModel.list) { _, i ->
             showFullWallpaperFragment(i)
         }
         binding.recyclerView.adapter = adapter

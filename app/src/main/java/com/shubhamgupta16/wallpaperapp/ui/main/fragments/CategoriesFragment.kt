@@ -53,11 +53,5 @@ class CategoriesFragment : Fragment() {
         viewModel.fetch(requireActivity().application)
 
         binding.viewPager2.isUserInputEnabled = false
-        binding.viewPager2.registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback(){
-            override fun onPageSelected(position: Int) {
-                super.onPageSelected(position)
-                adapter?.notifyVisible(position)
-            }
-        })
     }
 }

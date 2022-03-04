@@ -7,27 +7,19 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/image_card_container"
+    <ImageView
+        android:id="@+id/image_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginLeft="@dimen/half_gap"
         android:layout_marginRight="@dimen/half_gap"
         android:layout_marginTop="@dimen/half_gap"
         android:layout_marginBottom="@dimen/half_gap"
-        app:cardBackgroundColor="#e0e0e0"
-        app:cardElevation="0dp"
-        app:cardCornerRadius="@dimen/card_corner_radius"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="h,9:16"
         app:layout_constraintHorizontal_chainStyle="spread"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" >
-        <ImageView
-            android:id="@+id/image_view"
-            android:scaleType="centerCrop"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-    </androidx.cardview.widget.CardView>
+        app:riv_corner_radius="@dimen/card_corner_radius" />
 </androidx.constraintlayout.widget.ConstraintLayout>
