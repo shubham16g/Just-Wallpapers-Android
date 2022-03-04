@@ -44,10 +44,12 @@ class WallpapersViewModel
             _listObserver.value = ListObserver(ListCase.REMOVED_RANGE, 0, size)
         }
         viewModelScope.launch(Dispatchers.IO) {
+            Log.d(TAG, "fetch: IO")
             val response =
                 apiService.getWalls(page = _page, s = _query, category = _category, color = _color)
 
             if (response.isSuccessful) {
+                Log.d(TAG, "fetch: $category success")
                 response.body()?.let {
                     _lastPage = it.lastPage
                     val size = _list.size

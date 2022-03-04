@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
 import com.shubhamgupta16.wallpaperapp.adapters.ViewPager2Adapter
 import com.shubhamgupta16.wallpaperapp.databinding.FragmentMainCategoriesBinding
@@ -50,5 +51,13 @@ class CategoriesFragment : Fragment() {
             }
         }
         viewModel.fetch(requireActivity().application)
+
+        binding.viewPager2.isUserInputEnabled = false
+        binding.viewPager2.registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback(){
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                adapter?.notifyVisible(position)
+            }
+        })
     }
 }
