@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.shubhamgupta16.wallpaperapp.databinding.FragmentMainHomeBinding
-import com.shubhamgupta16.wallpaperapp.initData
 import com.shubhamgupta16.wallpaperapp.ui.ListingActivity
 import com.shubhamgupta16.wallpaperapp.ui.components.HorizontalCategoriesFragment
 import com.shubhamgupta16.wallpaperapp.ui.components.HorizontalColorsFragment
@@ -54,7 +53,5 @@ class HomeFragment : Fragment() {
         (childFragmentManager.findFragmentById(binding.latestWallpaperFragment.id) as HorizontalWallpapersFragment).fetch()
         (childFragmentManager.findFragmentById(binding.popularWallpaperFragment.id) as HorizontalWallpapersFragment).fetch()
 
-        Log.d("TAG", "InitData: ${requireActivity().application.initData}")
-//        todo ui work
     }
 }

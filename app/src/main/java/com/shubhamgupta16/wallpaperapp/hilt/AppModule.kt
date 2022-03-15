@@ -1,9 +1,12 @@
 package com.shubhamgupta16.wallpaperapp.hilt
 
+import android.content.Context
 import com.shubhamgupta16.wallpaperapp.network.ApiService
+import com.shubhamgupta16.wallpaperapp.room.AppDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 
 @Module
@@ -11,9 +14,13 @@ import dagger.hilt.components.SingletonComponent
 object AppModule {
 
     @Provides
-    fun providesApiService(): ApiService {
-        return ApiService.getInstance()
-    }
+    fun providesApiService() = ApiService.getInstance()
+
+    @Provides
+    fun getAppDatabase(@ApplicationContext context: Context) = AppDatabase.build(context)
+
+    @Provides
+    fun getInitDao(db: AppDatabase) = db.initDao()
 
 //    @Provides
 //    fun providesWoocommerce(): Woocommerce {

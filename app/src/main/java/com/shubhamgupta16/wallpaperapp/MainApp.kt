@@ -5,7 +5,7 @@ import com.shubhamgupta16.wallpaperapp.models.init.InitModel
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
-class MainApp : Application() {
+class MainApp : Application() /*{
 
     private var initModel:InitModel?=null
     val initData:InitModel get() = initModel ?: InitModel(ArrayList(), ArrayList())
@@ -21,7 +21,7 @@ val Application.initData: InitModel
     get() = (this as MainApp).initData
 
 val Application.main: MainApp
-    get() = this as MainApp
+    get() = this as MainApp*/
 
 /** TODOS
  *

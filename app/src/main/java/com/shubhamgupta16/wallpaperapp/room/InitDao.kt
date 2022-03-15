@@ -13,11 +13,10 @@ interface InitDao {
     fun searchProducts(path: String):LiveData<List<ProductModel>>*/
 
     @Query("SELECT * FROM categories")
-    fun getAllCategories(): LiveData<List<CategoryModel>>
-
+    suspend fun getAllCategories(): List<CategoryModel>
 
     @Query("SELECT * FROM colors")
-    fun getAllColors(): LiveData<List<ColorModel>>
+    suspend fun getAllColors(): List<ColorModel>
 
     @Query("DELETE FROM categories")
     suspend fun deleteAllCategories()
@@ -29,5 +28,5 @@ interface InitDao {
     suspend fun insertCategory(category: CategoryModel)
 
     @Insert
-    suspend fun colorModel(colorModel: ColorModel)
+    suspend fun insertColor(colorModel: ColorModel)
 }

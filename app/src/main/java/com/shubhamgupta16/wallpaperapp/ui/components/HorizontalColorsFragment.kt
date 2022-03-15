@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.shubhamgupta16.wallpaperapp.adapters.ColorsHorizontalAdapter
 import com.shubhamgupta16.wallpaperapp.databinding.FragmentForHorizontalListBinding
 import com.shubhamgupta16.wallpaperapp.network.ListCase
-import com.shubhamgupta16.wallpaperapp.ui.ListingActivity
 import com.shubhamgupta16.wallpaperapp.viewmodels.ColorsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -56,7 +55,7 @@ class HorizontalColorsFragment : Fragment() {
 
     private fun fetch() {
         if (viewModel.list.isEmpty())
-            viewModel.fetch(requireActivity().application)
+            viewModel.fetch()
     }
     var colorClickListener:((colorName:String, colorValue:Int)->Unit)?=null
 

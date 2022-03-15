@@ -12,10 +12,10 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun initDao(): InitDao
 
     companion object {
-        val Context.db: AppDatabase
-            get() = Room.databaseBuilder(
-                this,
-                AppDatabase::class.java, "database-name"
-            ).build()
+        fun build(context: Context)=
+             Room.databaseBuilder(
+        context,
+        AppDatabase::class.java, "database-name"
+        ).build()
     }
 }

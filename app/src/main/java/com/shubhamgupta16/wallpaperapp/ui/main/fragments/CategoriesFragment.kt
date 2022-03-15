@@ -1,7 +1,6 @@
 package com.shubhamgupta16.wallpaperapp.ui.main.fragments
 
 import android.os.Bundle
-import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -57,7 +56,7 @@ class CategoriesFragment : Fragment() {
                 }
             }
         }
-        viewModel.fetch(requireActivity().application)
+        viewModel.fetch()
 
         binding.viewPager2.isUserInputEnabled = false
     }

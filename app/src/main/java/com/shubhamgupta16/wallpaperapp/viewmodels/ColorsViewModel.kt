@@ -4,26 +4,34 @@ import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.shubhamgupta16.wallpaperapp.main
-import com.shubhamgupta16.wallpaperapp.models.init.CategoryModel
+import androidx.lifecycle.viewModelScope
 import com.shubhamgupta16.wallpaperapp.models.init.ColorModel
-import com.shubhamgupta16.wallpaperapp.network.ApiService
 import com.shubhamgupta16.wallpaperapp.network.ListCase
 import com.shubhamgupta16.wallpaperapp.network.ListObserver
+import com.shubhamgupta16.wallpaperapp.room.InitDao
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class ColorsViewModel: ViewModel() {
+@HiltViewModel
+class ColorsViewModel @Inject constructor(private val initDao: InitDao): ViewModel() {
     private val _listObserver = MutableLiveData<ListObserver>()
     val listObserver: LiveData<ListObserver> = _listObserver
 
     private val _list = ArrayList<ColorModel>()
     val list: List<ColorModel> = _list
 
-    fun fetch(application: Application) {
-        if (_list.isEmpty())
-            _list.addAll(application.main.initData.colors)
-        _listObserver.value = ListObserver(ListCase.ADDED_RANGE, from = 0, itemCount = _list.size)
+    fun fetch() {
+        if (_list.isNotEmpty()) return
+        viewModelScope.launch {
+            _list.addAll(initDao.getAllColors())
+            withContext(Dispatchers.Main) {
+                _listObserver.value =
+                    ListObserver(ListCase.ADDED_RANGE, from = 0, itemCount = _list.size)
+            }
+        }
     }
 
     companion object {
