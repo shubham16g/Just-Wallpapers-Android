@@ -9,6 +9,7 @@ import com.shubhamgupta16.wallpaperapp.models.wallpapers.WallModel
 import com.shubhamgupta16.wallpaperapp.network.ApiService
 import com.shubhamgupta16.wallpaperapp.network.ListCase
 import com.shubhamgupta16.wallpaperapp.network.ListObserver
+import com.shubhamgupta16.wallpaperapp.room.FavWallDao
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -16,7 +17,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class WallpapersViewModel
-@Inject constructor(private val apiService: ApiService) : ViewModel() {
+@Inject constructor(private val apiService: ApiService, private val favDao:FavWallDao) : ViewModel() {
     private val _listObserver = MutableLiveData<ListObserver>()
     val listObserver: LiveData<ListObserver> = _listObserver
 
@@ -55,7 +56,12 @@ class WallpapersViewModel
                     val size = _list.size
                     if (_list.isNotEmpty())
                         _list.removeAt(_list.lastIndex)
-                    _list.addAll(it.data)
+                    it.data.forEach { wallModel->
+//                        repository improvement needed
+                        if (favDao.isFav(wallModel.wallId) != null)
+                            wallModel.isFav = true
+                        _list.add(wallModel)
+                    }
                     if (_lastPage > _page)
                         _list.add(null)
                     _page++

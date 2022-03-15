@@ -1,9 +1,6 @@
 package com.shubhamgupta16.wallpaperapp.room
 
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
 import com.shubhamgupta16.wallpaperapp.models.init.CategoryModel
 import com.shubhamgupta16.wallpaperapp.models.init.ColorModel
 import com.shubhamgupta16.wallpaperapp.models.roommodels.FavWallModel
@@ -17,9 +14,12 @@ interface FavWallDao {
     @Query("DELETE FROM favorites")
     suspend fun deleteAllFavorites()
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertFav(favWallModel: FavWallModel)
 
-    @Delete
-    suspend fun deleteFav(favWallModel: FavWallModel)
+    @Query("SELECT * FROM favorites WHERE wallId = :wallId LIMIT 1")
+    suspend fun isFav(wallId: Int): FavWallModel?
+
+    @Query("DELETE FROM favorites WHERE wallId = :wallId")
+    suspend fun deleteFav(wallId: Int)
 }

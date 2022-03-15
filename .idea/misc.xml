@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/drawable/ic_baseline_favorite_border_24.xml" value="0.1575" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/activity_bottom_nav.xml" value="0.2" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/activity_full_wallpaper.xml" value="0.2" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/activity_listing.xml" value="0.33" />

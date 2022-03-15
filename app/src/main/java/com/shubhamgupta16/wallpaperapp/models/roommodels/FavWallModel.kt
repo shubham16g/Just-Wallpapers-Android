@@ -6,6 +6,5 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "favorites")
 class FavWallModel(
     @PrimaryKey(autoGenerate = true)
-    val id:Int = 0,
     val wallId: Int,
 )

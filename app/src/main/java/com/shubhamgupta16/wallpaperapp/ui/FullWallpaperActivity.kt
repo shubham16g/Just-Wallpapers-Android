@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.animation.PathInterpolatorCompat
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
+import com.shubhamgupta16.wallpaperapp.R
 import com.shubhamgupta16.wallpaperapp.adapters.SingleImageAdapter
 import com.shubhamgupta16.wallpaperapp.databinding.ActivityFullWallpaperBinding
 import com.shubhamgupta16.wallpaperapp.models.wallpapers.Author
@@ -69,7 +70,8 @@ class FullWallpaperActivity : AppCompatActivity() {
                     ListCase.LOADING -> {
                     }
                     ListCase.UPDATED -> {
-                        adapter?.notifyItemChanged(it.at)
+                        if (it.at == currentPosition)
+                            updateFavButton(viewModel.list[currentPosition].isFav)
                     }
                     ListCase.ADDED_RANGE -> {
                         adapter?.notifyItemRangeInserted(it.from, it.itemCount)
@@ -81,6 +83,10 @@ class FullWallpaperActivity : AppCompatActivity() {
                     }
                 }
             }
+        }
+
+        binding.favButton.setOnClickListener {
+            viewModel.toggleFav(currentPosition)
         }
 
         binding.setWallpaper.setOnClickListener {
@@ -119,6 +125,7 @@ class FullWallpaperActivity : AppCompatActivity() {
             viewModel.fetch()
         val wallModel = viewModel.list[position]
         updateAuthor(wallModel.author)
+        updateFavButton(wallModel.isFav)
 //                Glide.get(this@FullWallpaperActivity).clearMemory()
 //                val drawable = BitmapDrawable(resources, getBitmapFromView(binding.imageView))
 //                Glide.with(this@FullWallpaperActivity).clear(binding.imageView)
@@ -143,6 +150,13 @@ class FullWallpaperActivity : AppCompatActivity() {
                 .into(binding.imageView)
 
         }*/
+    }
+
+    private fun updateFavButton(fav: Boolean) {
+        binding.favButton.setImageResource(
+            if (fav) R.drawable.ic_baseline_favorite_24
+            else R.drawable.ic_baseline_favorite_border_24
+        )
     }
 
     private fun setupViewPager() {
