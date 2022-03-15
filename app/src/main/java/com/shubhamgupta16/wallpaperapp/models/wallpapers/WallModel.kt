@@ -35,4 +35,5 @@ data class WallModel(
     val createdAt: String,
     @SerializedName("updated_at")
     val updatedAt: String,
+    var isFav: Boolean = false
 ):Serializable

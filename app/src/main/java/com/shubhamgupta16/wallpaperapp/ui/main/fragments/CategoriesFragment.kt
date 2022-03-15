@@ -12,8 +12,9 @@ import com.shubhamgupta16.wallpaperapp.adapters.ViewPager2Adapter
 import com.shubhamgupta16.wallpaperapp.databinding.FragmentMainCategoriesBinding
 import com.shubhamgupta16.wallpaperapp.network.ListCase
 import com.shubhamgupta16.wallpaperapp.viewmodels.CategoriesViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class CategoriesFragment : Fragment() {
 
     private lateinit var binding: FragmentMainCategoriesBinding

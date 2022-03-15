@@ -22,6 +22,9 @@ object AppModule {
     @Provides
     fun getInitDao(db: AppDatabase) = db.initDao()
 
+    @Provides
+    fun getFavDao(db: AppDatabase) = db.favDao()
+
 //    @Provides
 //    fun providesWoocommerce(): Woocommerce {
 //        return Woocommerce.Builder()
