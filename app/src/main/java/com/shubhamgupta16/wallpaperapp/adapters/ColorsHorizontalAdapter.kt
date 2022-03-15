@@ -13,13 +13,14 @@ import com.shubhamgupta16.wallpaperapp.models.init.ColorModel
 
 class ColorsHorizontalAdapter(
     private val list: List<ColorModel>,
-    private val listener: (colorName: String, i: Int) -> Unit
+    private val listener: (colorName: String, colorValue: Int) -> Unit
 ) :
     RecyclerView.Adapter<ColorsHorizontalAdapter.ItemViewHolder>() {
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         val model = list[position]
-        holder.cardView.setCardBackgroundColor(Color.parseColor(model.value))
+        val colorValue = Color.parseColor(model.value)
+        holder.cardView.setCardBackgroundColor(colorValue)
 
 /*
         Glide.with(it.context).load(model.urls.small)
@@ -32,7 +33,7 @@ class ColorsHorizontalAdapter(
 
 
         holder.itemView.setOnClickListener {
-            listener(model.name, position)
+            listener(model.name, colorValue)
         }
     }
 

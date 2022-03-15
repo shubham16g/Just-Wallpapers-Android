@@ -26,18 +26,33 @@ class HomeFragment : Fragment() {
         return binding.root
     }
 
+    var categoryClickListener:((categoryName:String)->Unit)?=null
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         binding.newlyAddedHeader.setOnMoreClickListener {
-            ListingActivity.open(requireContext())
+            ListingActivity.open(requireContext(), "Newly Added")
         }
 
-        childFragmentManager.beginTransaction().replace(binding.colorsFragment.id, HorizontalColorsFragment()).commit()
+        childFragmentManager.beginTransaction()
+            .replace(binding.colorsFragment.id, HorizontalColorsFragment().apply {
+                colorClickListener = { colorName, colorValue ->
+                    ListingActivity.open(
+                        requireContext(),
+                        colorName, color = colorName, colorValue = colorValue
+                    )
+                }
+            }).commit()
+        (childFragmentManager.findFragmentById(binding.categoriesFragment.id) as HorizontalCategoriesFragment).apply {
+            categoryClickListener = { categoryName ->
+                this@HomeFragment.categoryClickListener?.let { it(categoryName) }
+            }
+            fetch()
+        }
 
         (childFragmentManager.findFragmentById(binding.latestWallpaperFragment.id) as HorizontalWallpapersFragment).fetch()
         (childFragmentManager.findFragmentById(binding.popularWallpaperFragment.id) as HorizontalWallpapersFragment).fetch()
-        (childFragmentManager.findFragmentById(binding.categoriesFragment.id) as HorizontalCategoriesFragment).fetch()
 
         Log.d("TAG", "InitData: ${requireActivity().application.initData}")
 //        todo ui work

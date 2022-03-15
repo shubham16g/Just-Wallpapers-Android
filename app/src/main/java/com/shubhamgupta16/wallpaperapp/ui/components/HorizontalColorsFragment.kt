@@ -4,13 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.shubhamgupta16.wallpaperapp.adapters.ColorsHorizontalAdapter
 import com.shubhamgupta16.wallpaperapp.databinding.FragmentForHorizontalListBinding
 import com.shubhamgupta16.wallpaperapp.network.ListCase
+import com.shubhamgupta16.wallpaperapp.ui.ListingActivity
 import com.shubhamgupta16.wallpaperapp.viewmodels.ColorsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -58,13 +58,15 @@ class HorizontalColorsFragment : Fragment() {
         if (viewModel.list.isEmpty())
             viewModel.fetch(requireActivity().application)
     }
+    var colorClickListener:((colorName:String, colorValue:Int)->Unit)?=null
 
     private fun setupRecyclerView() {
         val manager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         binding.recyclerView.layoutManager = manager
-        adapter = ColorsHorizontalAdapter(viewModel.list) { categoryName, i ->
-//            showFullWallpaperFragment(i)
-            Toast.makeText(requireContext(), categoryName, Toast.LENGTH_SHORT).show()
+        binding.recyclerView.itemAnimator = null
+
+        adapter = ColorsHorizontalAdapter(viewModel.list) { colorName, colorValue ->
+            colorClickListener?.let { it(colorName, colorValue) }
         }
         binding.recyclerView.adapter = adapter
     }

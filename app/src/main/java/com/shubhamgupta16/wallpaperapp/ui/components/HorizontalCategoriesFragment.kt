@@ -57,13 +57,14 @@ class HorizontalCategoriesFragment : Fragment() {
         if (viewModel.list.isEmpty())
             viewModel.fetch(requireActivity().application)
     }
+    var categoryClickListener:((categoryName:String)->Unit)?=null
 
     private fun setupRecyclerView() {
         val manager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         binding.recyclerView.layoutManager = manager
-        adapter = CategoriesAdapter(viewModel.list, true) { categoryName, i ->
-//            showFullWallpaperFragment(i)
-            Toast.makeText(requireContext(), categoryName, Toast.LENGTH_SHORT).show()
+        binding.recyclerView.itemAnimator = null
+        adapter = CategoriesAdapter(viewModel.list, true) { categoryName ->
+            categoryClickListener?.let { it(categoryName) }
         }
         binding.recyclerView.adapter = adapter
     }

@@ -15,7 +15,7 @@ import com.shubhamgupta16.wallpaperapp.utils.RotationTransform
 class CategoriesAdapter(
     private val list: List<CategoryModel>,
     private val isHorizontal: Boolean = false,
-    private val listener: (categoryName: String, i: Int) -> Unit
+    private val listener: (categoryName: String) -> Unit
 ) :
     RecyclerView.Adapter<CategoriesAdapter.ItemViewHolder>() {
 
@@ -36,7 +36,7 @@ class CategoriesAdapter(
 
 
         holder.itemView.setOnClickListener {
-            listener(model.name, position)
+            listener(model.name)
         }
     }
 
