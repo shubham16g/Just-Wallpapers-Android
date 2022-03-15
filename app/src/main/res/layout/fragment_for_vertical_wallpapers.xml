@@ -13,6 +13,8 @@
         android:paddingEnd="@dimen/half_gap"
         android:scrollbarStyle="outsideOverlay"
         android:clipToPadding="false"
+        android:layout_marginBottom="-50dp"
+        android:paddingBottom="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

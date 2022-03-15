@@ -108,6 +108,7 @@ class VerticalWallpapersFragment : Fragment() {
             StaggeredGridLayoutManager.VERTICAL
         )
         binding.recyclerView.layoutManager = manager
+        binding.recyclerView.itemAnimator = null
         adapter = ImagesAdapter(requireContext(), viewModel.list) { _, i ->
             showFullWallpaperFragment(i)
         }
