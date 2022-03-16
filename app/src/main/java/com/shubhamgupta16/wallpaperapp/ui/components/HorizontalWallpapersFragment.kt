@@ -55,9 +55,7 @@ class HorizontalWallpapersFragment : Fragment() {
     }
 
     fun fetch(query: String? = null, category: String? = null, color: String? = null) {
-        viewModel.setQuery(query)
-        viewModel.setCategory(category)
-        viewModel.setColor(color)
+        viewModel.init(query, category,color)
         if (viewModel.list.isEmpty())
             viewModel.fetch()
     }

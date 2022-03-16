@@ -33,16 +33,23 @@ class WallRepository @Inject constructor(private val apiService: ApiService, pri
     suspend fun getFavoriteWallpapers(
         page: Int = 1,
         perPage: Int? = null
-    ) {
-        /*val response = apiService.getWallsWithIds(RequestIdModel(), page, perPage)
+    ): Response<WallpaperPageModel> {
+        val response = apiService.getWallsWithIds(
+            RequestIdModel(favDao.getAllFavorites().map { it.wallId }),
+            page,
+            perPage
+        )
         if (response.isSuccessful && response.body() != null) {
+            favDao.deleteAllFavorites()
             response.body()?.let {
                 for ((i, wall) in it.data.withIndex()) {
-                    if (favDao.isFav(wall.wallId) != null)
-                        it.data[i].isFav = true
+                    favDao.insertFav(FavWallModel(wall.wallId))
+                    it.data[i].isFav = true
+
                 }
             }
-        }*/
+        }
+        return response
     }
 
     suspend fun removeFav(wallId: Int) {

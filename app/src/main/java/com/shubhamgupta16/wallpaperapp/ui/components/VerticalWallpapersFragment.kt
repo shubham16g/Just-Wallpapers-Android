@@ -31,9 +31,10 @@ class VerticalWallpapersFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            viewModel.setQuery(it.getString(QUERY))
-            viewModel.setCategory(it.getString(CATEGORY))
-            viewModel.setColor(it.getString(COLOR))
+            if (it.containsKey(FAVORITE))
+                viewModel.initForFavList()
+            else
+                viewModel.init(it.getString(QUERY), it.getString(CATEGORY), it.getString(COLOR))
         }
     }
 
@@ -137,13 +138,26 @@ class VerticalWallpapersFragment : Fragment() {
         private const val QUERY = "query"
         private const val CATEGORY = "category"
         private const val COLOR = "color"
+        private const val FAVORITE = "fav"
         private const val ORDER_BY = "order_by"
-        fun getInstance(query: String? = null, category: String? = null, color: String? = null): VerticalWallpapersFragment {
+        fun getInstance(
+            query: String? = null,
+            category: String? = null,
+            color: String? = null
+        ): VerticalWallpapersFragment {
             return VerticalWallpapersFragment().apply {
                 arguments = Bundle().apply {
                     putString(QUERY, query)
                     putString(CATEGORY, category)
                     putString(COLOR, color)
+                }
+            }
+        }
+
+        fun getInstanceForFavorite(): VerticalWallpapersFragment {
+            return VerticalWallpapersFragment().apply {
+                arguments = Bundle().apply {
+                    putBoolean(FAVORITE, true)
                 }
             }
         }

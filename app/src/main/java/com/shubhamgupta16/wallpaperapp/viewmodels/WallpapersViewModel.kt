@@ -30,6 +30,7 @@ class WallpapersViewModel
     private var _query: String? = null
     private var _category: String? = null
     private var _color: String? = null
+    private var isFavList:Boolean = false
 
     val page get() = _page
     val lastPage get() = _lastPage
@@ -47,7 +48,9 @@ class WallpapersViewModel
         }
         viewModelScope.launch(Dispatchers.IO) {
             Log.d(TAG, "fetch: IO")
-            val response =
+            val response = if (isFavList)
+                wallRepository.getFavoriteWallpapers(page = _page)
+            else
                 wallRepository.getWalls(page = _page, s = _query, category = _category, color = _color)
 
             if (response.isSuccessful) {
@@ -70,19 +73,19 @@ class WallpapersViewModel
         }
     }
 
-    fun setQuery(query: String?) {
+    fun init(query: String?=null, category: String?=null, color:String?=null){
         _page = 1
         this._query = query
-    }
-
-    fun setCategory(category: String?) {
-        _page = 1
         this._category = category
-    }
-
-    fun setColor(color: String?) {
-        _page = 1
         this._color = color
+        this.isFavList = false
+    }
+    fun initForFavList(){
+        _page = 1
+        this._query = null
+        this._category = null
+        this._color = null
+        this.isFavList = true
     }
 
     companion object {

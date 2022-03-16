@@ -22,9 +22,6 @@ class SplashActivity : AppCompatActivity() {
     @Inject
     lateinit var initRepository: InitRepository
 
-    @Inject
-    lateinit var categoryDao: CategoryDao
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.shubhamgupta16.wallpaperapp.R
 import com.shubhamgupta16.wallpaperapp.databinding.ActivityMainBinding
+import com.shubhamgupta16.wallpaperapp.ui.components.VerticalWallpapersFragment
 import com.shubhamgupta16.wallpaperapp.ui.main.fragments.CategoriesFragment
 import com.shubhamgupta16.wallpaperapp.ui.main.fragments.HomeFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -32,10 +33,13 @@ class MainActivity : AppCompatActivity() {
             when (it.itemId) {
                 R.id.action_home -> swapFragment(it.itemId, getHomeFragment())
                 R.id.action_category -> swapFragment(it.itemId, getCategoryFragment(categoryName))
+                R.id.action_fav -> swapFragment(it.itemId, getFavoriteFragment())
                 else -> false
             }
         }
     }
+
+    private fun getFavoriteFragment() = VerticalWallpapersFragment.getInstanceForFavorite()
 
 
     private fun getHomeFragment() = HomeFragment().apply {
