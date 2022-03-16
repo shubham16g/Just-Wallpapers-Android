@@ -9,6 +9,7 @@ import com.shubhamgupta16.wallpaperapp.models.wallpapers.WallModel
 import com.shubhamgupta16.wallpaperapp.network.ApiService
 import com.shubhamgupta16.wallpaperapp.network.ListCase
 import com.shubhamgupta16.wallpaperapp.network.ListObserver
+import com.shubhamgupta16.wallpaperapp.repositories.WallRepository
 import com.shubhamgupta16.wallpaperapp.room.FavWallDao
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -17,7 +18,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class WallpapersViewModel
-@Inject constructor(private val apiService: ApiService, private val favDao:FavWallDao) : ViewModel() {
+@Inject constructor(private val wallRepository: WallRepository) : ViewModel() {
     private val _listObserver = MutableLiveData<ListObserver>()
     val listObserver: LiveData<ListObserver> = _listObserver
 
@@ -47,7 +48,7 @@ class WallpapersViewModel
         viewModelScope.launch(Dispatchers.IO) {
             Log.d(TAG, "fetch: IO")
             val response =
-                apiService.getWalls(page = _page, s = _query, category = _category, color = _color)
+                wallRepository.getWalls(page = _page, s = _query, category = _category, color = _color)
 
             if (response.isSuccessful) {
                 Log.d(TAG, "fetch: $category success")
@@ -56,12 +57,7 @@ class WallpapersViewModel
                     val size = _list.size
                     if (_list.isNotEmpty())
                         _list.removeAt(_list.lastIndex)
-                    it.data.forEach { wallModel->
-//                        repository improvement needed
-                        if (favDao.isFav(wallModel.wallId) != null)
-                            wallModel.isFav = true
-                        _list.add(wallModel)
-                    }
+                    _list.addAll(it.data)
                     if (_lastPage > _page)
                         _list.add(null)
                     _page++

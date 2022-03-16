@@ -9,6 +9,7 @@ import com.shubhamgupta16.wallpaperapp.models.wallpapers.WallModel
 import com.shubhamgupta16.wallpaperapp.network.ApiService
 import com.shubhamgupta16.wallpaperapp.network.ListCase
 import com.shubhamgupta16.wallpaperapp.network.ListObserver
+import com.shubhamgupta16.wallpaperapp.repositories.WallRepository
 import com.shubhamgupta16.wallpaperapp.room.FavWallDao
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -17,7 +18,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PagerViewModel
-@Inject constructor(private val apiService: ApiService, private val favDao: FavWallDao) :
+@Inject constructor(private val wallRepository: WallRepository) :
     ViewModel() {
     private val _listObserver = MutableLiveData<ListObserver>()
     val listObserver: LiveData<ListObserver> = _listObserver
@@ -54,17 +55,12 @@ class PagerViewModel
         _listObserver.value = ListObserver(ListCase.LOADING)
         viewModelScope.launch(Dispatchers.IO) {
             val response =
-                apiService.getWalls(page = page, s = query, category = category, color = color)
+                wallRepository.getWalls(page = page, s = query, category = category, color = color)
             if (response.isSuccessful) {
                 response.body()?.let {
                     lastPage = it.lastPage
                     val size = _list.size
-                    it.data.forEach { wallModel->
-//                        repository improvement needed
-                        if (favDao.isFav(wallModel.wallId) != null)
-                            wallModel.isFav = true
-                        _list.add(wallModel)
-                    }
+                    _list.addAll(it.data)
                     page++
                     _listObserver.postValue(
                         ListObserver(ListCase.ADDED_RANGE, from = size, itemCount = _list.size)
@@ -81,11 +77,11 @@ class PagerViewModel
         viewModelScope.launch {
             val model = _list[position]
             if (model.isFav) {
-                favDao.deleteFav(model.wallId)
+                wallRepository.removeFav(model.wallId)
                 _list[position].isFav = false
             }
             else {
-                favDao.insertFav(FavWallModel(wallId = model.wallId))
+                wallRepository.applyFav(model.wallId)
                 _list[position].isFav = true
             }
             _listObserver.postValue(ListObserver(ListCase.UPDATED, at = position))
