@@ -7,8 +7,9 @@ import com.shubhamgupta16.wallpaperapp.network.ApiService
 import com.shubhamgupta16.wallpaperapp.room.CategoryDao
 import com.shubhamgupta16.wallpaperapp.room.ColorDao
 import retrofit2.Response
+import javax.inject.Inject
 
-class InitRepository constructor(
+class InitRepository @Inject constructor(
     private val apiService: ApiService,
     private val categoryDao: CategoryDao,
     private val colorDao: ColorDao

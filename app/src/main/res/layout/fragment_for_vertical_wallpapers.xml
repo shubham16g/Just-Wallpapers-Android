@@ -11,7 +11,7 @@
         android:paddingStart="@dimen/half_gap"
         android:nestedScrollingEnabled="false"
         android:paddingEnd="@dimen/half_gap"
-        android:scrollbarStyle="outsideOverlay"
+        android:scrollbarStyle="insideOverlay"
         android:clipToPadding="false"
         android:layout_marginBottom="-50dp"
         android:paddingBottom="50dp"

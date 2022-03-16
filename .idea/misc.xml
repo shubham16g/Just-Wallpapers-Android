@@ -5,7 +5,7 @@
       <map>
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/drawable/ic_baseline_favorite_border_24.xml" value="0.1575" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/activity_bottom_nav.xml" value="0.2" />
-        <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/activity_full_wallpaper.xml" value="0.2" />
+        <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/activity_full_wallpaper.xml" value="0.17" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/activity_listing.xml" value="0.33" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/activity_main.xml" value="0.2" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/activity_splash.xml" value="0.2" />
@@ -36,5 +36,12 @@
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
+  </component>
+  <component name="VisualizationToolProject">
+    <option name="state">
+      <ProjectState>
+        <option name="scale" value="0.22" />
+      </ProjectState>
+    </option>
   </component>
 </project>

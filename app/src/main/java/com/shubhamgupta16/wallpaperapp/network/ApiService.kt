@@ -3,12 +3,15 @@ package com.shubhamgupta16.wallpaperapp.network
 import com.shubhamgupta16.wallpaperapp.BuildConfig
 import com.shubhamgupta16.wallpaperapp.models.init.InitModel
 import com.shubhamgupta16.wallpaperapp.models.wallpapers.WallpaperPageModel
+import com.shubhamgupta16.wallpaperapp.network.request.RequestIdModel
 import okhttp3.OkHttpClient
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
+import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.Query
 
 interface ApiService {
@@ -42,6 +45,13 @@ interface ApiService {
         @Query("order_by") orderBy: String? = null,
         @Query("category") category: String? = null,
         @Query("color") color: String? = null,
+    ): Response<WallpaperPageModel>
+
+    @POST("wall/list")
+    suspend fun getWallsWithIds(
+        @Body list: RequestIdModel,
+        @Query("page") page: Int = 1,
+        @Query("per_page") perPage: Int? = null,
     ): Response<WallpaperPageModel>
 
     @GET("init")
