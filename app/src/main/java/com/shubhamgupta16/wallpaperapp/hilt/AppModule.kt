@@ -20,7 +20,10 @@ object AppModule {
     fun getAppDatabase(@ApplicationContext context: Context) = AppDatabase.build(context)
 
     @Provides
-    fun getInitDao(db: AppDatabase) = db.initDao()
+    fun getCategoryDao(db: AppDatabase) = db.categoryDao()
+
+    @Provides
+    fun getColorDao(db: AppDatabase) = db.colorDao()
 
     @Provides
     fun getFavDao(db: AppDatabase) = db.favDao()

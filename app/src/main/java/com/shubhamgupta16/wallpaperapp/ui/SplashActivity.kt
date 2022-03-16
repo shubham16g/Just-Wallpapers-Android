@@ -5,8 +5,8 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.shubhamgupta16.wallpaperapp.R
-import com.shubhamgupta16.wallpaperapp.network.ApiService
-import com.shubhamgupta16.wallpaperapp.room.InitDao
+import com.shubhamgupta16.wallpaperapp.repositories.InitRepository
+import com.shubhamgupta16.wallpaperapp.room.CategoryDao
 import com.shubhamgupta16.wallpaperapp.ui.main.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
@@ -20,37 +20,29 @@ import javax.inject.Inject
 class SplashActivity : AppCompatActivity() {
 
     @Inject
-    lateinit var apiService: ApiService
+    lateinit var initRepository: InitRepository
+
     @Inject
-    lateinit var initDao: InitDao
+    lateinit var categoryDao: CategoryDao
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
-//        if (!application.main.isInitialized){
-            CoroutineScope(Dispatchers.IO).launch {
-                val response = apiService.getInitData()
-                withContext(Dispatchers.Main){
-                    if (response.isSuccessful && response.body() != null) {
-                        initDao.deleteAllCategories()
-                        initDao.deleteAllColors()
-                        response.body()?.categories?.forEach {
-                            initDao.insertCategory(it)
-                        }
-                        response.body()?.colors?.forEach {
-                            initDao.insertColor(it)
-                        }
-                        /*application.main.initialize(response.body()!!)*/
-                        openMainActivity()
-                    } else {
-//                        todo network error
-                    }
+        CoroutineScope(Dispatchers.IO).launch {
+            val response = initRepository.fetchInit()
+            withContext(Dispatchers.Main) {
+                if (response.isSuccessful && response.body() != null) {
+                    openMainActivity()
+                } else {
+//                    todo network error
                 }
             }
+        }
 
     }
-    private fun openMainActivity(){
+
+    private fun openMainActivity() {
         startActivity(Intent(this, MainActivity::class.java))
         finish()
     }

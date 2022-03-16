@@ -8,16 +8,17 @@ import com.shubhamgupta16.wallpaperapp.models.init.CategoryModel
 import com.shubhamgupta16.wallpaperapp.models.init.ColorModel
 import com.shubhamgupta16.wallpaperapp.models.roommodels.FavWallModel
 
-@Database(entities = [CategoryModel::class, ColorModel::class, FavWallModel::class], version = 3)
+@Database(entities = [CategoryModel::class, ColorModel::class, FavWallModel::class], version = 4)
 abstract class AppDatabase : RoomDatabase() {
-    abstract fun initDao(): InitDao
+    abstract fun categoryDao(): CategoryDao
+    abstract fun colorDao(): ColorDao
     abstract fun favDao(): FavWallDao
 
     companion object {
         fun build(context: Context)=
              Room.databaseBuilder(
         context,
-        AppDatabase::class.java, "database-name2"
+        AppDatabase::class.java, "database-name3"
         ).build()
     }
 }
