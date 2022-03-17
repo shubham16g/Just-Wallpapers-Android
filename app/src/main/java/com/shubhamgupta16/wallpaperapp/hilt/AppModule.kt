@@ -14,7 +14,7 @@ import dagger.hilt.components.SingletonComponent
 object AppModule {
 
     @Provides
-    fun providesApiService() = ApiService.getInstance()
+    fun providesApiService(@ApplicationContext context: Context) = ApiService.getInstance(context)
 
     @Provides
     fun getAppDatabase(@ApplicationContext context: Context) = AppDatabase.build(context)
