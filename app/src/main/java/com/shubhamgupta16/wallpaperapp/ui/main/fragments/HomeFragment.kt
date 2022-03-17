@@ -1,7 +1,6 @@
 package com.shubhamgupta16.wallpaperapp.ui.main.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +11,7 @@ import com.shubhamgupta16.wallpaperapp.ui.components.HorizontalCategoriesFragmen
 import com.shubhamgupta16.wallpaperapp.ui.components.HorizontalColorsFragment
 import com.shubhamgupta16.wallpaperapp.ui.components.HorizontalWallpapersFragment
 import dagger.hilt.android.AndroidEntryPoint
+
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {

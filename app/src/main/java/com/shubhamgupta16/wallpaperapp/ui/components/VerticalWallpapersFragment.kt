@@ -15,6 +15,7 @@ import com.shubhamgupta16.wallpaperapp.databinding.FragmentForVerticalWallpapers
 import com.shubhamgupta16.wallpaperapp.models.wallpapers.WallModelListHolder
 import com.shubhamgupta16.wallpaperapp.network.ListCase
 import com.shubhamgupta16.wallpaperapp.ui.FullWallpaperActivity
+import com.shubhamgupta16.wallpaperapp.utils.BounceEdgeEffectFactory
 import com.shubhamgupta16.wallpaperapp.utils.PaginationController
 import com.shubhamgupta16.wallpaperapp.viewmodels.WallpapersViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -114,6 +115,7 @@ class VerticalWallpapersFragment : Fragment() {
             showFullWallpaperFragment(i)
         }
         binding.recyclerView.adapter = adapter
+        binding.recyclerView.edgeEffectFactory = BounceEdgeEffectFactory()
         paginationController = PaginationController(binding.recyclerView, manager) {
             viewModel.fetch()
         }

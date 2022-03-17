@@ -24,7 +24,7 @@ class ColorsViewModel @Inject constructor(private val initRepository: InitReposi
 
     fun fetch() {
         if (_list.isNotEmpty()) return
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             _list.addAll(initRepository.getAllColors())
             withContext(Dispatchers.Main) {
                 _listObserver.value =

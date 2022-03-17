@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -12,6 +13,7 @@ import com.shubhamgupta16.wallpaperapp.databinding.FragmentForHorizontalListBind
 import com.shubhamgupta16.wallpaperapp.models.wallpapers.WallModelListHolder
 import com.shubhamgupta16.wallpaperapp.network.ListCase
 import com.shubhamgupta16.wallpaperapp.ui.FullWallpaperActivity
+import com.shubhamgupta16.wallpaperapp.utils.BounceEdgeEffectFactory
 import com.shubhamgupta16.wallpaperapp.viewmodels.WallpapersViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -64,6 +66,7 @@ class HorizontalWallpapersFragment : Fragment() {
         val manager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         binding.recyclerView.layoutManager = manager
         binding.recyclerView.itemAnimator = null
+        binding.recyclerView.edgeEffectFactory = BounceEdgeEffectFactory(true)
         adapter = ImagesAdapter(requireContext(), viewModel.list, true) { wallModel, i ->
             showFullWallpaperFragment(i)
         }

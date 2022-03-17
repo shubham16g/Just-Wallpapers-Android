@@ -25,7 +25,7 @@ class CategoriesViewModel @Inject constructor(private val initRepository: InitRe
 
     fun fetch() {
         if (_list.isNotEmpty()) return
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             _list.addAll(initRepository.getAllCategories())
             withContext(Dispatchers.Main) {
                 _listObserver.value =

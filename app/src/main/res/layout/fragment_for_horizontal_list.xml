@@ -5,14 +5,13 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <com.factor.bouncy.BouncyRecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:nestedScrollingEnabled="false"
         android:paddingStart="@dimen/hor_padding_for_item"
         android:paddingEnd="@dimen/hor_padding_for_item"
-        android:scrollbarStyle="outsideOverlay"
         android:clipToPadding="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

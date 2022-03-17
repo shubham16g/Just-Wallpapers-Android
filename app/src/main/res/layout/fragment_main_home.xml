@@ -1,65 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.factor.bouncy.BouncyNestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.main.fragments.HomeFragment">
 
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingBottom="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:paddingBottom="20dp">
 
-    <com.shubhamgupta16.wallpaperapp.customviews.HeaderView
-        android:id="@+id/newly_added_header"
-        android:layout_width="match_parent"
-        app:title="Newly Added"
-        app:moreButtonVisible="true"
-        android:layout_height="wrap_content"/>
+        <androidx.cardview.widget.CardView
+            android:layout_margin="15dp"
+            android:layout_width="match_parent"
+            app:cardCornerRadius="20dp"
+            android:layout_height="200dp"
+            android:background="@color/cardBackground"/>
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/latest_wallpaper_fragment"
-        android:tag="latest"
-        android:name="com.shubhamgupta16.wallpaperapp.ui.components.HorizontalWallpapersFragment"
-        android:layout_width="match_parent"
-        android:layout_height="200dp" />
+        <com.shubhamgupta16.wallpaperapp.customviews.HeaderView
+            android:id="@+id/newly_added_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:moreButtonVisible="true"
+            app:title="Newly Added" />
 
-    <com.shubhamgupta16.wallpaperapp.customviews.HeaderView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:moreButtonVisible="false"
-        app:title="Colours" />
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/colors_fragment"
-        android:layout_width="match_parent"
-        android:layout_height="50dp" />
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/latest_wallpaper_fragment"
+            android:name="com.shubhamgupta16.wallpaperapp.ui.components.HorizontalWallpapersFragment"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:tag="latest" />
 
-    <com.shubhamgupta16.wallpaperapp.customviews.HeaderView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:moreButtonVisible="false"
-        app:title="Categories" />
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/categories_fragment"
-        android:tag="categories_in_home"
-        android:name="com.shubhamgupta16.wallpaperapp.ui.components.HorizontalCategoriesFragment"
-        android:layout_width="match_parent"
-        android:layout_height="90dp" />
+        <com.shubhamgupta16.wallpaperapp.customviews.HeaderView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:moreButtonVisible="false"
+            app:title="Colours" />
 
-    <com.shubhamgupta16.wallpaperapp.customviews.HeaderView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:moreButtonVisible="true"
-        app:title="Popular" />
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/colors_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="50dp" />
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/popular_wallpaper_fragment"
-        android:tag="popular"
-        android:name="com.shubhamgupta16.wallpaperapp.ui.components.HorizontalWallpapersFragment"
-        android:layout_width="match_parent"
-        android:layout_height="200dp" />
+        <com.shubhamgupta16.wallpaperapp.customviews.HeaderView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:moreButtonVisible="false"
+            app:title="Categories" />
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/categories_fragment"
+            android:name="com.shubhamgupta16.wallpaperapp.ui.components.HorizontalCategoriesFragment"
+            android:layout_width="match_parent"
+            android:layout_height="90dp"
+            android:tag="categories_in_home" />
+
+        <com.shubhamgupta16.wallpaperapp.customviews.HeaderView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:moreButtonVisible="true"
+            app:title="Popular" />
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/popular_wallpaper_fragment"
+            android:name="com.shubhamgupta16.wallpaperapp.ui.components.HorizontalWallpapersFragment"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:tag="popular" />
     </LinearLayout>
 
 </com.factor.bouncy.BouncyNestedScrollView>

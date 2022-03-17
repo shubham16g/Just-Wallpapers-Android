@@ -3,6 +3,9 @@ pluginManagement {
         gradlePluginPortal()
         google()
         mavenCentral()
+        flatDir {
+            dirs 'libs'
+        }
     }
 }
 dependencyResolutionManagement {
@@ -11,6 +14,9 @@ dependencyResolutionManagement {
         google()
         mavenCentral()
         maven { url 'https://jitpack.io' }
+        flatDir {
+            dirs 'libs'
+        }
     }
 }
 rootProject.name = "Wallpaper UI"
