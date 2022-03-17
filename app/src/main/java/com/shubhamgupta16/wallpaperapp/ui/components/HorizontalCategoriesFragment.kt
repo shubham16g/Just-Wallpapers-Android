@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.shubhamgupta16.wallpaperapp.adapters.CategoriesAdapter
 import com.shubhamgupta16.wallpaperapp.databinding.FragmentForHorizontalListBinding
 import com.shubhamgupta16.wallpaperapp.network.ListCase
+import com.shubhamgupta16.wallpaperapp.utils.BounceEdgeEffectFactory
 import com.shubhamgupta16.wallpaperapp.viewmodels.CategoriesViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -62,6 +63,7 @@ class HorizontalCategoriesFragment : Fragment() {
         val manager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         binding.recyclerView.layoutManager = manager
         binding.recyclerView.itemAnimator = null
+        binding.recyclerView.edgeEffectFactory = BounceEdgeEffectFactory(true)
         adapter = CategoriesAdapter(viewModel.list, true) { categoryName ->
             categoryClickListener?.let { it(categoryName) }
         }

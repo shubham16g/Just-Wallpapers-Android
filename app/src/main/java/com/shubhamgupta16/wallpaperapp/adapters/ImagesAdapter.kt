@@ -21,7 +21,7 @@ import jp.wasabeef.glide.transformations.RoundedCornersTransformation
 import kotlin.math.roundToInt
 
 class ImagesAdapter(
-    private val context: Context,
+    context: Context,
     private val list: List<WallModel?>,
     private val isHorizontal:Boolean = false,
     private val listener: (wallModel: WallModel, i: Int) -> Unit
@@ -80,13 +80,16 @@ class ImagesAdapter(
         LayoutInflater.from(parent.context).inflate(
             when {
                 isHorizontal -> R.layout.item_wall_horizontal
-                viewType == 1 -> R.layout.item_image
+                viewType == 1 -> R.layout.item_wall
                 else -> R.layout.item_loader
             }, parent, false
         ), viewType, isHorizontal
     )
 
     class ItemViewHolder(itemView: View, viewType: Int, isHorizontal: Boolean) : RecyclerView.ViewHolder(itemView) {
+        val imageView: ImageView? =
+            if (viewType == 1) itemView.findViewById(R.id.image_view) else null
+
         init {
             if (isHorizontal && viewType == 0) {
                 (itemView as ConstraintLayout).apply {
@@ -95,7 +98,6 @@ class ImagesAdapter(
                 }
             }
         }
-        val imageView: ImageView? =
-            if (viewType == 1) itemView.findViewById(R.id.image_view) else null
+
     }
 }

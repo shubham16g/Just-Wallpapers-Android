@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.shubhamgupta16.wallpaperapp.adapters.ColorsHorizontalAdapter
 import com.shubhamgupta16.wallpaperapp.databinding.FragmentForHorizontalListBinding
 import com.shubhamgupta16.wallpaperapp.network.ListCase
+import com.shubhamgupta16.wallpaperapp.utils.BounceEdgeEffectFactory
 import com.shubhamgupta16.wallpaperapp.viewmodels.ColorsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -63,6 +64,7 @@ class HorizontalColorsFragment : Fragment() {
         val manager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         binding.recyclerView.layoutManager = manager
         binding.recyclerView.itemAnimator = null
+        binding.recyclerView.edgeEffectFactory = BounceEdgeEffectFactory(true)
 
         adapter = ColorsHorizontalAdapter(viewModel.list) { colorName, colorValue ->
             colorClickListener?.let { it(colorName, colorValue) }
