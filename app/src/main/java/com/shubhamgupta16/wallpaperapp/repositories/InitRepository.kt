@@ -2,21 +2,13 @@ package com.shubhamgupta16.wallpaperapp.repositories
 
 import com.shubhamgupta16.wallpaperapp.models.init.CategoryModel
 import com.shubhamgupta16.wallpaperapp.models.init.ColorModel
-import com.shubhamgupta16.wallpaperapp.models.init.InitModel
 import com.shubhamgupta16.wallpaperapp.network.ApiService
-import com.shubhamgupta16.wallpaperapp.room.CategoryDao
-import com.shubhamgupta16.wallpaperapp.room.ColorDao
-import retrofit2.Response
 import javax.inject.Inject
 
-class InitRepository @Inject constructor(
-    private val apiService: ApiService,
-    private val categoryDao: CategoryDao,
-    private val colorDao: ColorDao
-) {
+class InitRepository @Inject constructor(private val apiService: ApiService, ) {
 
-    suspend fun fetchInit(): Response<InitModel> {
-        val response = apiService.getInitData()
+    /*suspend fun fetchInit(): Response<InitModel> {
+        *//*val response = apiService.getInitData()
         if (response.isSuccessful && response.body() != null) {
             categoryDao.deleteAllCategories()
             colorDao.deleteAllColors()
@@ -27,13 +19,15 @@ class InitRepository @Inject constructor(
                 colorDao.insertColor(it)
             }
         }
-        return response
-    }
+        return response*//*
+    }*/
 
     suspend fun getAllColors(): List<ColorModel> {
-        return colorDao.getAllColors()
+        val response = apiService.getColors()
+        return response.body() ?: ArrayList()
     }
     suspend fun getAllCategories(): List<CategoryModel> {
-        return categoryDao.getAllCategories()
+        val response = apiService.getCategories()
+        return response.body() ?: ArrayList()
     }
 }

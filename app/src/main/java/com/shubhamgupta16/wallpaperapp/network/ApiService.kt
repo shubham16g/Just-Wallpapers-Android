@@ -2,6 +2,8 @@ package com.shubhamgupta16.wallpaperapp.network
 
 import android.content.Context
 import com.shubhamgupta16.wallpaperapp.BuildConfig
+import com.shubhamgupta16.wallpaperapp.models.init.CategoryModel
+import com.shubhamgupta16.wallpaperapp.models.init.ColorModel
 import com.shubhamgupta16.wallpaperapp.models.init.InitModel
 import com.shubhamgupta16.wallpaperapp.models.wallpapers.WallpaperPageModel
 import com.shubhamgupta16.wallpaperapp.network.request.RequestIdModel
@@ -64,6 +66,12 @@ interface ApiService {
         @Query("per_page") perPage: Int? = null,
     ): Response<WallpaperPageModel>
 
-    @GET("init")
-    suspend fun getInitData(): Response<InitModel>
+    /*@GET("init")
+    suspend fun getInitData(): Response<InitModel>*/
+
+    @GET("list/color")
+    suspend fun getColors(): Response<List<ColorModel>>
+
+    @GET("list/category")
+    suspend fun getCategories(): Response<List<CategoryModel>>
 }

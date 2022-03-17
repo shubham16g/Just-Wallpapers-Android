@@ -8,7 +8,6 @@ import com.shubhamgupta16.wallpaperapp.models.init.ColorModel
 import com.shubhamgupta16.wallpaperapp.network.ListCase
 import com.shubhamgupta16.wallpaperapp.network.ListObserver
 import com.shubhamgupta16.wallpaperapp.repositories.InitRepository
-import com.shubhamgupta16.wallpaperapp.room.CategoryDao
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

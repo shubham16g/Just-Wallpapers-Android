@@ -10,8 +10,6 @@ import com.shubhamgupta16.wallpaperapp.models.roommodels.FavWallModel
 
 @Database(entities = [CategoryModel::class, ColorModel::class, FavWallModel::class], version = 4)
 abstract class AppDatabase : RoomDatabase() {
-    abstract fun categoryDao(): CategoryDao
-    abstract fun colorDao(): ColorDao
     abstract fun favDao(): FavWallDao
 
     companion object {
