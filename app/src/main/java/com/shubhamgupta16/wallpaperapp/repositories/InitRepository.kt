@@ -2,10 +2,10 @@ package com.shubhamgupta16.wallpaperapp.repositories
 
 import com.shubhamgupta16.wallpaperapp.models.init.CategoryModel
 import com.shubhamgupta16.wallpaperapp.models.init.ColorModel
-import com.shubhamgupta16.wallpaperapp.network.ApiService
+import com.shubhamgupta16.wallpaperapp.network.InitService
 import javax.inject.Inject
 
-class InitRepository @Inject constructor(private val apiService: ApiService, ) {
+class InitRepository @Inject constructor(private val initService: InitService, ) {
 
     /*suspend fun fetchInit(): Response<InitModel> {
         *//*val response = apiService.getInitData()
@@ -23,11 +23,11 @@ class InitRepository @Inject constructor(private val apiService: ApiService, ) {
     }*/
 
     suspend fun getAllColors(): List<ColorModel> {
-        val response = apiService.getColors()
+        val response = initService.getColors()
         return response.body() ?: ArrayList()
     }
     suspend fun getAllCategories(): List<CategoryModel> {
-        val response = apiService.getCategories()
+        val response = initService.getCategories()
         return response.body() ?: ArrayList()
     }
 }

@@ -5,8 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.shubhamgupta16.wallpaperapp.models.init.ColorModel
-import com.shubhamgupta16.wallpaperapp.network.ListCase
-import com.shubhamgupta16.wallpaperapp.network.ListObserver
+import com.shubhamgupta16.wallpaperapp.viewmodels.live_observer.ListCase
+import com.shubhamgupta16.wallpaperapp.viewmodels.live_observer.ListObserver
 import com.shubhamgupta16.wallpaperapp.repositories.InitRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers

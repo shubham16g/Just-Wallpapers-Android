@@ -9,7 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.shubhamgupta16.wallpaperapp.adapters.CategoriesAdapter
 import com.shubhamgupta16.wallpaperapp.databinding.FragmentForHorizontalListBinding
-import com.shubhamgupta16.wallpaperapp.network.ListCase
+import com.shubhamgupta16.wallpaperapp.viewmodels.live_observer.ListCase
 import com.shubhamgupta16.wallpaperapp.utils.BounceEdgeEffectFactory
 import com.shubhamgupta16.wallpaperapp.viewmodels.CategoriesViewModel
 import dagger.hilt.android.AndroidEntryPoint

@@ -2,9 +2,11 @@ package com.shubhamgupta16.wallpaperapp.ui
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.View
 import android.view.animation.DecelerateInterpolator
 import android.widget.Toast
@@ -13,16 +15,25 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.animation.PathInterpolatorCompat
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.MultiTransformation
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import com.shubhamgupta16.wallpaperapp.R
 import com.shubhamgupta16.wallpaperapp.adapters.SingleImageAdapter
 import com.shubhamgupta16.wallpaperapp.databinding.ActivityFullWallpaperBinding
 import com.shubhamgupta16.wallpaperapp.models.wallpapers.Author
 import com.shubhamgupta16.wallpaperapp.models.wallpapers.WallModelListHolder
-import com.shubhamgupta16.wallpaperapp.network.ListCase
+import com.shubhamgupta16.wallpaperapp.viewmodels.live_observer.ListCase
 import com.shubhamgupta16.wallpaperapp.utils.*
 import com.shubhamgupta16.wallpaperapp.viewmodels.PagerViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import jp.wasabeef.glide.transformations.ColorFilterTransformation
 import jp.wasabeef.glide.transformations.CropCircleWithBorderTransformation
+import jp.wasabeef.glide.transformations.gpu.BrightnessFilterTransformation
+
 @AndroidEntryPoint
 class FullWallpaperActivity : AppCompatActivity() {
 
@@ -107,7 +118,6 @@ class FullWallpaperActivity : AppCompatActivity() {
             Toast.makeText(this, "Wallpaper Set Successfully!", Toast.LENGTH_SHORT).show()
         }
 
-        val h = Handler(Looper.getMainLooper())
 //        binding.viewPager2.reduceDragSensitivity(-10)
 
         binding.viewPager2.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
@@ -116,40 +126,67 @@ class FullWallpaperActivity : AppCompatActivity() {
                 renderOtherComponents(position)
             }
         })
-
-
     }
-    private fun renderOtherComponents(position: Int){
+
+    private var thumbEven = false
+    var isLastTaskCompleted = true
+    val h = Handler(Looper.getMainLooper())
+    val runnable = {
+        isLastTaskCompleted = true
+    }
+
+    private fun renderOtherComponents(position: Int) {
         currentPosition = position
         if (position == viewModel.list.lastIndex)
             viewModel.fetch()
         val wallModel = viewModel.list[position]
         updateAuthor(wallModel.author)
         updateFavButton(wallModel.isFav)
-//                Glide.get(this@FullWallpaperActivity).clearMemory()
-//                val drawable = BitmapDrawable(resources, getBitmapFromView(binding.imageView))
-//                Glide.with(this@FullWallpaperActivity).clear(binding.imageView)
 
-//                h.post {
-//                    binding.imageView.fadeImage(darkenColor(wallModel.color,200))
-//                }
+        val multiTransformation = MultiTransformation(
+            RotationTransform((wallModel.rotation ?: 0f).toFloat()),
+            FastBlurTransform(),
+            BrightnessFilterTransformation(0.2f),
+            ColorFilterTransformation(darkenColor(wallModel.color, 156))
+        )
 
-        /*h.post {
-            val multiTransformation = MultiTransformation(
-                RotationTransform((wallModel.rotation ?: 0f).toFloat()),
-                FastBlurTransform(),
-                BrightnessFilterTransformation(0.2f),
-                ColorFilterTransformation(darkenColor(wallModel.color,156))
-            )
 
-            Glide.with(this@FullWallpaperActivity).load(wallModel.urls.small)
-//                        .thumbnail(0.2f)
-//                        .placeholder(BitmapDrawable(resources, getBitmapFromView(binding.imageView)))
-                .transform(multiTransformation)
-                .transition(DrawableTransitionOptions.withCrossFade())
-                .into(binding.imageView)
 
-        }*/
+        Glide.with(this@FullWallpaperActivity).load(wallModel.urls.small)
+            .transform(multiTransformation).addListener(object : RequestListener<Drawable> {
+                override fun onLoadFailed(
+                    e: GlideException?,
+                    model: Any?,
+                    target: Target<Drawable>?,
+                    isFirstResource: Boolean
+                ): Boolean {
+                    return false
+                }
+
+                override fun onResourceReady(
+                    resource: Drawable?,
+                    model: Any?,
+                    target: Target<Drawable>?,
+                    dataSource: DataSource?,
+                    isFirstResource: Boolean
+                ): Boolean {
+                    if (isLastTaskCompleted) {
+                        thumbEven = !thumbEven
+                        binding.thumbViewEven.fadeVisibility(
+                            if (thumbEven) View.INVISIBLE else View.VISIBLE,
+                            400
+                        )
+                    }
+                    val status = isLastTaskCompleted
+                    isLastTaskCompleted = false
+                    Log.d("TAG", "onResourceReady: $status")
+                    h.removeCallbacks(runnable)
+                    h.postDelayed(runnable, 400)
+                    return !status
+                }
+            })
+            .into(if (thumbEven) binding.thumbViewEven else binding.thumbView)
+
     }
 
     private fun updateFavButton(fav: Boolean) {
@@ -220,6 +257,7 @@ class FullWallpaperActivity : AppCompatActivity() {
         binding.authorContainer.visibility = View.VISIBLE
         binding.authorName.text = author.name
         Glide.with(this).load(author.image).transform(CropCircleWithBorderTransformation())
+            .transition(DrawableTransitionOptions.withCrossFade())
             .into(binding.authorProfile)
     }
 

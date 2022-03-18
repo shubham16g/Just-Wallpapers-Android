@@ -2,13 +2,13 @@ package com.shubhamgupta16.wallpaperapp.repositories
 
 import com.shubhamgupta16.wallpaperapp.models.roommodels.FavWallModel
 import com.shubhamgupta16.wallpaperapp.models.wallpapers.WallpaperPageModel
-import com.shubhamgupta16.wallpaperapp.network.ApiService
+import com.shubhamgupta16.wallpaperapp.network.WallService
 import com.shubhamgupta16.wallpaperapp.network.request.RequestIdModel
 import com.shubhamgupta16.wallpaperapp.room.FavWallDao
 import retrofit2.Response
 import javax.inject.Inject
 
-class WallRepository @Inject constructor(private val apiService: ApiService, private val  favDao: FavWallDao) {
+class WallRepository @Inject constructor(private val wallService: WallService, private val  favDao: FavWallDao) {
 
     suspend fun getWalls(
         page: Int = 1,
@@ -18,7 +18,7 @@ class WallRepository @Inject constructor(private val apiService: ApiService, pri
         category: String? = null,
         color: String? = null,
     ): Response<WallpaperPageModel> {
-        val response = apiService.getWalls(page, perPage, s, orderBy, category, color)
+        val response = wallService.getWalls(page, perPage, s, orderBy, category, color)
         if (response.isSuccessful && response.body() != null) {
             response.body()?.let {
                 for ((i, wall) in it.data.withIndex()) {
@@ -34,7 +34,7 @@ class WallRepository @Inject constructor(private val apiService: ApiService, pri
         page: Int = 1,
         perPage: Int? = null
     ): Response<WallpaperPageModel> {
-        val response = apiService.getWallsWithIds(
+        val response = wallService.getWallsWithIds(
             RequestIdModel(favDao.getAllFavorites().map { it.wallId }),
             page,
             perPage

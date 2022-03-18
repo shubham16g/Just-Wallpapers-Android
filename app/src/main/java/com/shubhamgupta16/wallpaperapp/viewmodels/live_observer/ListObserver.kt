@@ -1,4 +1,4 @@
-package com.shubhamgupta16.wallpaperapp.network
+package com.shubhamgupta16.wallpaperapp.viewmodels.live_observer
 
 data class ListObserver(
     val case: ListCase,

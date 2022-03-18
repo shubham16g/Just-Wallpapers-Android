@@ -10,7 +10,7 @@ import androidx.fragment.app.viewModels
 import com.google.android.material.tabs.TabLayoutMediator
 import com.shubhamgupta16.wallpaperapp.adapters.ViewPager2Adapter
 import com.shubhamgupta16.wallpaperapp.databinding.FragmentMainCategoriesBinding
-import com.shubhamgupta16.wallpaperapp.network.ListCase
+import com.shubhamgupta16.wallpaperapp.viewmodels.live_observer.ListCase
 import com.shubhamgupta16.wallpaperapp.viewmodels.CategoriesViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
