@@ -2,6 +2,7 @@ package com.shubhamgupta16.wallpaperapp.ui.main
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.fragment.app.Fragment
 import com.google.android.material.navigation.NavigationBarView
 import com.shubhamgupta16.wallpaperapp.R
@@ -9,7 +10,9 @@ import com.shubhamgupta16.wallpaperapp.databinding.ActivityMainBinding
 import com.shubhamgupta16.wallpaperapp.ui.components.VerticalWallpapersFragment
 import com.shubhamgupta16.wallpaperapp.ui.main.fragments.CategoriesFragment
 import com.shubhamgupta16.wallpaperapp.ui.main.fragments.HomeFragment
+import com.shubhamgupta16.wallpaperapp.utils.BottomNavigationViewBehaviour
 import dagger.hilt.android.AndroidEntryPoint
+
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -39,9 +42,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        binding.bottomNav?.setOnItemSelectedListener(navListener)
-        binding.railNav?.setOnItemSelectedListener(navListener)
-
+        binding.bottomNav.setOnItemSelectedListener(navListener)
     }
 
     private fun getFavoriteFragment() = VerticalWallpapersFragment.getInstanceForFavorite()
@@ -50,8 +51,7 @@ class MainActivity : AppCompatActivity() {
     private fun getHomeFragment() = HomeFragment().apply {
         categoryClickListener = { categoryName ->
             this@MainActivity.categoryName = categoryName
-            binding.bottomNav?.selectedItemId = R.id.action_category
-            binding.railNav?.selectedItemId = R.id.action_category
+            binding.bottomNav.selectedItemId = R.id.action_category
             this@MainActivity.categoryName = null
         }
     }

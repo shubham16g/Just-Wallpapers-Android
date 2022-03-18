@@ -16,16 +16,20 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object AppModule {
 
+    @Singleton
     @Provides
     fun providesWallService(@ApplicationContext context: Context) = ApiServiceBuilder.build(context, "wall-cache", 10 * 1024 * 1024, WallService::class.java)
 
 
+    @Singleton
     @Provides
     fun providesInitService(@ApplicationContext context: Context) = ApiServiceBuilder.build(context, "init-cache", 10 * 1024 * 1024, InitService::class.java)
 
+    @Singleton
     @Provides
     fun getAppDatabase(@ApplicationContext context: Context) = AppDatabase.build(context)
 
+    @Singleton
     @Provides
     fun getFavDao(db: AppDatabase) = db.favDao()
 

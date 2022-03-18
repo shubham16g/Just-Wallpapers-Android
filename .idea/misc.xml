@@ -3,13 +3,16 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/drawable/background_bottom_nav.xml" value="0.162" />
+        <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/drawable/background_card.xml" value="0.1415" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/drawable/ic_baseline_favorite_border_24.xml" value="0.1575" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/drawable/image_card.xml" value="0.119" />
-        <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout-land/activity_main.xml" value="0.33" />
+        <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/drawable/round_btn.xml" value="0.1415" />
+        <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout-land/activity_main.xml" value="0.19" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/activity_bottom_nav.xml" value="0.2" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/activity_full_wallpaper.xml" value="0.17" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/activity_listing.xml" value="0.33" />
-        <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/activity_main.xml" value="0.2" />
+        <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/activity_main.xml" value="0.22" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/activity_splash.xml" value="0.2" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/bottom_nav.xml" value="0.2" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/custom_header_view.xml" value="0.25" />

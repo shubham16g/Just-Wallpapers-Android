@@ -25,5 +25,5 @@
 
     <color name="dark_ripple">#999999</color>
 
-    <color name="cardBackground">#e0e0e0</color>
+    <color name="cardBackground">#eeeeee</color>
 </resources>
