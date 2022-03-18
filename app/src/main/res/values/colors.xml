@@ -7,6 +7,11 @@
     <color name="primaryVariant">#FF3700B3</color>
     <color name="onPrimary">#FFFFFF</color>
 
+    <!--Bottom Navigation-->
+    <color name="bottom_nav">#FF6200EE</color>
+    <color name="bottom_nav_item_inactive">#bbffffff</color>
+    <color name="bottom_nav_item_active">#ffffff</color>
+
     <color name="secondary">#FF03DAC5</color>
     <color name="secondaryVariant">#FF018786</color>
     <color name="onSecondary">#000000</color>

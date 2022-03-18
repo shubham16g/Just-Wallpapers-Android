@@ -9,10 +9,12 @@
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/drawable/image_card.xml" value="0.119" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/drawable/round_btn.xml" value="0.1415" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout-land/activity_main.xml" value="0.19" />
+        <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout-land/fragment_main_home.xml" value="0.1" />
+        <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout-w720dp/activity_main.xml" value="0.184375" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/activity_bottom_nav.xml" value="0.2" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/activity_full_wallpaper.xml" value="0.17" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/activity_listing.xml" value="0.33" />
-        <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/activity_main.xml" value="0.22" />
+        <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/activity_main.xml" value="0.2" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/activity_splash.xml" value="0.2" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/bottom_nav.xml" value="0.2" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/custom_header_view.xml" value="0.25" />
@@ -32,6 +34,7 @@
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/item_home_content.xml" value="0.2" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/item_image.xml" value="0.19692307692307692" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/item_loader.xml" value="0.2" />
+        <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/item_wall.xml" value="0.2" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/item_wall_client.xml" value="0.2" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/item_wall_horizontal.xml" value="0.33" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/menu/main_menu.xml" value="0.2" />

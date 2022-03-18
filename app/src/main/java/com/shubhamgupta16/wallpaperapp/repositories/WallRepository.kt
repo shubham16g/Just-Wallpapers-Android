@@ -40,12 +40,9 @@ class WallRepository @Inject constructor(private val wallService: WallService, p
             perPage
         )
         if (response.isSuccessful && response.body() != null) {
-            favDao.deleteAllFavorites()
             response.body()?.let {
-                for ((i, wall) in it.data.withIndex()) {
-                    favDao.insertFav(FavWallModel(wall.wallId))
+                for (i in it.data.indices) {
                     it.data[i].isFav = true
-
                 }
             }
         }

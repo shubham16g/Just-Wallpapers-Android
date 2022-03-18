@@ -96,7 +96,6 @@ dependencies {
     implementation "androidx.room:room-ktx:2.4.2"
 
 //    Third Party
-    implementation 'com.makeramen:roundedimageview:2.3.0'
     implementation 'com.github.valkriaine:Bouncy:1.8'
 
 }

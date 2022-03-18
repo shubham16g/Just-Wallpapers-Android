@@ -7,6 +7,11 @@
     <color name="status_bar">#111111</color>
     <color name="navigation_bar">#090C0E</color>
 
+    <!--Bottom Navigation-->
+    <color name="bottom_nav">#FFBB86FC</color>
+    <color name="bottom_nav_item_inactive">#77000000</color>
+    <color name="bottom_nav_item_active">#000000</color>
+
     <color name="textPrimary">#f0f0f0</color>
     <color name="textSecondary">#bbbbbb</color>
     <color name="textTertiary">#999999</color>

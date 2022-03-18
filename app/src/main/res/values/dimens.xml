@@ -6,6 +6,8 @@
     <dimen name="half_gap">3dp</dimen>
     <dimen name="card_corner_radius">10dp</dimen>
 
+    <dimen name="full_wall_card_corner_radius">12dp</dimen>
+
     <dimen name="pager_top">74dp</dimen>
     <dimen name="pager_top_padding">0dp</dimen>
     <dimen name="pager_author_size">0dp</dimen>
