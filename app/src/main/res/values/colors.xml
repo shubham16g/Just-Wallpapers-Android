@@ -8,9 +8,11 @@
     <color name="onPrimary">#FFFFFF</color>
 
     <!--Bottom Navigation-->
-    <color name="bottom_nav">#FF6200EE</color>
-    <color name="bottom_nav_item_inactive">#bbffffff</color>
-    <color name="bottom_nav_item_active">#ffffff</color>
+    <color name="bottom_nav">#ffffff</color>
+    <color name="bottom_nav_item_inactive">#77000000</color>
+    <color name="bottom_nav_item_active">#000000</color>
+    <!--<color name="bottom_nav_item_inactive">#bbffffff</color>
+    <color name="bottom_nav_item_active">#ffffff</color>-->
 
     <color name="secondary">#FF03DAC5</color>
     <color name="secondaryVariant">#FF018786</color>

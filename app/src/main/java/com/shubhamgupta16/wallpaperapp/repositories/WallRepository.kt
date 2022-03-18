@@ -2,10 +2,10 @@ package com.shubhamgupta16.wallpaperapp.repositories
 
 import com.shubhamgupta16.wallpaperapp.models.roommodels.FavWallModel
 import com.shubhamgupta16.wallpaperapp.models.wallpapers.WallpaperPageModel
+import com.shubhamgupta16.wallpaperapp.network.ApiResponse
 import com.shubhamgupta16.wallpaperapp.network.WallService
 import com.shubhamgupta16.wallpaperapp.network.request.RequestIdModel
 import com.shubhamgupta16.wallpaperapp.room.FavWallDao
-import retrofit2.Response
 import javax.inject.Inject
 
 class WallRepository @Inject constructor(private val wallService: WallService, private val  favDao: FavWallDao) {
@@ -17,36 +17,44 @@ class WallRepository @Inject constructor(private val wallService: WallService, p
         orderBy: String? = null,
         category: String? = null,
         color: String? = null,
-    ): Response<WallpaperPageModel> {
+    ): ApiResponse<WallpaperPageModel> {
         val response = wallService.getWalls(page, perPage, s, orderBy, category, color)
-        if (response.isSuccessful && response.body() != null) {
-            response.body()?.let {
-                for ((i, wall) in it.data.withIndex()) {
+        if (response.isSuccessful) {
+            return if (response.body() != null) {
+                for ((i, wall) in response.body()!!.data.withIndex()) {
                     if (favDao.isFav(wall.wallId) != null)
-                        it.data[i].isFav = true
+                        response.body()!!.data[i].isFav = true
                 }
-            }
+                ApiResponse(response.body()!!)
+            } else
+                ApiResponse(500)
         }
-        return response
+        return ApiResponse(response.code())
     }
 
     suspend fun getFavoriteWallpapers(
         page: Int = 1,
         perPage: Int? = null
-    ): Response<WallpaperPageModel> {
+    ): ApiResponse<WallpaperPageModel> {
+        val wallIds = favDao.getAllFavorites().map { it.wallId }
+        if (wallIds.isEmpty()) return ApiResponse(404)
         val response = wallService.getWallsWithIds(
-            RequestIdModel(favDao.getAllFavorites().map { it.wallId }),
+            RequestIdModel(wallIds),
             page,
             perPage
         )
-        if (response.isSuccessful && response.body() != null) {
-            response.body()?.let {
-                for (i in it.data.indices) {
-                    it.data[i].isFav = true
+        return if (response.isSuccessful) {
+            if (response.body() != null) {
+                for (i in response.body()!!.data.indices) {
+                    response.body()!!.data[i].isFav = true
                 }
-            }
+                ApiResponse(response.body()!!)
+            } else
+                ApiResponse(500)
+        } else {
+            ApiResponse(response.code())
         }
-        return response
+
     }
 
     suspend fun removeFav(wallId: Int) {

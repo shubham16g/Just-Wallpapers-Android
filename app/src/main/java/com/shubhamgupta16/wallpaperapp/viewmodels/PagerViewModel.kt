@@ -53,16 +53,14 @@ class PagerViewModel
         viewModelScope.launch(Dispatchers.IO) {
             val response =
                 wallRepository.getWalls(page = page, s = query, category = category, color = color)
-            if (response.isSuccessful) {
-                response.body()?.let {
-                    lastPage = it.lastPage
+            if (response.data != null) {
+                    lastPage = response.data!!.lastPage
                     val size = _list.size
-                    _list.addAll(it.data)
+                    _list.addAll(response.data!!.data)
                     page++
                     _listObserver.postValue(
                         ListObserver(ListCase.ADDED_RANGE, from = size, itemCount = _list.size)
                     )
-                }
             } else
                 _listObserver.postValue(ListObserver(ListCase.NO_CHANGE))
         }

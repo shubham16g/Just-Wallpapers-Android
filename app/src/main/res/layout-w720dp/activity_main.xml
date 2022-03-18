@@ -8,13 +8,22 @@
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
-        app:title="@string/app_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@color/toolbar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" >
+        <TextView
+            android:id="@+id/toolbar_title"
+            android:textStyle="bold"
+            android:textAllCaps="true"
+            android:textColor="@color/textPrimary"
+            android:textSize="20sp"
+            android:text="@string/app_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </androidx.appcompat.widget.Toolbar>
 
     <FrameLayout
         android:id="@+id/container"
@@ -30,7 +39,7 @@
         android:layout_height="55dp"
         app:layout_constraintWidth_max="350dp"
         android:layout_marginBottom="8dp"
-        app:elevation="0dp"
+        app:elevation="5dp"
         app:itemTextColor="@color/bottom_nav_item"
         app:itemIconTint="@color/bottom_nav_item"
         android:background="@drawable/background_bottom_nav"

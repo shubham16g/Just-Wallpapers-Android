@@ -6,9 +6,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.shubhamgupta16.wallpaperapp.models.wallpapers.WallModel
+import com.shubhamgupta16.wallpaperapp.repositories.WallRepository
 import com.shubhamgupta16.wallpaperapp.viewmodels.live_observer.ListCase
 import com.shubhamgupta16.wallpaperapp.viewmodels.live_observer.ListObserver
-import com.shubhamgupta16.wallpaperapp.repositories.WallRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -51,21 +51,19 @@ class WallpapersViewModel
             else
                 wallRepository.getWalls(page = _page, s = _query, category = _category, color = _color)
 
-            if (response.isSuccessful) {
+            if (response.data != null) {
                 Log.d(TAG, "fetch: $category success")
-                response.body()?.let {
-                    _lastPage = it.lastPage
-                    val size = _list.size
-                    if (_list.isNotEmpty())
-                        _list.removeAt(_list.lastIndex)
-                    _list.addAll(it.data)
-                    if (_lastPage > _page)
-                        _list.add(null)
-                    _page++
-                    if (_list.isNotEmpty())
+                _lastPage = response.data!!.lastPage
+                val size = _list.size
+                if (_list.isNotEmpty())
+                    _list.removeAt(_list.lastIndex)
+                _list.addAll(response.data!!.data)
+                if (_lastPage > _page)
+                    _list.add(null)
+                _page++
+                if (_list.isNotEmpty())
                         _listObserver.postValue(ListObserver(ListCase.UPDATED, at = size - 1))
                     _listObserver.postValue(ListObserver(ListCase.ADDED_RANGE, from = size, itemCount = _list.size))
-                }
             } else
                 _listObserver.postValue(ListObserver(ListCase.NO_CHANGE))
         }
