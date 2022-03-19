@@ -37,7 +37,17 @@ class WallRepository @Inject constructor(private val wallService: WallService, p
         perPage: Int? = null
     ): ApiResponse<WallpaperPageModel> {
         val wallIds = favDao.getAllFavorites().map { it.wallId }
-        if (wallIds.isEmpty()) return ApiResponse(404)
+        if (wallIds.isEmpty()) return ApiResponse(
+            WallpaperPageModel(
+                1,
+                ArrayList(),
+                1,
+                1,
+                18,
+                1,
+                0
+            )
+        )
         val response = wallService.getWallsWithIds(
             RequestIdModel(wallIds),
             page,

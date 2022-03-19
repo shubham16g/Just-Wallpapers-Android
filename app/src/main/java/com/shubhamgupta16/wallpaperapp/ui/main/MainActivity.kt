@@ -1,6 +1,8 @@
 package com.shubhamgupta16.wallpaperapp.ui.main
 
 import android.os.Bundle
+import android.util.Log
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.navigation.NavigationBarView
@@ -9,6 +11,7 @@ import com.shubhamgupta16.wallpaperapp.databinding.ActivityMainBinding
 import com.shubhamgupta16.wallpaperapp.ui.components.VerticalWallpapersFragment
 import com.shubhamgupta16.wallpaperapp.ui.main.fragments.CategoriesFragment
 import com.shubhamgupta16.wallpaperapp.ui.main.fragments.HomeFragment
+import com.shubhamgupta16.wallpaperapp.viewmodels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -19,8 +22,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private lateinit var binding: ActivityMainBinding
-    private var currentFrag = R.id.action_home
-    private var categoryName: String? = null
+    private val viewModel:MainViewModel by viewModels()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,19 +30,25 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        swapFragment(R.id.action_home, getHomeFragment(), false)
+        Log.d(TAG, "onCreate: ${getCurrentFragName()}")
+
+        applyFragment(viewModel.currentFrag)
 
         val navListener = NavigationBarView.OnItemSelectedListener{
-            if (currentFrag == it.itemId) return@OnItemSelectedListener false
-            when (it.itemId) {
-                R.id.action_home -> swapFragment(it.itemId, getHomeFragment())
-                R.id.action_category -> swapFragment(it.itemId, getCategoryFragment(categoryName))
-                R.id.action_fav -> swapFragment(it.itemId, getFavoriteFragment())
-                else -> false
-            }
+            if (viewModel.currentFrag == it.itemId) return@OnItemSelectedListener false
+            applyFragment(it.itemId)
         }
 
         binding.bottomNav.setOnItemSelectedListener(navListener)
+    }
+
+    private fun applyFragment(itemId:Int): Boolean {
+        return when (itemId) {
+            R.id.action_home -> swapFragment(itemId, getHomeFragment())
+            R.id.action_category -> swapFragment(itemId, getCategoryFragment(viewModel.categoryName))
+            R.id.action_fav -> swapFragment(itemId, getFavoriteFragment())
+            else -> false
+        }
     }
 
     private fun getFavoriteFragment() = VerticalWallpapersFragment.getInstanceForFavorite()
@@ -48,9 +56,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun getHomeFragment() = HomeFragment().apply {
         categoryClickListener = { categoryName ->
-            this@MainActivity.categoryName = categoryName
+            viewModel.categoryName = categoryName
             binding.bottomNav.selectedItemId = R.id.action_category
-            this@MainActivity.categoryName = null
+            viewModel.categoryName = null
         }
     }
 
@@ -58,20 +66,46 @@ class MainActivity : AppCompatActivity() {
         CategoriesFragment().apply { this.categoryName = categoryName }
 
     private fun swapFragment(id: Int, frag: Fragment, animate: Boolean = true): Boolean {
-        currentFrag = id
+        viewModel.currentFrag = id
 //        todo animation
         supportFragmentManager.beginTransaction().replace(binding.container.id, frag).commit()
         updateToolbarTitle()
         return true
     }
 
-    private fun updateToolbarTitle(){
-        binding.toolbarTitle.text = when (currentFrag) {
+    private fun updateToolbarTitle() {
+        binding.toolbarTitle.text = getCurrentFragName()
+    }
+
+    private fun getCurrentFragName():String{
+        return when (viewModel.currentFrag) {
             R.id.action_home -> "Home"
             R.id.action_category -> "Categories"
             R.id.action_fav -> "Favorites"
             else -> ""
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.d(TAG, "onResume: ${getCurrentFragName()}")
+    }
+
+    /*override fun onRestart() {
+        super.onRestart()
+        Log.d(TAG, "onRestart: ${getCurrentFragName()}")
+    }
+
+    override fun onStart() {
+        super.onStart()
+        Log.d(TAG, "onStart: ${getCurrentFragName()}")
+    }*/
+
+    override fun onBackPressed() {
+        if (viewModel.currentFrag != R.id.action_home)
+            binding.bottomNav.selectedItemId = R.id.action_home
+        else
+            super.onBackPressed()
     }
 
 
