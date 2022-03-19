@@ -59,6 +59,6 @@ class CategoriesFragment : Fragment() {
         }
         viewModel.fetch()
 
-        binding.viewPager2.isUserInputEnabled = false
+//        binding.viewPager2.isUserInputEnabled = false
     }
 }

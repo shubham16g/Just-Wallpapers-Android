@@ -28,7 +28,7 @@ class WallpapersViewModel
     private var _query: String? = null
     private var _category: String? = null
     private var _color: String? = null
-    private var isFavList:Boolean = false
+    private var isFavList: Boolean = false
 
     val page get() = _page
     val lastPage get() = _lastPage
@@ -43,13 +43,20 @@ class WallpapersViewModel
             val size = _list.size
             _list.clear()
             _listObserver.value = ListObserver(ListCase.REMOVED_RANGE, 0, size)
+        } else if (page == 1 && _list.isEmpty()) {
+            _listObserver.value = ListObserver(ListCase.INITIAL_LOADING)
         }
         viewModelScope.launch(Dispatchers.IO) {
             Log.d(TAG, "fetch: IO")
             val response = if (isFavList)
                 wallRepository.getFavoriteWallpapers(page = _page)
             else
-                wallRepository.getWalls(page = _page, s = _query, category = _category, color = _color)
+                wallRepository.getWalls(
+                    page = _page,
+                    s = _query,
+                    category = _category,
+                    color = _color
+                )
 
             if (response.data != null) {
                 Log.d(TAG, "fetch: $category success")
@@ -61,22 +68,32 @@ class WallpapersViewModel
                 if (_lastPage > _page)
                     _list.add(null)
                 _page++
-                if (_list.isNotEmpty())
-                        _listObserver.postValue(ListObserver(ListCase.UPDATED, at = size - 1))
-                    _listObserver.postValue(ListObserver(ListCase.ADDED_RANGE, from = size, itemCount = _list.size))
+                if (_list.isNotEmpty()) {
+                    _listObserver.postValue(ListObserver(ListCase.UPDATED, at = size - 1))
+                    _listObserver.postValue(
+                        ListObserver(
+                            ListCase.ADDED_RANGE,
+                            from = size,
+                            itemCount = _list.size
+                        )
+                    )
+                } else {
+                    _listObserver.postValue(ListObserver(ListCase.EMPTY))
+                }
             } else
                 _listObserver.postValue(ListObserver(ListCase.NO_CHANGE))
         }
     }
 
-    fun init(query: String?=null, category: String?=null, color:String?=null){
+    fun init(query: String? = null, category: String? = null, color: String? = null) {
         _page = 1
         this._query = query
         this._category = category
         this._color = color
         this.isFavList = false
     }
-    fun initForFavList(){
+
+    fun initForFavList() {
         _page = 1
         this._query = null
         this._category = null

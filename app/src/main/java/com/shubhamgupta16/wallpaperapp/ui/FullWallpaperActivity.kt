@@ -78,7 +78,7 @@ class FullWallpaperActivity : AppCompatActivity() {
         viewModel.listObserver.observe(this) {
             it?.let {
                 when (it.case) {
-                    ListCase.LOADING -> {
+                    ListCase.INITIAL_LOADING -> {
                     }
                     ListCase.UPDATED -> {
                         if (it.at == currentPosition)

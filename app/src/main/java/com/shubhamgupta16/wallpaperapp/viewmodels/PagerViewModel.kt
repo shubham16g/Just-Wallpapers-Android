@@ -48,8 +48,8 @@ class PagerViewModel
 
     fun fetch() {
         if (page > lastPage) return
-        if (_listObserver.value?.case == ListCase.LOADING) return
-        _listObserver.value = ListObserver(ListCase.LOADING)
+        if (_listObserver.value?.case == ListCase.INITIAL_LOADING) return
+        _listObserver.value = ListObserver(ListCase.INITIAL_LOADING)
         viewModelScope.launch(Dispatchers.IO) {
             val response =
                 wallRepository.getWalls(page = page, s = query, category = category, color = color)

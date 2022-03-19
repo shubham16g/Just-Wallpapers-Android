@@ -5,5 +5,6 @@ enum class ListCase {
     ADDED_RANGE,
     REMOVED_RANGE,
     NO_CHANGE,
-    LOADING
+    EMPTY,
+    INITIAL_LOADING
 }

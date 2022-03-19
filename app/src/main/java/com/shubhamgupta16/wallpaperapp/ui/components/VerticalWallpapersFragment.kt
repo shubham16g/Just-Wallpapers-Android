@@ -17,6 +17,7 @@ import com.shubhamgupta16.wallpaperapp.viewmodels.live_observer.ListCase
 import com.shubhamgupta16.wallpaperapp.ui.FullWallpaperActivity
 import com.shubhamgupta16.wallpaperapp.utils.BounceEdgeEffectFactory
 import com.shubhamgupta16.wallpaperapp.utils.PaginationController
+import com.shubhamgupta16.wallpaperapp.utils.fadeVisibility
 import com.shubhamgupta16.wallpaperapp.viewmodels.WallpapersViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -73,20 +74,38 @@ class VerticalWallpapersFragment : Fragment() {
                 when (it.case) {
                     ListCase.UPDATED -> {
                         adapter?.notifyItemChanged(it.at)
+                        binding.initialLoader.fadeVisibility(View.GONE)
+                        binding.noResultContainer.fadeVisibility(View.GONE)
                     }
                     ListCase.ADDED_RANGE -> {
                         adapter?.notifyItemRangeInserted(it.from, it.itemCount)
                         if (viewModel.list.isNotEmpty() && it.from == 0)
                             binding.recyclerView.smoothScrollToPosition(0)
                         paginationController?.notifyDataFetched(true)
+                        if (it.from == 0)
+                            binding.recyclerView.scheduleLayoutAnimation()
+
+                        binding.initialLoader.fadeVisibility(View.GONE)
+                        binding.noResultContainer.fadeVisibility(View.GONE)
                     }
                     ListCase.REMOVED_RANGE -> {
                         adapter?.notifyItemRangeRemoved(it.from, it.itemCount)
+                        binding.initialLoader.fadeVisibility(View.GONE)
+                        binding.noResultContainer.fadeVisibility(View.GONE)
                     }
                     ListCase.NO_CHANGE -> {
                         paginationController?.notifyDataFetched(true)
+                        binding.initialLoader.fadeVisibility(View.GONE)
+                        binding.noResultContainer.fadeVisibility(View.GONE)
                     }
-                    else -> {}
+                    ListCase.INITIAL_LOADING -> {
+                        binding.initialLoader.fadeVisibility(View.VISIBLE)
+                        binding.noResultContainer.fadeVisibility(View.GONE)
+                    }
+                    ListCase.EMPTY -> {
+                        binding.initialLoader.fadeVisibility(View.GONE)
+                        binding.noResultContainer.fadeVisibility(View.VISIBLE)
+                    }
                 }
             }
         }
@@ -110,7 +129,6 @@ class VerticalWallpapersFragment : Fragment() {
             StaggeredGridLayoutManager.VERTICAL
         )
         binding.recyclerView.layoutManager = manager
-        binding.recyclerView.itemAnimator = null
         adapter = ImagesAdapter(requireContext(), viewModel.list) { _, i ->
             showFullWallpaperFragment(i)
         }
