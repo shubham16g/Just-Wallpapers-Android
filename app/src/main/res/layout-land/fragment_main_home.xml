@@ -15,6 +15,7 @@
         android:paddingBottom="20dp">
 
         <RelativeLayout
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="180dp"
             android:layout_marginTop="15dp"

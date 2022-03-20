@@ -4,11 +4,14 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/drawable/background_bottom_nav.xml" value="0.162" />
+        <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/drawable/background_bottom_sheet.xml" value="0.1325" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/drawable/background_card.xml" value="0.1415" />
+        <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/drawable/btn_primary.xml" value="0.1325" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/drawable/ic_baseline_favorite_border_24.xml" value="0.1575" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/drawable/ic_no_result.xml" value="0.1325" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/drawable/image_card.xml" value="0.119" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/drawable/round_btn.xml" value="0.1415" />
+        <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/drawable/round_btn_dark.xml" value="0.1325" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout-land/activity_main.xml" value="0.19" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout-land/fragment_main_home.xml" value="0.1" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout-w720dp/activity_full_wallpaper.xml" value="0.1" />
@@ -39,6 +42,7 @@
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/item_wall.xml" value="0.2" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/item_wall_client.xml" value="0.2" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/item_wall_horizontal.xml" value="0.33" />
+        <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/sheet_layout_set_on.xml" value="0.2" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/menu/main_menu.xml" value="0.2" />
       </map>
     </option>
