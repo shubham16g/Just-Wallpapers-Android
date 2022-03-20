@@ -74,7 +74,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateToolbarTitle() {
-        binding.toolbarTitle.text = getCurrentFragName()
+        getCurrentFragName().also {
+            binding.toolbarTitle?.text = it
+        }
     }
 
     private fun getCurrentFragName():String{

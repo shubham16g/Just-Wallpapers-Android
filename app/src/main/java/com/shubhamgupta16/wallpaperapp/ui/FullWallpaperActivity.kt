@@ -101,6 +101,10 @@ class FullWallpaperActivity : AppCompatActivity() {
         }
 
         binding.setWallpaper.setOnClickListener {
+            if (isOrientationLandscape()){
+                Toast.makeText(this, "Set Wallpapers only in Portrait Mode", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
             val model = viewModel.list[currentPosition]
             Glide.with(this).asBitmap().load(model.urls.regular)
                 .transform(RotationTransform((model.rotation ?: 0).toFloat()))
@@ -202,12 +206,12 @@ class FullWallpaperActivity : AppCompatActivity() {
             if (!isZoom) animateZoom() else animateZoomOut()
         }
         adapter = SingleImageAdapter(this, viewModel.list) {
+            if (isOrientationLandscape()) return@SingleImageAdapter
             if (!isZoom) hideSystemUI() else showSystemUI()
             h.post(r)
         }
         binding.viewPager2.adapter = adapter
         binding.viewPager2.apply3DSwiper()
-        binding.viewPager2.offscreenPageLimit = 1
         /*(binding.viewPager2.getChildAt(0)as RecyclerView).apply {
             setItemViewCacheSize(50)
             setHasFixedSize(true)

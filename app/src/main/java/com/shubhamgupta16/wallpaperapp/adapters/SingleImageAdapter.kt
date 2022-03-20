@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.MultiTransformation
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.shubhamgupta16.wallpaperapp.R
 import com.shubhamgupta16.wallpaperapp.databinding.ItemWallClientBinding
 import com.shubhamgupta16.wallpaperapp.models.wallpapers.WallModel
@@ -38,14 +39,15 @@ class SingleImageAdapter(
             )
         )
         Glide.with(context)
-//            .load(model.urls.regular ?: model.urls.small)
-            .load(model.urls.small)
+            .load(model.urls.regular ?: model.urls.small)
+//            .load(model.urls.small)
             .thumbnail()
             .placeholder(GradientDrawable().apply {
                 setColor(Color.parseColor(model.color))
                 cornerRadius = cardRadius
             })
             .transform(mlt)
+            .transition(DrawableTransitionOptions.withCrossFade())
             .into(holder.binding.imageView)
 
         holder.itemView.setOnClickListener {
