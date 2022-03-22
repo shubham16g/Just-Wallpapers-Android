@@ -58,7 +58,6 @@ class FullWallpaperActivity : AppCompatActivity() {
         setTransparentStatusBar()
         setContentView(binding.root)
 
-        applyBlurView(binding.actionCard, 10f)
 
         val position = intent.getIntExtra("position", 0)
         val wallModelList = intent.getSerializableExtra("list") as WallModelListHolder

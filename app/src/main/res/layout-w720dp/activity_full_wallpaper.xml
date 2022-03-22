@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
     android:clickable="true"
-    android:focusable="true">
+    android:focusable="true"
+    android:background="@color/white">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -63,13 +63,13 @@
             app:layout_constraintVertical_bias="1.0"
             app:layout_wrapBehaviorInParent="horizontal_only" />
 
-        <eightbitlab.com.blurview.BlurView
+        <RelativeLayout
             android:id="@+id/action_card"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_marginTop="35dp"
             android:layout_marginEnd="20dp"
             android:layout_marginBottom="5dp"
+            android:layout_marginTop="35dp"
             android:background="@drawable/background_card"
             android:paddingStart="15dp"
             android:paddingEnd="15dp"
@@ -78,120 +78,114 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintWidth_max="300dp">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-
-                <LinearLayout
-                    android:id="@+id/author_container"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginTop="24dp"
-                    android:background="@drawable/background_card"
-                    android:gravity="center"
-                    android:padding="3dp">
-
-                    <ImageView
-                        android:id="@+id/author_profile"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:background="@drawable/round_btn" />
-
-                    <TextView
-                        android:id="@+id/author_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginEnd="8dp"
-                        android:ellipsize="end"
-                        android:lines="1"
-                        android:maxWidth="110dp"
-                        android:minWidth="60dp"
-                        android:textColor="@color/white" />
-                </LinearLayout>
+            <LinearLayout
+                android:id="@+id/author_container"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/background_card"
+                android:gravity="center"
+                android:padding="3dp">
 
                 <ImageView
+                    android:id="@+id/author_profile"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/round_btn" />
+
+                <TextView
+                    android:id="@+id/author_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:background="?attr/selectableItemBackgroundBorderless"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:src="@drawable/ic_baseline_keyboard_arrow_down_24"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="8dp"
+                    android:ellipsize="end"
+                    android:lines="1"
+                    android:maxWidth="110dp"
+                    android:minWidth="60dp"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true"
+                android:src="@drawable/ic_baseline_keyboard_arrow_down_24"
+                app:tint="@color/white" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginTop="25dp"
+                android:layout_marginBottom="10dp"
+                android:orientation="vertical">
+
+
+                <ImageButton
+                    android:layout_width="@dimen/action_icon_size"
+                    android:layout_height="@dimen/action_icon_size"
+                    android:background="@drawable/round_btn_dark"
+                    android:src="@drawable/ic_baseline_arrow_downward_24"
                     app:tint="@color/white" />
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginTop="25dp"
-                    android:layout_marginBottom="10dp"
-                    android:orientation="vertical">
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="6" />
 
+                <ImageButton
+                    android:id="@+id/set_wallpaper"
+                    android:layout_width="@dimen/action_icon_size"
+                    android:layout_height="@dimen/action_icon_size"
+                    android:background="@drawable/round_btn_dark"
+                    android:src="@drawable/ic_baseline_wallpaper_24"
+                    app:tint="@color/white" />
 
-                    <ImageButton
-                        android:layout_width="@dimen/action_icon_size"
-                        android:layout_height="@dimen/action_icon_size"
-                        android:background="@drawable/round_btn_dark"
-                        android:src="@drawable/ic_baseline_arrow_downward_24"
-                        app:tint="@color/white" />
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="6" />
 
-                    <View
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:layout_weight="6" />
+                <ImageButton
+                    android:id="@+id/fav_button"
+                    android:layout_width="@dimen/action_icon_size"
+                    android:layout_height="@dimen/action_icon_size"
+                    android:background="@drawable/round_btn_dark"
+                    android:src="@drawable/ic_baseline_favorite_border_24"
+                    app:tint="@color/white" />
 
-                    <ImageButton
-                        android:id="@+id/set_wallpaper"
-                        android:layout_width="@dimen/action_icon_size"
-                        android:layout_height="@dimen/action_icon_size"
-                        android:background="@drawable/round_btn_dark"
-                        android:src="@drawable/ic_baseline_wallpaper_24"
-                        app:tint="@color/white" />
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="6" />
 
-                    <View
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:layout_weight="6" />
+                <ImageButton
+                    android:layout_width="@dimen/action_icon_size"
+                    android:layout_height="@dimen/action_icon_size"
+                    android:background="@drawable/round_btn_dark"
+                    android:src="@drawable/ic_baseline_arrow_downward_24"
+                    app:tint="@color/white" />
 
-                    <ImageButton
-                        android:id="@+id/fav_button"
-                        android:layout_width="@dimen/action_icon_size"
-                        android:layout_height="@dimen/action_icon_size"
-                        android:background="@drawable/round_btn_dark"
-                        android:src="@drawable/ic_baseline_favorite_border_24"
-                        app:tint="@color/white" />
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="6" />
 
-                    <View
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:layout_weight="6" />
+                <ImageButton
+                    android:layout_width="@dimen/action_icon_size"
+                    android:layout_height="@dimen/action_icon_size"
+                    android:background="@drawable/round_btn_dark"
+                    android:src="@drawable/three_dots"
+                    app:tint="@color/white" />
 
-                    <ImageButton
-                        android:layout_width="@dimen/action_icon_size"
-                        android:layout_height="@dimen/action_icon_size"
-                        android:background="@drawable/round_btn_dark"
-                        android:src="@drawable/ic_baseline_arrow_downward_24"
-                        app:tint="@color/white" />
+            </LinearLayout>
 
-                    <View
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:layout_weight="6" />
-
-                    <ImageButton
-                        android:layout_width="@dimen/action_icon_size"
-                        android:layout_height="@dimen/action_icon_size"
-                        android:background="@drawable/round_btn_dark"
-                        android:src="@drawable/three_dots"
-                        app:tint="@color/white" />
-
-                </LinearLayout>
-            </RelativeLayout>
-
-        </eightbitlab.com.blurview.BlurView>
+        </RelativeLayout>
 
         <LinearLayout
             android:id="@+id/navigation_overlay"
