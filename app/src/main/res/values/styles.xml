@@ -5,4 +5,17 @@
 <!--        <item name="fontFamily">@font/heebo_bold</item>-->
         <item name="android:textAllCaps">false</item>
     </style>
+
+    <style name="BottomSheetDialog" parent="Theme.MaterialComponents.DayNight.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/bottomSheetStyleWrapper</item>
+    </style>
+
+    <style name="bottomSheetStyleWrapper" parent="Widget.Design.BottomSheet.Modal">
+        <!--        todo padded rounded corner bg-->
+        <item name="android:background">@drawable/background_bottom_sheet</item>
+    </style>
+
+    <style name="DefaultAlertTheme" parent="@style/Theme.MaterialComponents.DayNight.Dialog.Alert">
+        <item name="android:windowBackground">@drawable/background_alert_dialog</item>
+    </style>
 </resources>

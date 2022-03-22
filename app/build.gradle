@@ -97,5 +97,6 @@ dependencies {
 
 //    Third Party
     implementation 'com.github.valkriaine:Bouncy:1.8'
+    implementation 'com.github.Dimezis:BlurView:version-1.6.6'
 
 }

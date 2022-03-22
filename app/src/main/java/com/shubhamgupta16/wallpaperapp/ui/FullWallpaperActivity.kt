@@ -9,7 +9,6 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
 import android.view.animation.DecelerateInterpolator
 import androidx.activity.viewModels
@@ -23,7 +22,6 @@ import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.shubhamgupta16.wallpaperapp.R
 import com.shubhamgupta16.wallpaperapp.adapters.SingleImageAdapter
 import com.shubhamgupta16.wallpaperapp.databinding.ActivityFullWallpaperBinding
@@ -59,6 +57,8 @@ class FullWallpaperActivity : AppCompatActivity() {
         fitFullScreen()
         setTransparentStatusBar()
         setContentView(binding.root)
+
+        applyBlurView(binding.actionCard, 10f)
 
         val position = intent.getIntExtra("position", 0)
         val wallModelList = intent.getSerializableExtra("list") as WallModelListHolder
@@ -108,22 +108,21 @@ class FullWallpaperActivity : AppCompatActivity() {
             val model = viewModel.list[currentPosition]
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 val sheetLayout =
-                    SheetLayoutSetOnBinding.inflate(LayoutInflater.from(this), null, false)
-
+                    SheetLayoutSetOnBinding.inflate(layoutInflater)
+                val dialog = alertDialog(sheetLayout)
                 sheetLayout.onHomeScreenBtn.setOnClickListener {
                     fetchAndApplyWallpaper(model, WallpaperManager.FLAG_SYSTEM)
+                    dialog.dismiss()
                 }
                 sheetLayout.onLockScreenBtn.setOnClickListener {
                     fetchAndApplyWallpaper(model, WallpaperManager.FLAG_LOCK)
+                    dialog.dismiss()
                 }
                 sheetLayout.onBothScreenBtn.setOnClickListener {
                     fetchAndApplyWallpaper(model)
+                    dialog.dismiss()
                 }
-                fetchAndApplyWallpaper(model)
-
-                /*BottomSheetDialog(this).also {
-                    setContentView(sheetLayout.root)
-                }.show()*/
+                dialog.show()
             } else
                 fetchAndApplyWallpaper(model)
         }

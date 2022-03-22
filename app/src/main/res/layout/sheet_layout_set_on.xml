@@ -4,7 +4,6 @@
     android:orientation="vertical"
     android:layout_height="wrap_content"
     android:gravity="center_horizontal"
-    android:background="@drawable/background_bottom_sheet"
     android:paddingBottom="30dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 

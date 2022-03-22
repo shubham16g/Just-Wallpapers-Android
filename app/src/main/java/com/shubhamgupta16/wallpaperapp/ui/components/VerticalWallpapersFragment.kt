@@ -133,6 +133,7 @@ class VerticalWallpapersFragment : Fragment() {
             showFullWallpaperFragment(i)
         }
         binding.recyclerView.adapter = adapter
+        binding.recyclerView.itemAnimator = null
         binding.recyclerView.edgeEffectFactory = BounceEdgeEffectFactory()
         paginationController = PaginationController(binding.recyclerView, manager) {
             viewModel.fetch()
