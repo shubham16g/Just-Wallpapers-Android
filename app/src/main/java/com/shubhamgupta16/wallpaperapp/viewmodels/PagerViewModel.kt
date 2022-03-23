@@ -5,9 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.shubhamgupta16.wallpaperapp.models.wallpapers.WallModel
+import com.shubhamgupta16.wallpaperapp.repositories.WallRepository
 import com.shubhamgupta16.wallpaperapp.viewmodels.live_observer.ListCase
 import com.shubhamgupta16.wallpaperapp.viewmodels.live_observer.ListObserver
-import com.shubhamgupta16.wallpaperapp.repositories.WallRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -24,6 +24,7 @@ class PagerViewModel
     val list: List<WallModel> = _list
 
     private var page = 1
+    private var id = 0
     private var lastPage = 1
     private var query: String? = null
     private var category: String? = null
@@ -44,6 +45,11 @@ class PagerViewModel
         this.query = query
         this.color = color
         this.category = category
+        this.id = 0
+    }
+
+    fun init(id: Int) {
+        this.id = id
     }
 
     fun fetch() {
@@ -51,10 +57,12 @@ class PagerViewModel
         if (_listObserver.value?.case == ListCase.INITIAL_LOADING) return
         _listObserver.value = ListObserver(ListCase.INITIAL_LOADING)
         viewModelScope.launch(Dispatchers.IO) {
-            val response =
+            val response = if (id == 0)
                 wallRepository.getWalls(page = page, s = query, category = category, color = color)
+            else
+                wallRepository.getWallsWithIds(listOf(id))
             if (response.data != null) {
-                    lastPage = response.data!!.lastPage
+                lastPage = response.data!!.lastPage
                     val size = _list.size
                     _list.addAll(response.data!!.data)
                     page++

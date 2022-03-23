@@ -6,6 +6,7 @@ import com.shubhamgupta16.wallpaperapp.network.ApiResponse
 import com.shubhamgupta16.wallpaperapp.network.ApiService
 import com.shubhamgupta16.wallpaperapp.network.request.RequestIdModel
 import com.shubhamgupta16.wallpaperapp.room.FavWallDao
+import retrofit2.Response
 import javax.inject.Inject
 
 class WallRepository @Inject constructor(private val apiService: ApiService, private val  favDao: FavWallDao) {
@@ -19,17 +20,20 @@ class WallRepository @Inject constructor(private val apiService: ApiService, pri
         color: String? = null,
     ): ApiResponse<WallpaperPageModel> {
         val response = apiService.getWalls(page, perPage, s, orderBy, category, color)
-        if (response.isSuccessful) {
-            return if (response.body() != null) {
-                for ((i, wall) in response.body()!!.data.withIndex()) {
-                    if (favDao.isFav(wall.wallId) != null)
-                        response.body()!!.data[i].isFav = true
-                }
-                ApiResponse(response.body()!!)
-            } else
-                ApiResponse(500)
-        }
-        return ApiResponse(response.code())
+        return filterFav(response)
+    }
+
+    suspend fun getWallsWithIds(
+        wallIds: List<Int>,
+        page: Int = 1,
+        perPage: Int? = null,
+    ): ApiResponse<WallpaperPageModel> {
+        val response = apiService.getWallsWithIds(
+            RequestIdModel(wallIds),
+            page,
+            perPage
+        )
+        return filterFav(response)
     }
 
     suspend fun getFavoriteWallpapers(
@@ -48,23 +52,7 @@ class WallRepository @Inject constructor(private val apiService: ApiService, pri
                 0
             )
         )
-        val response = apiService.getWallsWithIds(
-            RequestIdModel(wallIds),
-            page,
-            perPage
-        )
-        return if (response.isSuccessful) {
-            if (response.body() != null) {
-                for (i in response.body()!!.data.indices) {
-                    response.body()!!.data[i].isFav = true
-                }
-                ApiResponse(response.body()!!)
-            } else
-                ApiResponse(500)
-        } else {
-            ApiResponse(response.code())
-        }
-
+        return getWallsWithIds(wallIds)
     }
 
     suspend fun removeFav(wallId: Int) {
@@ -73,5 +61,21 @@ class WallRepository @Inject constructor(private val apiService: ApiService, pri
 
     suspend fun applyFav(wallId: Int) {
         favDao.insertFav(FavWallModel(wallId = wallId))
+    }
+
+
+    private suspend fun filterFav(response: Response<WallpaperPageModel>): ApiResponse<WallpaperPageModel> {
+        return if (response.isSuccessful) {
+            if (response.body() != null) {
+                for ((i, wall) in response.body()!!.data.withIndex()) {
+                    if (favDao.isFav(wall.wallId) != null)
+                        response.body()!!.data[i].isFav = true
+                }
+                ApiResponse(response.body()!!)
+            } else
+                ApiResponse(500)
+        } else {
+            ApiResponse(response.code())
+        }
     }
 }

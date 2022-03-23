@@ -4,6 +4,7 @@ import android.app.WallpaperManager
 import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -11,6 +12,7 @@ import android.os.Looper
 import android.util.Log
 import android.view.View
 import android.view.animation.DecelerateInterpolator
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.animation.PathInterpolatorCompat
@@ -27,6 +29,7 @@ import com.shubhamgupta16.wallpaperapp.adapters.SingleImageAdapter
 import com.shubhamgupta16.wallpaperapp.databinding.ActivityFullWallpaperBinding
 import com.shubhamgupta16.wallpaperapp.databinding.SheetLayoutSetOnBinding
 import com.shubhamgupta16.wallpaperapp.models.wallpapers.Author
+import com.shubhamgupta16.wallpaperapp.models.wallpapers.WallModel
 import com.shubhamgupta16.wallpaperapp.models.wallpapers.WallModelListHolder
 import com.shubhamgupta16.wallpaperapp.utils.*
 import com.shubhamgupta16.wallpaperapp.viewmodels.PagerViewModel
@@ -58,24 +61,29 @@ class FullWallpaperActivity : AppCompatActivity() {
         setTransparentStatusBar()
         setContentView(binding.root)
 
-
-        val position = intent.getIntExtra("position", 0)
-        val wallModelList = intent.getSerializableExtra("list") as WallModelListHolder
-
-        viewModel.init(
-            wallModelList.list,
-            intent.getIntExtra("page", 1),
-            intent.getIntExtra("lastPage", 1),
-            query = intent.getStringExtra("query"),
-            color = intent.getStringExtra("color"),
-            category = intent.getStringExtra("category"),
-        )
-
         val navigationHeight = getNavigationBarHeight()
         binding.navigationOverlay.setPadding(0, 0, 0, navigationHeight)
         setupViewPager()
-        binding.viewPager2.setCurrentItem(position, true)
-        renderOtherComponents(position)
+
+        val position = intent.getIntExtra("position", 0)
+        val data: Uri? = intent.data
+        when {
+            intent.hasExtra("list") -> {
+                val wallModelListHolder = intent.getSerializableExtra("list") as WallModelListHolder
+                initOnList(wallModelListHolder.list)
+                binding.viewPager2.setCurrentItem(position, true)
+                renderOtherComponents(position)
+            }
+            data != null -> {
+                processOnUri(data)
+                viewModel.fetch()
+            }
+            else -> {
+                Toast.makeText(this, "Internal Error", Toast.LENGTH_SHORT).show()
+                finish()
+                return
+            }
+        }
 
 
         viewModel.listObserver.observe(this) {
@@ -134,6 +142,24 @@ class FullWallpaperActivity : AppCompatActivity() {
                 renderOtherComponents(position)
             }
         })
+    }
+
+    private fun processOnUri(uri:Uri){
+        val segments = uri.pathSegments
+        Log.d(TAG, "processOnUri: $segments")
+        if (segments.contains("id"))
+            viewModel.init(segments.last().toInt())
+    }
+
+    private fun initOnList(list:List<WallModel>){
+        viewModel.init(
+            list,
+            intent.getIntExtra("page", 1),
+            intent.getIntExtra("lastPage", 1),
+            query = intent.getStringExtra("query"),
+            color = intent.getStringExtra("color"),
+            category = intent.getStringExtra("category"),
+        )
     }
 
     private var thumbEven = false
@@ -270,6 +296,7 @@ class FullWallpaperActivity : AppCompatActivity() {
     }
 
     companion object {
+        private const val TAG = "FullWallpaperActivity"
         fun getLaunchingIntent(
             context: Context,
             listHolder: WallModelListHolder,
