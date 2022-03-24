@@ -63,16 +63,22 @@ class PagerViewModel
                 wallRepository.getWalls(page = page, s = query, category = category, color = color)
             else
                 wallRepository.getWallsWithIds(listOf(id))
-            if (response.data != null) {
+            if (response.isSuccessful && response.data != null) {
                 lastPage = response.data!!.lastPage
-                    val size = _list.size
-                    _list.addAll(response.data!!.data)
-                    page++
-                    _listObserver.postValue(
-                        ListObserver(ListCase.ADDED_RANGE, from = size, itemCount = _list.size)
-                    )
+                val size = _list.size
+                _list.addAll(response.data!!.data)
+                page++
+                _listObserver.postValue(
+                    ListObserver(ListCase.ADDED_RANGE, from = size, itemCount = _list.size)
+                )
             } else
                 _listObserver.postValue(ListObserver(ListCase.NO_CHANGE))
+        }
+    }
+
+    fun downloadWallpaper(wallId:Int){
+        viewModelScope.launch(Dispatchers.IO) {
+            wallRepository.downloadWallpaper(wallId)
         }
     }
 

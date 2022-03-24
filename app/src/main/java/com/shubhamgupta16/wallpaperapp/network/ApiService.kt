@@ -3,13 +3,11 @@ package com.shubhamgupta16.wallpaperapp.network
 import android.content.Context
 import com.shubhamgupta16.wallpaperapp.models.init.CategoryModel
 import com.shubhamgupta16.wallpaperapp.models.init.ColorModel
+import com.shubhamgupta16.wallpaperapp.models.wallpapers.MessageModel
 import com.shubhamgupta16.wallpaperapp.models.wallpapers.WallpaperPageModel
 import com.shubhamgupta16.wallpaperapp.network.request.RequestIdModel
 import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface ApiService {
 
@@ -22,6 +20,11 @@ interface ApiService {
         @Query("category") category: String? = null,
         @Query("color") color: String? = null,
     ): Response<WallpaperPageModel>
+
+    @GET("wall/download/{id}")
+    suspend fun downloadWallpaper(
+        @Path("id") wallId:Int
+    ): Response<MessageModel>
 
     @POST("wall/list")
     suspend fun getWallsWithIds(
@@ -36,9 +39,10 @@ interface ApiService {
     @GET("list/category")
     suspend fun getCategories(): Response<List<CategoryModel>>
 
+
+
     companion object {
         fun build(context: Context) =
             ApiServiceBuilder.build(context, "wall-cache", 10 * 1024 * 1024, ApiService::class.java)
-
     }
 }

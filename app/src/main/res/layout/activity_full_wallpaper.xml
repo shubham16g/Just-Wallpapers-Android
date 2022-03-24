@@ -124,6 +124,7 @@
 
 
                 <ImageButton
+                    android:id="@+id/download_button"
                     android:layout_width="@dimen/action_icon_size"
                     android:layout_height="@dimen/action_icon_size"
                     android:background="@drawable/round_btn_dark"
@@ -136,7 +137,7 @@
                     android:layout_weight="6" />
 
                 <ImageButton
-                    android:id="@+id/set_wallpaper"
+                    android:id="@+id/set_wallpaper_button"
                     android:layout_width="@dimen/action_icon_size"
                     android:layout_height="@dimen/action_icon_size"
                     android:background="@drawable/round_btn_dark"

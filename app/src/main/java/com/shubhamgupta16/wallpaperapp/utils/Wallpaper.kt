@@ -11,29 +11,16 @@ import com.shubhamgupta16.wallpaperapp.models.wallpapers.WallModel
 import java.io.IOException
 
 
-fun Context.fetchAndApplyWallpaper(model: WallModel, flag: Int?=null){
-    if (isOrientationLandscape()){
-        Toast.makeText(this, "Set Wallpapers only in Portrait Mode", Toast.LENGTH_SHORT).show()
-        return
-    }
+fun Context.fetchWallpaperBitmap(model: WallModel, listener:(bitmap: Bitmap?)->Unit){
     Glide.with(this).asBitmap().load(model.urls.regular)
         .transform(RotationTransform((model.rotation ?: 0).toFloat()))
         .addBitmapListener { isReady, resource, e ->
-            if (isReady)
-                resource?.let { it1 ->
-                    setWallpaper(
-                        it1,
-                        it1.width,
-                        it1.height,
-                        flag
-                    )
-                }
+                listener(resource)
+
         }.submit()
-    Toast.makeText(this, "Loading...", Toast.LENGTH_SHORT).show()
-    Toast.makeText(this, "Wallpaper Set Successfully!", Toast.LENGTH_SHORT).show()
 }
 
-fun Context.setWallpaper(bmap2: Bitmap, width: Int, height: Int, flag: Int? = null) {
+fun Context.applyWall(bmap2: Bitmap, width: Int, height: Int, flag: Int? = null) {
     val bitmap = bmap2
 //    val bitmap = Bitmap.createScaledBitmap(bmap2, width, height, true)
     val wallpaperManager = WallpaperManager.getInstance(this)

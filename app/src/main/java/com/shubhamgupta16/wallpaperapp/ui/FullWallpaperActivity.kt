@@ -1,14 +1,15 @@
 package com.shubhamgupta16.wallpaperapp.ui
 
 import android.app.WallpaperManager
+import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
+import android.media.MediaScannerConnection
 import android.net.Uri
-import android.os.Build
-import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
+import android.os.*
+import android.provider.MediaStore
 import android.util.Log
 import android.view.View
 import android.view.animation.DecelerateInterpolator
@@ -31,7 +32,6 @@ import com.shubhamgupta16.wallpaperapp.databinding.SheetLayoutSetOnBinding
 import com.shubhamgupta16.wallpaperapp.models.wallpapers.Author
 import com.shubhamgupta16.wallpaperapp.models.wallpapers.WallModel
 import com.shubhamgupta16.wallpaperapp.models.wallpapers.WallModelListHolder
-import com.shubhamgupta16.wallpaperapp.ui.main.MainActivity
 import com.shubhamgupta16.wallpaperapp.utils.*
 import com.shubhamgupta16.wallpaperapp.viewmodels.PagerViewModel
 import com.shubhamgupta16.wallpaperapp.viewmodels.live_observer.ListCase
@@ -39,6 +39,9 @@ import dagger.hilt.android.AndroidEntryPoint
 import jp.wasabeef.glide.transformations.ColorFilterTransformation
 import jp.wasabeef.glide.transformations.CropCircleWithBorderTransformation
 import jp.wasabeef.glide.transformations.gpu.BrightnessFilterTransformation
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
 
 
 @AndroidEntryPoint
@@ -128,7 +131,17 @@ class FullWallpaperActivity : AppCompatActivity() {
             startActivity(Intent.createChooser(intent, "Share via"))
         }
 
-        binding.setWallpaper.setOnClickListener {
+        binding.downloadButton.setOnClickListener {
+            val model = viewModel.list[currentPosition]
+            fetchWallpaperBitmap(model){
+                if (it != null)
+                    saveImageToExternal("app", "imagename.png", it)
+            }
+            viewModel.downloadWallpaper(model.wallId)
+
+        }
+
+        binding.setWallpaperButton.setOnClickListener {
             val model = viewModel.list[currentPosition]
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 val sheetLayout =
@@ -147,11 +160,12 @@ class FullWallpaperActivity : AppCompatActivity() {
                     dialog.dismiss()
                 }
                 dialog.show()
-            } else
+            } else {
                 fetchAndApplyWallpaper(model)
+            }
         }
 
-//        binding.viewPager2.reduceDragSensitivity(-10)
+        binding.viewPager2.reduceDragSensitivity(-10)
 
         binding.viewPager2.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
@@ -161,14 +175,62 @@ class FullWallpaperActivity : AppCompatActivity() {
         })
     }
 
-    private fun processOnUri(uri:Uri){
+    @Throws(IOException::class)
+    fun Context.saveImageToExternal(appFolder:String, imgName: String, bm: Bitmap) {
+
+        /*val resolver = contentResolver
+        val contentValues = ContentValues().apply {
+            put(MediaStore.MediaColumns.DISPLAY_NAME, "CuteKitten001")
+            put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
+            put(MediaStore.MediaColumns.RELATIVE_PATH, "DCIM/PerracoLabs")
+        }
+
+        val uri = resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
+
+        resolver.openOutputStream(uri).use {
+            // TODO something with the stream
+        }*/
+        //Create Path to save Image
+        val path: File? = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        path?.mkdirs()
+        val imageFile = File(path, "$imgName.png") // Imagename.png
+        val out = FileOutputStream(imageFile)
+        try {
+            bm.compress(Bitmap.CompressFormat.PNG, 100, out) // Compress Image
+            out.flush()
+            out.close()
+            MediaScannerConnection.scanFile(
+                this, arrayOf(imageFile.absolutePath), null
+            ) { path, uri ->
+                Log.i("ExternalStorage", "Scanned $path:")
+                Log.i("ExternalStorage", "-> uri=$uri")
+            }
+        } catch (e: Exception) {
+            throw IOException()
+        }
+    }
+    private fun fetchAndApplyWallpaper(model: WallModel, flag: Int? = null) {
+        if (isOrientationLandscape()) {
+            Toast.makeText(this, "Set Wallpapers only in Portrait Mode", Toast.LENGTH_SHORT).show()
+            return
+        }
+        fetchWallpaperBitmap(model) {
+            if (it != null)
+                applyWall(it, it.width, it.height, flag)
+        }
+        viewModel.downloadWallpaper(model.wallId)
+        Toast.makeText(this, "Loading...", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, "Wallpaper Set Successfully!", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun processOnUri(uri: Uri) {
         val segments = uri.pathSegments
         Log.d(TAG, "processOnUri: $segments")
         if (segments.contains("id"))
             viewModel.init(segments.last().toInt())
     }
 
-    private fun initOnList(list:List<WallModel>){
+    private fun initOnList(list: List<WallModel>) {
         viewModel.init(
             list,
             intent.getIntExtra("page", 1),
