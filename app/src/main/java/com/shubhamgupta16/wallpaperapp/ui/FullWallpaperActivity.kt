@@ -39,6 +39,7 @@ import jp.wasabeef.glide.transformations.ColorFilterTransformation
 import jp.wasabeef.glide.transformations.CropCircleWithBorderTransformation
 import jp.wasabeef.glide.transformations.gpu.BrightnessFilterTransformation
 
+
 @AndroidEntryPoint
 class FullWallpaperActivity : AppCompatActivity() {
 
@@ -109,6 +110,15 @@ class FullWallpaperActivity : AppCompatActivity() {
 
         binding.favButton.setOnClickListener {
             viewModel.toggleFav(currentPosition)
+        }
+
+        binding.shareButton.setOnClickListener {
+            val intent = Intent(Intent.ACTION_SEND).apply {
+                intent.type = "text/plain"
+//                intent.putExtra(Intent.EXTRA_SUBJECT, "Checkout this Cool Wallpaper - Wallpaper App")
+                intent.putExtra(Intent.EXTRA_TEXT, "Checkout this Cool Wallpaper\n http://wallpaper.onetakego.com")
+            }
+            startActivity(Intent.createChooser(intent, "Share via"))
         }
 
         binding.setWallpaper.setOnClickListener {

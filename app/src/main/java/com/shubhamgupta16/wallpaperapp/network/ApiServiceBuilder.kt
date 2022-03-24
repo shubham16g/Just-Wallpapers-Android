@@ -2,6 +2,7 @@ package com.shubhamgupta16.wallpaperapp.network
 
 import android.content.Context
 import com.shubhamgupta16.wallpaperapp.BuildConfig
+import com.shubhamgupta16.wallpaperapp.R
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -25,7 +26,7 @@ object ApiServiceBuilder {
             .build()
 
         val retrofit = Retrofit.Builder()
-            .baseUrl(BuildConfig.BASE_URL)
+            .baseUrl("${context.getString(R.string.SCHEMA)}://${context.getString(R.string.BASE_URL)}/api/" )
             .addConverterFactory(GsonConverterFactory.create())
             .client(client)
             .build()

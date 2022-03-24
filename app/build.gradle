@@ -19,7 +19,8 @@ android {
         versionName "1.0"
 
         buildConfigField("String", "API_KEY", secretProperties['API_KEY'])
-        buildConfigField("String", "BASE_URL", secretProperties['BASE_URL'])
+        resValue("string", "BASE_URL", secretProperties['BASE_URL'])
+        resValue("string", "SCHEMA", secretProperties['SCHEMA'])
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

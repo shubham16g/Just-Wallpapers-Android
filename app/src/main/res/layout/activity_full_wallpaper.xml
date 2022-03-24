@@ -162,10 +162,11 @@
                     android:layout_weight="6" />
 
                 <ImageButton
+                    android:id="@+id/share_button"
                     android:layout_width="@dimen/action_icon_size"
                     android:layout_height="@dimen/action_icon_size"
                     android:background="@drawable/round_btn_dark"
-                    android:src="@drawable/ic_baseline_arrow_downward_24"
+                    android:src="@drawable/ic_baseline_share_24"
                     app:tint="@color/white" />
 
                 <View
