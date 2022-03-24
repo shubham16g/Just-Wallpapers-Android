@@ -52,6 +52,8 @@ class PagerViewModel
         this.id = id
     }
 
+    fun isShowingSharedImage() = id != 0
+
     fun fetch() {
         if (page > lastPage) return
         if (_listObserver.value?.case == ListCase.INITIAL_LOADING) return

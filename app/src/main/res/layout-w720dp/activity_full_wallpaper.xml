@@ -68,7 +68,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginEnd="20dp"
-            android:layout_marginBottom="5dp"
+            android:layout_marginBottom="15dp"
             android:layout_marginTop="35dp"
             android:background="@drawable/background_card"
             android:paddingStart="15dp"
@@ -106,16 +106,6 @@
                     android:minWidth="60dp"
                     android:textColor="@color/white" />
             </LinearLayout>
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:clickable="true"
-                android:focusable="true"
-                android:src="@drawable/ic_baseline_keyboard_arrow_down_24"
-                app:tint="@color/white" />
 
             <LinearLayout
                 android:layout_width="wrap_content"

@@ -31,6 +31,7 @@ import com.shubhamgupta16.wallpaperapp.databinding.SheetLayoutSetOnBinding
 import com.shubhamgupta16.wallpaperapp.models.wallpapers.Author
 import com.shubhamgupta16.wallpaperapp.models.wallpapers.WallModel
 import com.shubhamgupta16.wallpaperapp.models.wallpapers.WallModelListHolder
+import com.shubhamgupta16.wallpaperapp.ui.main.MainActivity
 import com.shubhamgupta16.wallpaperapp.utils.*
 import com.shubhamgupta16.wallpaperapp.viewmodels.PagerViewModel
 import com.shubhamgupta16.wallpaperapp.viewmodels.live_observer.ListCase
@@ -104,6 +105,9 @@ class FullWallpaperActivity : AppCompatActivity() {
                     }
                     ListCase.NO_CHANGE -> {
                     }
+                    ListCase.EMPTY -> {
+
+                    }
                 }
             }
         }
@@ -114,9 +118,12 @@ class FullWallpaperActivity : AppCompatActivity() {
 
         binding.shareButton.setOnClickListener {
             val intent = Intent(Intent.ACTION_SEND).apply {
-                intent.type = "text/plain"
-//                intent.putExtra(Intent.EXTRA_SUBJECT, "Checkout this Cool Wallpaper - Wallpaper App")
-                intent.putExtra(Intent.EXTRA_TEXT, "Checkout this Cool Wallpaper\n http://wallpaper.onetakego.com")
+                type = "text/plain"
+                putExtra(Intent.EXTRA_SUBJECT, "Checkout this Cool Wallpaper - Wallpaper App")
+                putExtra(
+                    Intent.EXTRA_TEXT,
+                    "Checkout this Cool Wallpaper\n ${getString(R.string.SCHEMA)}://${getString(R.string.BASE_URL)}/id/${viewModel.list[currentPosition].wallId}"
+                )
             }
             startActivity(Intent.createChooser(intent, "Share via"))
         }
@@ -291,6 +298,17 @@ class FullWallpaperActivity : AppCompatActivity() {
             animator.start()
             isActionCardVisible = isVisible
         }
+    }
+
+    override fun onBackPressed() {
+        if (viewModel.isShowingSharedImage()) {
+            val intent = Intent(this, SplashActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            startActivity(intent)
+            finish()
+        } else
+            super.onBackPressed()
+
     }
 
     private fun updateAuthor(author: Author?) {

@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="pager_bottom">30dp</dimen>
-    <dimen name="pager_top">50dp</dimen>
+    <dimen name="pager_bottom">22dp</dimen>
+    <dimen name="pager_top">42dp</dimen>
+
+    <!--    full view pager-->
+    <dimen name="view_pager_item_margin">195dp</dimen>
+    <dimen name="view_pager_next_visible_item">205dp</dimen>
 </resources>
