@@ -15,7 +15,6 @@ fun ViewPager2.apply3DSwiper(){
         offscreenPageLimit = 2  // make sure left/right item is rendered
     }
 
-
     val currentItemHorizontalMarginPx = resources.getDimensionPixelSize(R.dimen.view_pager_item_margin)
     val nextItemVisiblePx = resources.getDimension(R.dimen.view_pager_next_visible_item)
     val abs = 0.25f

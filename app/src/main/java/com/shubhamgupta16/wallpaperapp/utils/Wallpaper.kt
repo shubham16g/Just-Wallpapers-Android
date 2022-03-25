@@ -1,5 +1,6 @@
 package com.shubhamgupta16.wallpaperapp.utils
 
+import android.app.Activity
 import android.app.WallpaperManager
 import android.content.Context
 import android.content.res.Configuration
@@ -11,11 +12,13 @@ import com.shubhamgupta16.wallpaperapp.models.wallpapers.WallModel
 import java.io.IOException
 
 
-fun Context.fetchWallpaperBitmap(model: WallModel, listener:(bitmap: Bitmap?)->Unit){
+fun Activity.fetchWallpaperBitmap(model: WallModel, listener:(bitmap: Bitmap?)->Unit){
     Glide.with(this).asBitmap().load(model.urls.regular)
         .transform(RotationTransform((model.rotation ?: 0).toFloat()))
         .addBitmapListener { isReady, resource, e ->
+            runOnUiThread{
                 listener(resource)
+            }
 
         }.submit()
 }

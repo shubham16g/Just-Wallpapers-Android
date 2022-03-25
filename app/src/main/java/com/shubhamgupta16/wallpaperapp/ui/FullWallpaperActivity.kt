@@ -1,15 +1,14 @@
 package com.shubhamgupta16.wallpaperapp.ui
 
 import android.app.WallpaperManager
-import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.net.Uri
-import android.os.*
-import android.provider.MediaStore
+import android.os.Build
+import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.View
 import android.view.animation.DecelerateInterpolator
@@ -39,10 +38,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import jp.wasabeef.glide.transformations.ColorFilterTransformation
 import jp.wasabeef.glide.transformations.CropCircleWithBorderTransformation
 import jp.wasabeef.glide.transformations.gpu.BrightnessFilterTransformation
-import java.io.File
-import java.io.FileOutputStream
-import java.io.IOException
-import java.io.OutputStream
 import java.util.*
 
 
@@ -134,13 +129,11 @@ class FullWallpaperActivity : AppCompatActivity() {
         }
 
         binding.downloadButton.setOnClickListener {
-            val model = viewModel.list[currentPosition]
-            fetchWallpaperBitmap(model){
-                if (it != null)
-                    if (!saveImageToExternal("app", "${UUID.randomUUID()}", it))
-                        Toast.makeText(this, "WTF", Toast.LENGTH_SHORT).show()
+            if (isHaveWriteExternalStoragePermission()) {
+                processDownloadWallpaper()
+            } else {
+
             }
-            viewModel.downloadWallpaper(model.wallId)
 
         }
 
@@ -168,7 +161,7 @@ class FullWallpaperActivity : AppCompatActivity() {
             }
         }
 
-        binding.viewPager2.reduceDragSensitivity(-10)
+        binding.viewPager2.reduceDragSensitivity()
 
         binding.viewPager2.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
@@ -178,64 +171,17 @@ class FullWallpaperActivity : AppCompatActivity() {
         })
     }
 
-    inline fun <T> sdk29orUp(listener: () -> T): T? =
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q)
-            listener() else null
-
-    @Throws(IOException::class)
-    fun Context.saveImageToExternal(appFolder: String, imgName: String, bm: Bitmap): Boolean {
-        val outStream: OutputStream? = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            val contentValues = ContentValues().apply {
-                put(MediaStore.MediaColumns.DISPLAY_NAME, imgName)
-                put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
-                put(
-                    MediaStore.MediaColumns.RELATIVE_PATH,
-                    "${Environment.DIRECTORY_PICTURES}/$appFolder"
-                )
-            }
-            try {
-                contentResolver.insert(
-                    MediaStore.Images.Media.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY),
-                    contentValues
-                )?.let { uri ->
-                    contentResolver.openOutputStream(uri)
-                } ?: throw IOException("Unable to create Media Store entry")
-            } catch (e: IOException) {
-                null
-            }
-
-        } else {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                null
-            } else {
-                @Suppress("DEPRECATION")
-                val imagesDir =
-                    Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES + "/$appFolder")
-                imagesDir.mkdirs()
-                val image = File(imagesDir, "$imgName.jpg")
-                FileOutputStream(image)
-            }
+    private fun processDownloadWallpaper(){
+        val model = viewModel.list[currentPosition]
+        fetchWallpaperBitmap(model) {
+            if (it != null)
+                if (!saveImageToExternal("app", "${UUID.randomUUID()}", it))
+                    Toast.makeText(this, "WTF", Toast.LENGTH_SHORT).show()
         }
-        return try {
-            if (outStream == null) false
-            else {
-                outStream.use { stream ->
-                    if (!bm.compress(Bitmap.CompressFormat.JPEG, 95, stream))
-                        throw IOException("Can't save bitmap")
-                }
-                /*MediaScannerConnection.scanFile(
-                this, arrayOf(imageFile.absolutePath), null
-                ) { path, uri ->
-                    Log.i("ExternalStorage", "Scanned $path:")
-                    Log.i("ExternalStorage", "-> uri=$uri")
-                }*/
-                true
-            }
-        } catch (e: IOException) {
-            e.printStackTrace()
-            false
-        }
+        viewModel.downloadWallpaper(model.wallId)
     }
+
+
     private fun fetchAndApplyWallpaper(model: WallModel, flag: Int? = null) {
         if (isOrientationLandscape()) {
             Toast.makeText(this, "Set Wallpapers only in Portrait Mode", Toast.LENGTH_SHORT).show()
