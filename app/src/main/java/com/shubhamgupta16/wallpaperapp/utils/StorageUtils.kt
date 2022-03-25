@@ -17,16 +17,16 @@ import java.io.OutputStream
 
 /** Permissions */
 
-fun ComponentActivity.getPermissionLauncher(): ActivityResultLauncher<Array<String>> {
+fun ComponentActivity.getPermissionLauncher(listener: (isAllPermissionGranted:Boolean, Map<String,Boolean>)->Unit): ActivityResultLauncher<Array<String>> {
     return registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) {
-
+        listener(it.values.all { value-> value }, it)
     }
 }
 
 fun ActivityResultLauncher<Array<String>>.launchPermission(
     context: Context,
-    read: Boolean = true,
-    write: Boolean = true,
+    read: Boolean = false,
+    write: Boolean = false,
     extraPermissions:Array<String>? = null
 ) {
     val permissionToRequest = mutableListOf<String>()
@@ -34,9 +34,10 @@ fun ActivityResultLauncher<Array<String>>.launchPermission(
         permissionToRequest.add(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
     if (!context.isHaveReadExternalStoragePermission() && read)
         permissionToRequest.add(android.Manifest.permission.READ_EXTERNAL_STORAGE)
-    extraPermissions?.let {
-        permissionToRequest.addAll(it)
-    }
+        extraPermissions?.forEach {
+            if (it != android.Manifest.permission.READ_EXTERNAL_STORAGE || it != android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            permissionToRequest.add(it)
+        }
     if (permissionToRequest.isNotEmpty())
         launch(permissionToRequest.toTypedArray())
 }
@@ -44,16 +45,16 @@ fun ActivityResultLauncher<Array<String>>.launchPermission(
 
 fun Context.isHaveReadExternalStoragePermission() =
     Build.VERSION.SDK_INT >= Build.VERSION_CODES.M &&
-            checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE) !=
+            checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE) ==
             PackageManager.PERMISSION_GRANTED
 
 fun Context.isHaveWriteExternalStoragePermissionForced() =
     Build.VERSION.SDK_INT >= Build.VERSION_CODES.M &&
-            checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
+            checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE) ==
             PackageManager.PERMISSION_GRANTED
 
 fun Context.isHaveWriteExternalStoragePermission() =
-    Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q || isHaveWriteExternalStoragePermissionForced()
+    Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q || isHaveWriteExternalStoragePermissionForced()
 
 enum class ImageFormat {
     JPEG, PNG

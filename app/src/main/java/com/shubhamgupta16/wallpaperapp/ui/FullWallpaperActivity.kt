@@ -13,6 +13,7 @@ import android.util.Log
 import android.view.View
 import android.view.animation.DecelerateInterpolator
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.animation.PathInterpolatorCompat
@@ -45,6 +46,7 @@ import java.util.*
 class FullWallpaperActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityFullWallpaperBinding
+    private var permissionLauncher: ActivityResultLauncher<Array<String>>?=null
     private val viewModel: PagerViewModel by viewModels()
     private var adapter: SingleImageAdapter? = null
     private var screenMeasure: ScreenMeasure? = null
@@ -62,6 +64,13 @@ class FullWallpaperActivity : AppCompatActivity() {
         fitFullScreen()
         setTransparentStatusBar()
         setContentView(binding.root)
+
+        permissionLauncher = getPermissionLauncher { isAllPermissionGranted, _ ->
+            if (isAllPermissionGranted)
+                processDownloadWallpaper()
+            else
+                Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show()
+        }
 
         val navigationHeight = getNavigationBarHeight()
         binding.navigationOverlay.setPadding(0, 0, 0, navigationHeight)
@@ -132,7 +141,7 @@ class FullWallpaperActivity : AppCompatActivity() {
             if (isHaveWriteExternalStoragePermission()) {
                 processDownloadWallpaper()
             } else {
-
+                permissionLauncher?.launchPermission(this, write = true)
             }
 
         }
