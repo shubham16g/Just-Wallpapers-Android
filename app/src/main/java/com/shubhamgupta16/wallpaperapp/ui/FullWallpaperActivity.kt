@@ -4,9 +4,9 @@ import android.app.WallpaperManager
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
-import android.media.MediaScannerConnection
 import android.net.Uri
 import android.os.*
 import android.provider.MediaStore
@@ -42,6 +42,8 @@ import jp.wasabeef.glide.transformations.gpu.BrightnessFilterTransformation
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
+import java.io.OutputStream
+import java.util.*
 
 
 @AndroidEntryPoint
@@ -135,7 +137,8 @@ class FullWallpaperActivity : AppCompatActivity() {
             val model = viewModel.list[currentPosition]
             fetchWallpaperBitmap(model){
                 if (it != null)
-                    saveImageToExternal("app", "imagename.png", it)
+                    if (!saveImageToExternal("app", "${UUID.randomUUID()}", it))
+                        Toast.makeText(this, "WTF", Toast.LENGTH_SHORT).show()
             }
             viewModel.downloadWallpaper(model.wallId)
 
@@ -175,38 +178,62 @@ class FullWallpaperActivity : AppCompatActivity() {
         })
     }
 
+    inline fun <T> sdk29orUp(listener: () -> T): T? =
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q)
+            listener() else null
+
     @Throws(IOException::class)
-    fun Context.saveImageToExternal(appFolder:String, imgName: String, bm: Bitmap) {
-
-        /*val resolver = contentResolver
-        val contentValues = ContentValues().apply {
-            put(MediaStore.MediaColumns.DISPLAY_NAME, "CuteKitten001")
-            put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
-            put(MediaStore.MediaColumns.RELATIVE_PATH, "DCIM/PerracoLabs")
-        }
-
-        val uri = resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
-
-        resolver.openOutputStream(uri).use {
-            // TODO something with the stream
-        }*/
-        //Create Path to save Image
-        val path: File? = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-        path?.mkdirs()
-        val imageFile = File(path, "$imgName.png") // Imagename.png
-        val out = FileOutputStream(imageFile)
-        try {
-            bm.compress(Bitmap.CompressFormat.PNG, 100, out) // Compress Image
-            out.flush()
-            out.close()
-            MediaScannerConnection.scanFile(
-                this, arrayOf(imageFile.absolutePath), null
-            ) { path, uri ->
-                Log.i("ExternalStorage", "Scanned $path:")
-                Log.i("ExternalStorage", "-> uri=$uri")
+    fun Context.saveImageToExternal(appFolder: String, imgName: String, bm: Bitmap): Boolean {
+        val outStream: OutputStream? = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            val contentValues = ContentValues().apply {
+                put(MediaStore.MediaColumns.DISPLAY_NAME, imgName)
+                put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
+                put(
+                    MediaStore.MediaColumns.RELATIVE_PATH,
+                    "${Environment.DIRECTORY_PICTURES}/$appFolder"
+                )
             }
-        } catch (e: Exception) {
-            throw IOException()
+            try {
+                contentResolver.insert(
+                    MediaStore.Images.Media.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY),
+                    contentValues
+                )?.let { uri ->
+                    contentResolver.openOutputStream(uri)
+                } ?: throw IOException("Unable to create Media Store entry")
+            } catch (e: IOException) {
+                null
+            }
+
+        } else {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                null
+            } else {
+                @Suppress("DEPRECATION")
+                val imagesDir =
+                    Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES + "/$appFolder")
+                imagesDir.mkdirs()
+                val image = File(imagesDir, "$imgName.jpg")
+                FileOutputStream(image)
+            }
+        }
+        return try {
+            if (outStream == null) false
+            else {
+                outStream.use { stream ->
+                    if (!bm.compress(Bitmap.CompressFormat.JPEG, 95, stream))
+                        throw IOException("Can't save bitmap")
+                }
+                /*MediaScannerConnection.scanFile(
+                this, arrayOf(imageFile.absolutePath), null
+                ) { path, uri ->
+                    Log.i("ExternalStorage", "Scanned $path:")
+                    Log.i("ExternalStorage", "-> uri=$uri")
+                }*/
+                true
+            }
+        } catch (e: IOException) {
+            e.printStackTrace()
+            false
         }
     }
     private fun fetchAndApplyWallpaper(model: WallModel, flag: Int? = null) {
