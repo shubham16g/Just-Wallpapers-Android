@@ -17,6 +17,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.animation.PathInterpolatorCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
@@ -39,6 +40,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import jp.wasabeef.glide.transformations.ColorFilterTransformation
 import jp.wasabeef.glide.transformations.CropCircleWithBorderTransformation
 import jp.wasabeef.glide.transformations.gpu.BrightnessFilterTransformation
+import kotlinx.coroutines.launch
 import java.util.*
 
 
@@ -50,7 +52,6 @@ class FullWallpaperActivity : AppCompatActivity() {
     private val viewModel: PagerViewModel by viewModels()
     private var adapter: SingleImageAdapter? = null
     private var screenMeasure: ScreenMeasure? = null
-    private var currentPosition = 0
     private fun initScreenMeasure() {
         if (screenMeasure == null) {
             screenMeasure = ScreenMeasure(this)
@@ -103,8 +104,8 @@ class FullWallpaperActivity : AppCompatActivity() {
                     ListCase.INITIAL_LOADING -> {
                     }
                     ListCase.UPDATED -> {
-                        if (it.at == currentPosition)
-                            updateFavButton(viewModel.list[currentPosition].isFav)
+                        if (it.at == viewModel.currentPosition)
+                            updateFavButton(viewModel.list[viewModel.currentPosition].isFav)
                     }
                     ListCase.ADDED_RANGE -> {
                         adapter?.notifyItemRangeInserted(it.from, it.itemCount)
@@ -122,7 +123,7 @@ class FullWallpaperActivity : AppCompatActivity() {
         }
 
         binding.favButton.setOnClickListener {
-            viewModel.toggleFav(currentPosition)
+            viewModel.toggleFav(viewModel.currentPosition)
         }
 
         binding.shareButton.setOnClickListener {
@@ -131,7 +132,7 @@ class FullWallpaperActivity : AppCompatActivity() {
                 putExtra(Intent.EXTRA_SUBJECT, "Checkout this Cool Wallpaper - Wallpaper App")
                 putExtra(
                     Intent.EXTRA_TEXT,
-                    "Checkout this Cool Wallpaper\n ${getString(R.string.SCHEMA)}://${getString(R.string.BASE_URL)}/id/${viewModel.list[currentPosition].wallId}"
+                    "Checkout this Cool Wallpaper\n ${getString(R.string.SCHEMA)}://${getString(R.string.BASE_URL)}/id/${viewModel.list[viewModel.currentPosition].wallId}"
                 )
             }
             startActivity(Intent.createChooser(intent, "Share via"))
@@ -147,7 +148,7 @@ class FullWallpaperActivity : AppCompatActivity() {
         }
 
         binding.setWallpaperButton.setOnClickListener {
-            val model = viewModel.list[currentPosition]
+            val model = viewModel.list[viewModel.currentPosition]
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 val sheetLayout =
                     SheetLayoutSetOnBinding.inflate(layoutInflater)
@@ -180,12 +181,22 @@ class FullWallpaperActivity : AppCompatActivity() {
         })
     }
 
-    private fun processDownloadWallpaper(){
-        val model = viewModel.list[currentPosition]
-        fetchWallpaperBitmap(model) {
-            if (it != null)
-                if (!saveImageToExternal("app", "${UUID.randomUUID()}", it))
-                    Toast.makeText(this, "WTF", Toast.LENGTH_SHORT).show()
+    private fun processDownloadWallpaper() {
+        val model = viewModel.list[viewModel.currentPosition]
+        Log.d(TAG, "processDownloadWallpaper: Loading....")
+        ImageFetcher(this, model.urls.raw ?: model.urls.full, rotation = model.rotation?:0).onSuccess {
+            lifecycleScope.launch {
+                if (!saveImageToExternal("app", "wallpaper_${model.wallId}", it))
+                    Toast.makeText(
+                        this@FullWallpaperActivity,
+                        "Some Error Occurred",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                Log.d(TAG, "processDownloadWallpaper: DONE")
+
+            }
+        }.onError {
+            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
         }
         viewModel.downloadWallpaper(model.wallId)
     }
@@ -196,9 +207,8 @@ class FullWallpaperActivity : AppCompatActivity() {
             Toast.makeText(this, "Set Wallpapers only in Portrait Mode", Toast.LENGTH_SHORT).show()
             return
         }
-        fetchWallpaperBitmap(model) {
-            if (it != null)
-                applyWall(it, it.width, it.height, flag)
+        ImageFetcher(this, model.urls.full, rotation = model.rotation?:0).onSuccess {
+            applyWall(it, it.width, it.height, flag)
         }
         viewModel.downloadWallpaper(model.wallId)
         Toast.makeText(this, "Loading...", Toast.LENGTH_SHORT).show()
@@ -231,7 +241,7 @@ class FullWallpaperActivity : AppCompatActivity() {
     }
 
     private fun renderOtherComponents(position: Int) {
-        currentPosition = position
+        viewModel.currentPosition = position
         if (position == viewModel.list.lastIndex)
             viewModel.fetch()
         val wallModel = viewModel.list[position]

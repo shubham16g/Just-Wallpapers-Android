@@ -17,6 +17,8 @@ import javax.inject.Inject
 class PagerViewModel
 @Inject constructor(private val wallRepository: WallRepository) :
     ViewModel() {
+    var currentPosition = 0
+
     private val _listObserver = MutableLiveData<ListObserver>()
     val listObserver: LiveData<ListObserver> = _listObserver
 
