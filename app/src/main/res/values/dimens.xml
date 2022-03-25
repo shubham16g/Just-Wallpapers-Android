@@ -15,8 +15,9 @@
 
     <dimen name="action_icon_size">50dp</dimen>
     <dimen name="action_card_height">160dp</dimen>
+    <dimen name="button_progress">80dp</dimen>
 
-<!--    horizontal fragments -->
+    <!--    horizontal fragments -->
     <dimen name="hor_half_gap">4dp</dimen>
     <dimen name="hor_padding">16dp</dimen>
     <dimen name="hor_padding_for_item">12dp</dimen>

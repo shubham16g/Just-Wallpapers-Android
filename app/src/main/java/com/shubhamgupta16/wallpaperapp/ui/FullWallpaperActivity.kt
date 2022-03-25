@@ -40,8 +40,9 @@ import dagger.hilt.android.AndroidEntryPoint
 import jp.wasabeef.glide.transformations.ColorFilterTransformation
 import jp.wasabeef.glide.transformations.CropCircleWithBorderTransformation
 import jp.wasabeef.glide.transformations.gpu.BrightnessFilterTransformation
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.util.*
+import kotlinx.coroutines.withContext
 
 
 @AndroidEntryPoint
@@ -183,22 +184,33 @@ class FullWallpaperActivity : AppCompatActivity() {
 
     private fun processDownloadWallpaper() {
         val model = viewModel.list[viewModel.currentPosition]
-        Log.d(TAG, "processDownloadWallpaper: Loading....")
+        binding.downloadProgress.visibility = View.VISIBLE
         ImageFetcher(this, model.urls.raw ?: model.urls.full, rotation = model.rotation?:0).onSuccess {
-            lifecycleScope.launch {
-                if (!saveImageToExternal("app", "wallpaper_${model.wallId}", it))
-                    Toast.makeText(
-                        this@FullWallpaperActivity,
-                        "Some Error Occurred",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                Log.d(TAG, "processDownloadWallpaper: DONE")
-
+            lifecycleScope.launch(Dispatchers.IO) {
+                saveImageToExternal("app", "wallpaper_${model.wallId}", it).also {
+                    withContext(Dispatchers.Main){
+                        if (!it) {
+                            viewModel.downloadWallpaper(model.wallId)
+                            Toast.makeText(
+                                this@FullWallpaperActivity,
+                                "Some Error Occurred",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        } else {
+                            Toast.makeText(
+                                this@FullWallpaperActivity,
+                                "Image saved successfully!",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                        binding.downloadProgress.fadeVisibility(View.INVISIBLE)
+                    }
+                }
             }
         }.onError {
+            binding.downloadProgress.fadeVisibility(View.INVISIBLE)
             Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
         }
-        viewModel.downloadWallpaper(model.wallId)
     }
 
 
@@ -207,12 +219,20 @@ class FullWallpaperActivity : AppCompatActivity() {
             Toast.makeText(this, "Set Wallpapers only in Portrait Mode", Toast.LENGTH_SHORT).show()
             return
         }
+        binding.setWallpaperProgress.visibility = View.VISIBLE
         ImageFetcher(this, model.urls.full, rotation = model.rotation?:0).onSuccess {
-            applyWall(it, it.width, it.height, flag)
+            lifecycleScope.launch(Dispatchers.IO) {
+                applyWall(it, it.width, it.height, flag)
+                withContext(Dispatchers.Main){
+                    binding.setWallpaperProgress.fadeVisibility(View.INVISIBLE)
+                    viewModel.downloadWallpaper(model.wallId)
+                    Toast.makeText(this@FullWallpaperActivity, "Wallpaper Set Successfully!", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }.onError {
+            binding.setWallpaperProgress.fadeVisibility(View.INVISIBLE)
+            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
         }
-        viewModel.downloadWallpaper(model.wallId)
-        Toast.makeText(this, "Loading...", Toast.LENGTH_SHORT).show()
-        Toast.makeText(this, "Wallpaper Set Successfully!", Toast.LENGTH_SHORT).show()
     }
 
     private fun processOnUri(uri: Uri) {
