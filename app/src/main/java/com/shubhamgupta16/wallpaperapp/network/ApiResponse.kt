@@ -16,6 +16,7 @@ class ApiResponse<T> {
 
     constructor(data: T, code: Int = 200, message: String? = null) {
         this.data = data
+        this.msg = message
         this._code = code
     }
 

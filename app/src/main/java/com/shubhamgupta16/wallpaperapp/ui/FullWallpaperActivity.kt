@@ -123,6 +123,10 @@ class FullWallpaperActivity : AppCompatActivity() {
             }
         }
 
+        binding.backButton.setOnClickListener {
+            onBackPressed()
+        }
+
         binding.favButton.setOnClickListener {
             viewModel.toggleFav(viewModel.currentPosition)
         }
@@ -172,7 +176,7 @@ class FullWallpaperActivity : AppCompatActivity() {
             }
         }
 
-        binding.viewPager2.reduceDragSensitivity()
+//        binding.viewPager2.reduceDragSensitivity()
 
         binding.viewPager2.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
@@ -381,7 +385,10 @@ class FullWallpaperActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         } else
-            super.onBackPressed()
+            if (isZoom)
+                animateZoomOut()
+            else
+                super.onBackPressed()
 
     }
 

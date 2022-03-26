@@ -105,15 +105,12 @@
                     android:textColor="@color/white" />
             </LinearLayout>
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <View
+                android:layout_width="25dp"
+                android:layout_height="6dp"
+                android:layout_marginTop="5dp"
                 android:layout_centerHorizontal="true"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:clickable="true"
-                android:focusable="true"
-                android:src="@drawable/ic_baseline_keyboard_arrow_down_24"
-                app:tint="@color/white" />
+                android:background="@drawable/background_card" />
 
         </RelativeLayout>
 
@@ -206,6 +203,18 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
+
+        <ImageButton
+            android:id="@+id/back_button"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="35dp"
+            android:background="@drawable/round_btn_transparent"
+            android:src="@drawable/ic_arrow_back_asset"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/white" />
 
 
         <!--<TextView
