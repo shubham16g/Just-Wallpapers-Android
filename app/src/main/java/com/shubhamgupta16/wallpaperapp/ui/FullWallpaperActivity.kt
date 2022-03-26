@@ -19,6 +19,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.animation.PathInterpolatorCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
+import com.airbnb.lottie.Lottie
+import com.airbnb.lottie.LottieDrawable
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.MultiTransformation
@@ -201,11 +203,12 @@ class FullWallpaperActivity : AppCompatActivity() {
                                 Toast.LENGTH_SHORT
                             ).show()
                         } else {
-                            Toast.makeText(
+                            binding.downloadDoneTick?.playAndHide()
+                            /*Toast.makeText(
                                 this@FullWallpaperActivity,
                                 "Image saved successfully!",
                                 Toast.LENGTH_SHORT
-                            ).show()
+                            ).show()*/
                         }
                         binding.downloadProgress.fadeVisibility(View.INVISIBLE)
                     }
@@ -230,7 +233,7 @@ class FullWallpaperActivity : AppCompatActivity() {
                 withContext(Dispatchers.Main){
                     binding.setWallpaperProgress.fadeVisibility(View.INVISIBLE)
                     viewModel.downloadWallpaper(model.wallId)
-                    Toast.makeText(this@FullWallpaperActivity, "Wallpaper Set Successfully!", Toast.LENGTH_SHORT).show()
+                    binding.setDoneTick?.playAndHide()
                 }
             }
         }.onError {
@@ -326,25 +329,21 @@ class FullWallpaperActivity : AppCompatActivity() {
     }
 
     private fun setupViewPager() {
-        val h = Handler(Looper.getMainLooper())
-        val r = Runnable {
-            if (!isZoom) animateZoom() else animateZoomOut()
-        }
+
         adapter = SingleImageAdapter(this, viewModel.list) {
             if (isOrientationLandscape()) return@SingleImageAdapter
-            if (!isZoom) hideSystemUI() else showSystemUI()
-            h.post(r)
+            if (!isZoom) animateZoom() else animateZoomOut()
         }
         binding.viewPager2.adapter = adapter
         binding.viewPager2.apply3DSwiper()
-        /*(binding.viewPager2.getChildAt(0)as RecyclerView).apply {
-            setItemViewCacheSize(50)
-            setHasFixedSize(true)
-        }*/
     }
 
     private var isZoom = false
+    val r = Runnable {
+        if (isZoom) hideSystemUI() else showSystemUI()
+    }
     private fun animateZoom() {
+        binding.backButton.playForward(1.5f)
         initScreenMeasure()
         val interpolatorCompat = PathInterpolatorCompat.create(0.4f,-0.03f,.26f,1.1f)
 //        val interpolatorCompat = PathInterpolatorCompat.create(0.32f,0.41f,1f,.26f)
@@ -354,9 +353,11 @@ class FullWallpaperActivity : AppCompatActivity() {
             .setDuration(200).start()
         binding.viewPager2.isUserInputEnabled = false
         animateActionCard(false)
+        h.post(r)
     }
 
     private fun animateZoomOut() {
+        binding.backButton.playReverse(1.5f)
         initScreenMeasure()
         isZoom = false
         binding.viewPager2.animate().scaleX(1f).scaleY(1f).setDuration(200)
@@ -364,6 +365,7 @@ class FullWallpaperActivity : AppCompatActivity() {
             .start()
         binding.viewPager2.isUserInputEnabled = true
         animateActionCard(true)
+        h.post(r)
     }
 
     private var isActionCardVisible = true

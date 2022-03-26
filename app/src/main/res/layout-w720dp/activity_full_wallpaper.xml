@@ -200,17 +200,17 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <ImageButton
+        <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/back_button"
             android:layout_width="45dp"
             android:layout_height="45dp"
+            android:padding="12dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="35dp"
             android:background="@drawable/round_btn_transparent"
-            android:src="@drawable/ic_arrow_back_asset"
+            app:lottie_rawRes="@raw/back_to_close_white"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:tint="@color/white" />
+            app:layout_constraintTop_toTopOf="parent"/>
 
         <!--<TextView
             android:gravity="center"
