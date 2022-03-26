@@ -127,7 +127,7 @@ class FullWallpaperActivity : AppCompatActivity() {
             when {
                 it == null -> binding.setWallpaperProgress.fadeVisibility(View.INVISIBLE)
                 it -> binding.setWallpaperProgress.visibility = View.VISIBLE
-                else -> binding.setDoneTick?.playAndHide()
+                else -> binding.setDoneTick.playAndHide()
             }
         }
 
@@ -135,7 +135,7 @@ class FullWallpaperActivity : AppCompatActivity() {
             when {
                 it == null -> binding.downloadProgress.fadeVisibility(View.INVISIBLE)
                 it -> binding.downloadProgress.visibility = View.VISIBLE
-                else -> binding.downloadDoneTick?.playAndHide()
+                else -> binding.downloadDoneTick.playAndHide()
             }
         }
 

@@ -131,16 +131,13 @@ class PagerViewModel
                 context.saveImageToExternal(context.getString(R.string.app_name), "wallpaper_${wallModel.wallId}", bmp).also {
                     withContext(Dispatchers.Main){
                         if (!it) {
-                            _downloadBitmapLoading.value = null
+//                            _downloadBitmapLoading.value = null
                         } else {
                             downloadWallpaper(wallModel.wallId)
                             _downloadBitmapLoading.value = false
                         }
                         _downloadBitmapLoading.value = null
                     }
-                }
-                withContext(Dispatchers.Main) {
-                    downloadWallpaper(wallModel.wallId)
                 }
             } else {
                 _downloadBitmapLoading.postValue(null)
