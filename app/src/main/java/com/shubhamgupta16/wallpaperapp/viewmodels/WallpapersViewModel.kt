@@ -85,6 +85,12 @@ class WallpapersViewModel
         }
     }
 
+    fun filterFavorites() {
+        viewModelScope.launch {
+            wallRepository.filterFavorites(_list)
+        }
+    }
+
     fun init(query: String? = null, category: String? = null, color: String? = null) {
         _page = 1
         this._query = query
@@ -100,6 +106,8 @@ class WallpapersViewModel
         this._color = null
         this.isFavList = true
     }
+
+
 
     companion object {
         private const val TAG = "ListingViewModel"

@@ -1,6 +1,7 @@
 package com.shubhamgupta16.wallpaperapp.ui.components
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,6 +20,9 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class HorizontalWallpapersFragment : Fragment() {
 
+    companion object{
+        private const val TAG = "HorizontalWallpapersFra"
+    }
     private val viewModel: WallpapersViewModel by viewModels()
     private lateinit var binding: FragmentForHorizontalListBinding
     private var adapter: ImagesAdapter? = null
@@ -29,6 +33,11 @@ class HorizontalWallpapersFragment : Fragment() {
     ): View {
         binding = FragmentForHorizontalListBinding.inflate(inflater, container, false)
         return binding.root
+    }
+
+    override fun onStart() {
+        super.onStart()
+        viewModel.filterFavorites()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

@@ -1,6 +1,7 @@
 package com.shubhamgupta16.wallpaperapp.repositories
 
 import com.shubhamgupta16.wallpaperapp.models.roommodels.FavWallModel
+import com.shubhamgupta16.wallpaperapp.models.wallpapers.WallModel
 import com.shubhamgupta16.wallpaperapp.models.wallpapers.WallpaperPageModel
 import com.shubhamgupta16.wallpaperapp.network.ApiResponse
 import com.shubhamgupta16.wallpaperapp.network.ApiService
@@ -81,6 +82,13 @@ class WallRepository @Inject constructor(private val apiService: ApiService, pri
                 ApiResponse(500)
         } else {
             ApiResponse(response.code())
+        }
+    }
+
+    suspend fun filterFavorites(_list: ArrayList<WallModel?>) {
+        for ((i, wall) in _list.withIndex()) {
+            if (wall == null) continue
+            _list[i]?.isFav = favDao.isFav(wall.wallId) != null
         }
     }
 }

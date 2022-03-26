@@ -15,12 +15,18 @@
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/drawable/progress_indeterminate.xml" value="0.1555" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/drawable/round_btn.xml" value="0.1415" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/drawable/round_btn_dark.xml" value="0.1325" />
+        <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/drawable/round_btn_transparent.xml" value="0.134" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout-land/activity_main.xml" value="0.19" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout-land/fragment_main_home.xml" value="0.1" />
-        <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout-w720dp/activity_full_wallpaper.xml" value="0.16" />
+        <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout-w720dp/activity_full_wallpaper.xml" value="0.22" />
+        <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout-w720dp/activity_full_wallpaper_alt.xml" value="0.2296875" />
+        <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout-w720dp/activity_full_wallpaper_i.xml" value="0.2296875" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout-w720dp/activity_main.xml" value="0.1" />
+        <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout-w720dp/content_full_wallpaper.xml" value="0.16306306306306306" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/activity_bottom_nav.xml" value="0.2" />
-        <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/activity_full_wallpaper.xml" value="0.75" />
+        <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/activity_full_wallpaper.xml" value="0.18" />
+        <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/activity_full_wallpaper_alt.xml" value="0.16" />
+        <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/activity_full_wallpaper_i.xml" value="0.2" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/activity_listing.xml" value="0.33" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/activity_main.xml" value="0.2" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/activity_splash.xml" value="0.2" />
