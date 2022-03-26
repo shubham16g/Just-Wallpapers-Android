@@ -17,7 +17,6 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.animation.PathInterpolatorCompat
-import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
@@ -40,9 +39,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import jp.wasabeef.glide.transformations.ColorFilterTransformation
 import jp.wasabeef.glide.transformations.CropCircleWithBorderTransformation
 import jp.wasabeef.glide.transformations.gpu.BrightnessFilterTransformation
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 
 @AndroidEntryPoint
@@ -356,6 +352,12 @@ class FullWallpaperActivity : AppCompatActivity() {
     private var isZoom = false
     val r = Runnable {
         if (isZoom) hideSystemUI() else showSystemUI()
+        val y = if (!isZoom) 0f else screenMeasure!!.actionButtonsRowY()
+        binding.buttonsRow?.let {
+            val animator = it.animate().translationY(y).setDuration(170)
+            animator.interpolator = DecelerateInterpolator()
+            animator.start()
+        }
     }
     private fun animateZoom() {
         binding.backButton.playForward(1.5f)
@@ -396,16 +398,16 @@ class FullWallpaperActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        if (viewModel.isShowingSharedImage()) {
-            val intent = Intent(this, SplashActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-            startActivity(intent)
-            finish()
-        } else
-            if (isZoom)
-                animateZoomOut()
-            else
-                super.onBackPressed()
+        when {
+            viewModel.isShowingSharedImage() -> {
+                val intent = Intent(this, SplashActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                startActivity(intent)
+                finish()
+            }
+            isZoom -> animateZoomOut()
+            else -> super.onBackPressed()
+        }
 
     }
 

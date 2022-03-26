@@ -17,15 +17,18 @@ class ScreenMeasure(activity: Activity) {
     private var measuredHeight = 0f
     private var pivot = 0f
     private val actionCardHeight: Float
+    private val actionButtonRowHeight: Float
     private val navigationHeight: Int = activity.getNavigationBarHeight()
 
     fun actionCollapsedY() = actionCardHeight + navigationHeight + 15.dp
+    fun actionButtonsRowY() = actionCardHeight - actionButtonRowHeight - 18.px
     fun scale() = scale
     fun pivot() = pivot
 
     init {
         screenHeight = activity.window.decorView.measuredHeight
         actionCardHeight = activity.resources.getDimension(R.dimen.action_card_height)
+        actionButtonRowHeight = activity.resources.getDimension(R.dimen.action_icon_size)
         bottom = activity.resources.getDimension(R.dimen.pager_bottom)
         top = activity.resources.getDimension(R.dimen.pager_top)
         measuredHeight = (screenHeight - top - bottom)
