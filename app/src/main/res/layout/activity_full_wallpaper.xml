@@ -148,8 +148,6 @@
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/download_done_tick"
-            app:lottie_loop="true"
-            app:lottie_autoPlay="true"
             android:layout_width="@dimen/action_button_tick_size"
             android:layout_height="@dimen/action_button_tick_size"
             app:layout_constraintTop_toTopOf="@id/download_button"
@@ -183,15 +181,13 @@
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/set_done_tick"
-            app:lottie_loop="true"
-            app:lottie_autoPlay="true"
-            android:layout_width="102dp"
-            android:layout_height="102dp"
+            android:layout_width="@dimen/action_button_tick_size"
+            android:layout_height="@dimen/action_button_tick_size"
             app:layout_constraintTop_toTopOf="@id/set_wallpaper_button"
             app:layout_constraintBottom_toBottomOf="@id/set_wallpaper_button"
             app:layout_constraintStart_toStartOf="@id/set_wallpaper_button"
             app:layout_constraintEnd_toEndOf="@id/set_wallpaper_button"
-            app:lottie_rawRes="@raw/purple_tick"/>
+            app:lottie_rawRes="@raw/purple_tick_3"/>
 
         <ImageButton
             android:id="@+id/fav_button"
@@ -200,19 +196,6 @@
             android:background="@drawable/round_btn_dark"
             android:src="@drawable/ic_baseline_favorite_border_24"
             app:tint="@color/white" />
-
-        <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/fav_done_tick"
-            app:lottie_loop="true"
-            app:lottie_autoPlay="true"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            app:layout_constraintTop_toTopOf="@id/fav_button"
-            app:layout_constraintBottom_toBottomOf="@id/fav_button"
-            app:layout_constraintStart_toStartOf="@id/fav_button"
-            app:layout_constraintEnd_toEndOf="@id/fav_button"
-            app:lottie_rawRes="@raw/confirmed_tick"/>
-
 
         <ImageButton
             android:id="@+id/share_button"
