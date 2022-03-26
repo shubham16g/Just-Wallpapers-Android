@@ -8,10 +8,20 @@ import android.graphics.Bitmap
 import android.os.Build
 import android.util.Log
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
+import kotlinx.coroutines.suspendCancellableCoroutine
 import java.io.IOException
 
-class ImageFetcher(private val activity: Activity, url: String, rotation: Int = 0, useCache:Boolean=true) {
+class ImageFetcher(
+    private val activity: Activity,
+    url: String,
+    rotation: Int = 0,
+    useCache: Boolean = true
+) {
     init {
         Log.d("TAG", "URL: $url")
         Glide.with(activity).asBitmap().load(url)
@@ -19,14 +29,11 @@ class ImageFetcher(private val activity: Activity, url: String, rotation: Int = 
             .timeout(20000)
             .diskCacheStrategy(if (useCache) DiskCacheStrategy.AUTOMATIC else DiskCacheStrategy.NONE)
             .addBitmapListener { _, resource, e ->
-                activity.runOnUiThread {
-                    if (resource != null) {
-                        successListener?.let { it1 -> it1(resource) }
-                    } else {
-                        errorListener?.let { it(e?.message ?: "Unknown Error") }
-                    }
+                if (resource != null) {
+                    successListener?.let { it1 -> it1(resource) }
+                } else {
+                    errorListener?.let { it(e?.message ?: "Unknown Error") }
                 }
-
             }.submit()
     }
 

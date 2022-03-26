@@ -197,17 +197,6 @@
             android:src="@drawable/ic_baseline_favorite_border_24"
             app:tint="@color/white" />
 
-        <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/fav_done_tick"
-            android:layout_width="@dimen/action_button_tick_size"
-            android:layout_height="@dimen/action_button_tick_size"
-            app:layout_constraintTop_toTopOf="@id/fav_button"
-            app:layout_constraintBottom_toBottomOf="@id/fav_button"
-            app:layout_constraintStart_toStartOf="@id/fav_button"
-            app:layout_constraintEnd_toEndOf="@id/fav_button"
-            app:lottie_rawRes="@raw/purple_tick_3"/>
-
-
         <ImageButton
             android:id="@+id/share_button"
             android:layout_width="@dimen/action_icon_size"

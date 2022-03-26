@@ -19,8 +19,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.animation.PathInterpolatorCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
-import com.airbnb.lottie.Lottie
-import com.airbnb.lottie.LottieDrawable
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.MultiTransformation
@@ -125,6 +123,22 @@ class FullWallpaperActivity : AppCompatActivity() {
             }
         }
 
+        viewModel.wallBitmapLoading.observe(this) {
+            when {
+                it == null -> binding.setWallpaperProgress.fadeVisibility(View.INVISIBLE)
+                it -> binding.setWallpaperProgress.visibility = View.VISIBLE
+                else -> binding.setDoneTick?.playAndHide()
+            }
+        }
+
+        viewModel.downloadBitmapLoading.observe(this) {
+            when {
+                it == null -> binding.downloadProgress.fadeVisibility(View.INVISIBLE)
+                it -> binding.downloadProgress.visibility = View.VISIBLE
+                else -> binding.downloadDoneTick?.playAndHide()
+            }
+        }
+
         binding.backButton.setOnClickListener {
             onBackPressed()
         }
@@ -190,7 +204,8 @@ class FullWallpaperActivity : AppCompatActivity() {
 
     private fun processDownloadWallpaper() {
         val model = viewModel.list[viewModel.currentPosition]
-        binding.downloadProgress.visibility = View.VISIBLE
+        viewModel.downloadWallpaper(this, model)
+        /*binding.downloadProgress.visibility = View.VISIBLE
         ImageFetcher(this, model.urls.raw ?: model.urls.full, rotation = model.rotation?:0).onSuccess {
             lifecycleScope.launch(Dispatchers.IO) {
                 saveImageToExternal("app", "wallpaper_${model.wallId}", it).also {
@@ -204,11 +219,11 @@ class FullWallpaperActivity : AppCompatActivity() {
                             ).show()
                         } else {
                             binding.downloadDoneTick?.playAndHide()
-                            /*Toast.makeText(
+                            *//*Toast.makeText(
                                 this@FullWallpaperActivity,
                                 "Image saved successfully!",
                                 Toast.LENGTH_SHORT
-                            ).show()*/
+                            ).show()*//*
                         }
                         binding.downloadProgress.fadeVisibility(View.INVISIBLE)
                     }
@@ -217,7 +232,7 @@ class FullWallpaperActivity : AppCompatActivity() {
         }.onError {
             binding.downloadProgress.fadeVisibility(View.INVISIBLE)
             Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
-        }
+        }*/
     }
 
 
@@ -226,8 +241,8 @@ class FullWallpaperActivity : AppCompatActivity() {
             Toast.makeText(this, "Set Wallpapers only in Portrait Mode", Toast.LENGTH_SHORT).show()
             return
         }
-        binding.setWallpaperProgress.visibility = View.VISIBLE
-        ImageFetcher(this, model.urls.full, rotation = model.rotation?:0).onSuccess {
+        viewModel.applyWallpaper(this, model, flag)
+        /*ImageFetcher(this, model.urls.full, rotation = model.rotation?:0).onSuccess {
             lifecycleScope.launch(Dispatchers.IO) {
                 applyWall(it, it.width, it.height, flag)
                 withContext(Dispatchers.Main){
@@ -239,7 +254,7 @@ class FullWallpaperActivity : AppCompatActivity() {
         }.onError {
             binding.setWallpaperProgress.fadeVisibility(View.INVISIBLE)
             Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
-        }
+        }*/
     }
 
     private fun processOnUri(uri: Uri) {
