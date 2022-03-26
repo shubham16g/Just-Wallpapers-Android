@@ -211,7 +211,7 @@
             app:layout_constraintBottom_toBottomOf="@id/fav_button"
             app:layout_constraintStart_toStartOf="@id/fav_button"
             app:layout_constraintEnd_toEndOf="@id/fav_button"
-            app:lottie_rawRes="@raw/purple_tick_2"/>
+            app:lottie_rawRes="@raw/confirmed_tick"/>
 
 
         <ImageButton
