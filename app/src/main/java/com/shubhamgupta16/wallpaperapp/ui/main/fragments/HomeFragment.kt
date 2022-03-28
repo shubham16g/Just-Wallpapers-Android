@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -37,11 +38,21 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         requireActivity().setTransparentStatusBar()
         if (requireContext().isOrientationLandscape()){
-//            binding.bouncyScrollView.overscrollAnimationSize = 0f
+            binding.bouncyScrollView.overscrollAnimationSize = 0f
         }
         Glide.with(this).load("https://picsum.photos/480/720")
             .diskCacheStrategy(DiskCacheStrategy.NONE)
             .transition(DrawableTransitionOptions.withCrossFade()).into(binding.headerImage)
+
+        binding.searchBar.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String): Boolean {
+                ListingActivity.open(requireContext(), "Showing results for '$query'", query = query)
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?)=true
+
+        })
 
         binding.newlyAddedHeader.setOnMoreClickListener {
             ListingActivity.open(requireContext(), "Newly Added")
