@@ -8,13 +8,13 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.navigation.NavigationBarView
 import com.shubhamgupta16.wallpaperapp.R
 import com.shubhamgupta16.wallpaperapp.databinding.ActivityMainBinding
-import com.shubhamgupta16.wallpaperapp.ui.components.VerticalWallpapersFragment
 import com.shubhamgupta16.wallpaperapp.ui.main.fragments.CategoriesFragment
 import com.shubhamgupta16.wallpaperapp.ui.main.fragments.FavoritesFragment
 import com.shubhamgupta16.wallpaperapp.ui.main.fragments.HomeFragment
+import com.shubhamgupta16.wallpaperapp.utils.fitFullScreen
+import com.shubhamgupta16.wallpaperapp.utils.setTransparentStatusBar
 import com.shubhamgupta16.wallpaperapp.viewmodels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
-
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -23,19 +23,26 @@ class MainActivity : AppCompatActivity() {
     }
 
     private lateinit var binding: ActivityMainBinding
-    private val viewModel:MainViewModel by viewModels()
+    private val viewModel: MainViewModel by viewModels()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        fitFullScreen()
+        setTransparentStatusBar()
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        /*binding.bottomNav.layoutParams = (binding.bottomNav.layoutParams as ConstraintLayout.LayoutParams).apply {
+            bottomMargin = getNavigationBarHeight()
+        }*/
 
         Log.d(TAG, "onCreate: ${getCurrentFragName()}")
 
         applyFragment(viewModel.currentFrag)
 
-        val navListener = NavigationBarView.OnItemSelectedListener{
+        val navListener = NavigationBarView.OnItemSelectedListener {
             if (viewModel.currentFrag == it.itemId) return@OnItemSelectedListener false
             applyFragment(it.itemId)
         }
@@ -43,10 +50,13 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNav.setOnItemSelectedListener(navListener)
     }
 
-    private fun applyFragment(itemId:Int): Boolean {
+    private fun applyFragment(itemId: Int): Boolean {
         return when (itemId) {
             R.id.action_home -> swapFragment(itemId, getHomeFragment())
-            R.id.action_category -> swapFragment(itemId, getCategoryFragment(viewModel.categoryName))
+            R.id.action_category -> swapFragment(
+                itemId,
+                getCategoryFragment(viewModel.categoryName)
+            )
             R.id.action_fav -> swapFragment(itemId, getFavoriteFragment())
             else -> false
         }
@@ -70,6 +80,11 @@ class MainActivity : AppCompatActivity() {
         Log.d(TAG, "swapFragment: swapFragment()")
         viewModel.currentFrag = id
 //        todo animation
+        /*if (!isUsingNightMode()) {
+            if (id == R.id.action_home)
+                nonLightStatusBar()
+            else lightStatusBar()
+        }*/
         supportFragmentManager.beginTransaction().replace(binding.container.id, frag).commit()
         updateToolbarTitle()
         return true
@@ -81,7 +96,7 @@ class MainActivity : AppCompatActivity() {
 //        }
     }
 
-    private fun getCurrentFragName():String{
+    private fun getCurrentFragName(): String {
         return when (viewModel.currentFrag) {
             R.id.action_home -> "Home"
             R.id.action_category -> "Categories"

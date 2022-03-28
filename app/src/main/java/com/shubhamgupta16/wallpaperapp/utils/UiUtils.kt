@@ -2,6 +2,7 @@ package com.shubhamgupta16.wallpaperapp.utils
 
 import android.app.Activity
 import android.content.Context
+import android.content.res.Configuration
 import android.content.res.Resources
 import android.graphics.Bitmap
 import android.graphics.Canvas
@@ -101,14 +102,6 @@ fun ViewPager2.reduceDragSensitivity(f: Int = 4) {
     touchSlopField.set(recyclerView, touchSlop*f)       // "8" was obtained experimentally
 }
 
-fun getBitmapFromView(view: View): Bitmap? {
-    val bitmap =
-        Bitmap.createBitmap(view.width, view.height, Bitmap.Config.ARGB_8888)
-    val canvas = Canvas(bitmap)
-    view.draw(canvas)
-    return bitmap
-}
-
 fun darkenColor(stringColor: String, alpha:Int = 24): Int {
     val color = Color.parseColor(stringColor)
     return ColorUtils.setAlphaComponent(Color.HSVToColor(FloatArray(3).apply {
@@ -118,41 +111,15 @@ fun darkenColor(stringColor: String, alpha:Int = 24): Int {
     }), alpha)
 }
 
-fun ImageView.fadeImage(bitmap: Bitmap?) {
-    val td = TransitionDrawable(
-        arrayOf(
-            drawable ?: ColorDrawable(Color.TRANSPARENT),
-            BitmapDrawable(resources, bitmap)
-        )
-    )
-    setImageDrawable(td)
-    Handler(Looper.getMainLooper()).post {
-        td.startTransition(200)
-    }
-}
-fun ImageView.fadeImage(color: Int) {
-    val td = TransitionDrawable(
-        arrayOf(
-            drawable ?: ColorDrawable(Color.TRANSPARENT),
-            ColorDrawable(color)
-        )
-    )
-    setImageDrawable(td)
-    Handler(Looper.getMainLooper()).post {
-        td.startTransition(200)
-    }
-}
 fun Activity.fitFullScreen(){
     WindowCompat.setDecorFitsSystemWindows(window, false)
 }
 
 fun Activity.setTransparentStatusBar() {
-    WindowInsetsControllerCompat(window, window.decorView).isAppearanceLightStatusBars = false
     window.statusBarColor = Color.TRANSPARENT
     window.navigationBarColor = Color.parseColor("#01ffffff")
 }
 fun Activity.setNormalStatusBar() {
-    WindowInsetsControllerCompat(window, window.decorView).isAppearanceLightStatusBars = true
     window.statusBarColor = ContextCompat.getColor(this, R.color.status_bar)
 //    window.navigationBarColor = Color.BLACK
 }
@@ -163,13 +130,37 @@ fun Activity.hideSystemUI() {
         controller.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_BARS_BY_SWIPE
     }
 }
+fun Activity.lightStatusBar() {
+    WindowInsetsControllerCompat(window, window.decorView).isAppearanceLightStatusBars = true
+}
+fun Activity.nonLightStatusBar() {
+    WindowInsetsControllerCompat(window, window.decorView).isAppearanceLightStatusBars = false
+}
 
 fun Activity.showSystemUI() {
     WindowInsetsControllerCompat(window, window.decorView).show(WindowInsetsCompat.Type.systemBars())
 }
 
+fun Context.isUsingNightMode(): Boolean {
+    return when (resources.configuration.uiMode and
+            Configuration.UI_MODE_NIGHT_MASK) {
+        Configuration.UI_MODE_NIGHT_YES -> true
+        Configuration.UI_MODE_NIGHT_NO -> false
+        Configuration.UI_MODE_NIGHT_UNDEFINED -> false
+        else -> false
+    }
+}
+
 fun Context.getNavigationBarHeight(): Int {
     val resourceId = resources.getIdentifier("navigation_bar_height", "dimen", "android")
+    return if (resourceId > 0) {
+        resources.getDimensionPixelSize(resourceId)
+    } else
+        0
+}
+
+fun Context.getStatusBarHeight(): Int {
+    val resourceId = resources.getIdentifier("status_bar_height", "dimen", "android")
     return if (resourceId > 0) {
         resources.getDimensionPixelSize(resourceId)
     } else

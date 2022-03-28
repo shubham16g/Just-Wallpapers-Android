@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="app_background">#171717</color>
+
     <color name="primary">#FFBB86FC</color>
 
     <color name="toolbar">#111111</color>
@@ -10,7 +12,7 @@
     <!--Bottom Navigation-->
     <color name="bottom_nav">#222222</color>
     <color name="bottom_nav_item_inactive">#bbffffff</color>
-    <color name="bottom_nav_item_active">#ffffff</color>
+    <color name="bottom_nav_item_active">#FFBB86FC</color>
     <!--<color name="bottom_nav_item_inactive">#77000000</color>
     <color name="bottom_nav_item_active">#000000</color>-->
 
