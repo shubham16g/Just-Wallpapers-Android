@@ -19,10 +19,6 @@ object AppModule {
     @Provides
     fun providesApiService(@ApplicationContext context: Context) = ApiService.build(context)
 
-//    @Singleton
-//    @Provides
-//    fun providesInitService(@ApplicationContext context: Context) = ApiServiceBuilder.build(context, "init-cache", 10 * 1024 * 1024, InitService::class.java)
-
     @Singleton
     @Provides
     fun getAppDatabase(@ApplicationContext context: Context) = AppDatabase.build(context)
@@ -30,14 +26,4 @@ object AppModule {
     @Singleton
     @Provides
     fun getFavDao(db: AppDatabase) = db.favDao()
-
-//    @Provides
-//    fun providesWoocommerce(): Woocommerce {
-//        return Woocommerce.Builder()
-//            .setSiteUrl(Config.siteUrl)
-//            .setApiVersion(Woocommerce.API_V3)
-//            .setConsumerKey(Config.consumerKey)
-//            .setConsumerSecret(Config.consumerSecret)
-//            .build()
-//    }
 }

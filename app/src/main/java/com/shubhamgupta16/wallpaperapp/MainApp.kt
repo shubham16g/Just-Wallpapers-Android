@@ -1,7 +1,6 @@
 package com.shubhamgupta16.wallpaperapp
 
 import android.app.Application
-import com.shubhamgupta16.wallpaperapp.models.init.InitModel
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp

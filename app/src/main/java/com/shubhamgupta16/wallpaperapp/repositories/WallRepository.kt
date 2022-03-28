@@ -11,7 +11,6 @@ import javax.inject.Inject
 
 class WallRepository @Inject constructor(private val apiService: ApiService, private val  favDao: FavWallDao) {
 
-
     suspend fun downloadWallpaper(wallId: Int){
         ApiResponse.from { apiService.downloadWallpaper(wallId) }
     }

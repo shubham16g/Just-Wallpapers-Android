@@ -10,6 +10,7 @@ import com.shubhamgupta16.wallpaperapp.ui.ListingActivity
 import com.shubhamgupta16.wallpaperapp.ui.components.HorizontalCategoriesFragment
 import com.shubhamgupta16.wallpaperapp.ui.components.HorizontalColorsFragment
 import com.shubhamgupta16.wallpaperapp.ui.components.HorizontalWallpapersFragment
+import com.shubhamgupta16.wallpaperapp.utils.isOrientationLandscape
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -29,6 +30,10 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        if (requireContext().isOrientationLandscape()){
+            binding.root.overscrollAnimationSize = 0f
+        }
 
         binding.newlyAddedHeader.setOnMoreClickListener {
             ListingActivity.open(requireContext(), "Newly Added")
