@@ -58,13 +58,13 @@ class WallpapersViewModel
                     color = _color
                 )
 
-            if (response.isSuccessful && response.data != null) {
+            if (response.isSuccessful && response.body != null) {
                 Log.d(TAG, "fetch: $category success")
-                _lastPage = response.data!!.lastPage
+                _lastPage = response.body!!.lastPage
                 val size = _list.size
                 if (_list.isNotEmpty())
                     _list.removeAt(_list.lastIndex)
-                _list.addAll(response.data!!.data)
+                _list.addAll(response.body!!.data)
                 if (_lastPage > _page)
                     _list.add(null)
                 _page++

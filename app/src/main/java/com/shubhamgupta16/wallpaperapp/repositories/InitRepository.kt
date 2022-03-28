@@ -25,10 +25,10 @@ class InitRepository @Inject constructor(private val apiService: ApiService) {
 
     suspend fun getAllColors(): List<ColorModel> {
         val response = ApiResponse.from { apiService.getColors() }
-        return response.data ?: ArrayList()
+        return response.body ?: ArrayList()
     }
     suspend fun getAllCategories(): List<CategoryModel> {
         val response = ApiResponse.from { apiService.getCategories() }
-        return response.data ?: ArrayList()
+        return response.body ?: ArrayList()
     }
 }

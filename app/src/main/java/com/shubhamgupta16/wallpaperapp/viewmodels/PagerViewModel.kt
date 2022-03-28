@@ -75,10 +75,10 @@ class PagerViewModel
                 wallRepository.getWalls(page = page, s = query, category = category, color = color)
             else
                 wallRepository.getWallsWithIds(listOf(id))
-            if (response.isSuccessful && response.data != null) {
-                lastPage = response.data!!.lastPage
+            if (response.isSuccessful && response.body != null) {
+                lastPage = response.body!!.lastPage
                 val size = _list.size
-                _list.addAll(response.data!!.data)
+                _list.addAll(response.body!!.data)
                 page++
                 _listObserver.postValue(
                     ListObserver(ListCase.ADDED_RANGE, from = size, itemCount = _list.size)
@@ -129,10 +129,8 @@ class PagerViewModel
             if (bmp != null) {
                 context.saveImageToExternal(context.getString(R.string.app_name), "wallpaper_${wallModel.wallId}", bmp).also {
                     withContext(Dispatchers.Main){
-                        if (!it) {
-//                            _downloadBitmapLoading.value = null
-                        } else {
-//                            downloadWallpaper(wallModel.wallId)
+                        if (it) {
+                            downloadWallpaper(wallModel.wallId)
                             _downloadBitmapLoading.value = false
                         }
                         _downloadBitmapLoading.value = null

@@ -121,17 +121,33 @@ class FullWallpaperActivity : AppCompatActivity() {
 
         viewModel.wallBitmapLoading.observe(this) {
             when {
-                it == null -> binding.setWallpaperProgress.fadeVisibility(View.INVISIBLE)
-                it -> binding.setWallpaperProgress.visibility = View.VISIBLE
-                else -> binding.setDoneTick.playAndHide()
+                it == null -> {
+                    binding.setWallpaperButton.isEnabled = true
+                    binding.setWallpaperProgress.fadeVisibility(View.INVISIBLE)
+                }
+                it -> {
+                    binding.setWallpaperButton.isEnabled = false
+                    binding.setWallpaperProgress.visibility = View.VISIBLE
+                }
+                else -> {
+                    binding.setDoneTick.playAndHide()
+                }
             }
         }
 
         viewModel.downloadBitmapLoading.observe(this) {
             when {
-                it == null -> binding.downloadProgress.fadeVisibility(View.INVISIBLE)
-                it -> binding.downloadProgress.visibility = View.VISIBLE
-                else -> binding.downloadDoneTick.playAndHide()
+                it == null -> {
+                    binding.downloadButton.isEnabled = true
+                    binding.downloadProgress.fadeVisibility(View.INVISIBLE)
+                }
+                it -> {
+                    binding.downloadButton.isEnabled = false
+                    binding.downloadProgress.visibility = View.VISIBLE
+                }
+                else -> {
+                    binding.downloadDoneTick.playAndHide()
+                }
             }
         }
 

@@ -6,7 +6,7 @@ import java.io.IOException
 
 class ApiResponse<T> {
     val isSuccessful: Boolean get() = code in 200..299
-    var data: T? = null
+    var body: T? = null
 
     private var _code: Int
     val code: Int get() = _code
@@ -19,7 +19,7 @@ class ApiResponse<T> {
         }
 
     constructor(data: T, code: Int = 200, message: String? = null) {
-        this.data = data
+        this.body = data
         this.msg = message
         this._code = code
     }
