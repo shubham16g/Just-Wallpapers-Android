@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import com.google.android.material.tabs.TabLayoutMediator
 import com.shubhamgupta16.wallpaperapp.adapters.ViewPager2Adapter
 import com.shubhamgupta16.wallpaperapp.databinding.FragmentMainCategoriesBinding
+import com.shubhamgupta16.wallpaperapp.utils.isOrientationLandscape
 import com.shubhamgupta16.wallpaperapp.utils.reduceDragSensitivity
 import com.shubhamgupta16.wallpaperapp.viewmodels.CategoriesViewModel
 import com.shubhamgupta16.wallpaperapp.viewmodels.live_observer.ListCase
@@ -33,6 +34,9 @@ class CategoriesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        if (requireContext().isOrientationLandscape()){
+            binding.toolbar.visibility = View.GONE
+        }
         adapter = ViewPager2Adapter(childFragmentManager, lifecycle)
         binding.viewPager2.reduceDragSensitivity()
         viewModel.listObserver.observe(viewLifecycleOwner) {

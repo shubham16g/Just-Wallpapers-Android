@@ -118,7 +118,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/buttons_row"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/action_button_tick_size"
             app:layout_constraintTop_toTopOf="@id/action_card"
             app:layout_constraintEnd_toEndOf="@id/action_card"
             app:layout_constraintStart_toStartOf="@id/action_card">

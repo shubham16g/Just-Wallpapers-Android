@@ -51,6 +51,8 @@ class HorizontalWallpapersFragment : Fragment() {
                         adapter?.notifyItemChanged(it.at)
                     }
                     ListCase.ADDED_RANGE -> {
+                        if (viewModel.list.isNotEmpty() && it.from == 0)
+                            binding.recyclerView.smoothScrollToPosition(0)
                         adapter?.notifyItemRangeInserted(it.from, it.itemCount)
                     }
                     ListCase.REMOVED_RANGE -> {

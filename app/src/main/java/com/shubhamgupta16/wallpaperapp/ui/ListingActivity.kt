@@ -29,23 +29,25 @@ class ListingActivity : AppCompatActivity() {
         val category = intent.getStringExtra("category")
         val color = intent.getStringExtra("color")
         val colorValue = intent.getIntExtra("color_value", 0)
+        val orderBy = intent.getStringExtra("order_by")
         if (colorValue != 0)
             binding.toolbarColorCard.apply {
                 visibility = View.VISIBLE
                 setCardBackgroundColor(colorValue)
             }
-        showListingFragment(query, category, color)
+        showListingFragment(query, category, color,orderBy)
     }
 
     private fun showListingFragment(
         query: String? = null,
         category: String? = null,
-        color: String? = null
+        color: String? = null,
+        orderBy: String? = null
     ) {
         supportFragmentManager.beginTransaction()
             .replace(
                 binding.container.id,
-                VerticalWallpapersFragment.getInstance(query, category, color)
+                VerticalWallpapersFragment.getInstance(query, category, color, orderBy)
             )
             .commit()
     }
@@ -57,7 +59,8 @@ class ListingActivity : AppCompatActivity() {
             query: String? = null,
             category: String? = null,
             color: String? = null,
-            colorValue: Int? = null
+            colorValue: Int? = null,
+            orderBy: String? = null
         ) {
             context.startActivity(Intent(context, ListingActivity::class.java).apply {
                 putExtra("title", title)
@@ -65,6 +68,7 @@ class ListingActivity : AppCompatActivity() {
                 putExtra("category", category)
                 putExtra("color", color)
                 putExtra("color_value", colorValue)
+                putExtra("order_by", orderBy)
             })
         }
     }

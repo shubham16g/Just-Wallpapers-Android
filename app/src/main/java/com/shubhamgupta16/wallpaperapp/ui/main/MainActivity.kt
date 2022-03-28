@@ -10,6 +10,7 @@ import com.shubhamgupta16.wallpaperapp.R
 import com.shubhamgupta16.wallpaperapp.databinding.ActivityMainBinding
 import com.shubhamgupta16.wallpaperapp.ui.components.VerticalWallpapersFragment
 import com.shubhamgupta16.wallpaperapp.ui.main.fragments.CategoriesFragment
+import com.shubhamgupta16.wallpaperapp.ui.main.fragments.FavoritesFragment
 import com.shubhamgupta16.wallpaperapp.ui.main.fragments.HomeFragment
 import com.shubhamgupta16.wallpaperapp.viewmodels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -51,7 +52,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun getFavoriteFragment() = VerticalWallpapersFragment.getInstanceForFavorite()
+    private fun getFavoriteFragment() = FavoritesFragment()
 
 
     private fun getHomeFragment() = HomeFragment().apply {
@@ -66,6 +67,7 @@ class MainActivity : AppCompatActivity() {
         CategoriesFragment().apply { this.categoryName = categoryName }
 
     private fun swapFragment(id: Int, frag: Fragment, animate: Boolean = true): Boolean {
+        Log.d(TAG, "swapFragment: swapFragment()")
         viewModel.currentFrag = id
 //        todo animation
         supportFragmentManager.beginTransaction().replace(binding.container.id, frag).commit()
@@ -74,9 +76,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateToolbarTitle() {
-        getCurrentFragName().also {
-            binding.toolbarTitle?.text = it
-        }
+//        getCurrentFragName().also {
+//            binding.toolbarTitle?.text = it
+//        }
     }
 
     private fun getCurrentFragName():String{

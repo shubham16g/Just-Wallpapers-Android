@@ -11,7 +11,7 @@ import java.io.File
 
 object ApiServiceBuilder {
 
-    fun <T> build(context:Context, cacheDirSpecifier:String, cacheSize:Long, service: Class<T>): T{
+    fun <T> build(context: Context, service: Class<T>): T{
         val cacheDir = File(context.cacheDir, "wall-cache")
         val cache = Cache(cacheDir, 10 * 1024 * 1024)
         val client = OkHttpClient.Builder()
@@ -19,6 +19,7 @@ object ApiServiceBuilder {
             .addInterceptor { chain ->
                 val request = chain.request().newBuilder()
                     .header("Accept", "application/json")
+                    .header("App-Version", "${BuildConfig.VERSION_CODE}")
                     .header("Authorization", "Bearer ${BuildConfig.API_KEY}")
                     .build()
                 chain.proceed(request)

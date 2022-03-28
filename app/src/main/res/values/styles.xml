@@ -18,4 +18,11 @@
     <style name="DefaultAlertTheme" parent="@style/Theme.MaterialComponents.DayNight.Dialog.Alert">
         <item name="android:windowBackground">@drawable/background_alert_dialog</item>
     </style>
+
+    <style name="ToolbarTitle" parent="Widget.MaterialComponents.TextView">
+        <item name="textAllCaps">true</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/textPrimary</item>
+        <item name="android:textSize">20sp</item>
+    </style>
 </resources>

@@ -94,6 +94,7 @@
             android:tag="categories_in_home" />
 
         <com.shubhamgupta16.wallpaperapp.customviews.HeaderView
+            android:id="@+id/popular_header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:moreButtonVisible="true"

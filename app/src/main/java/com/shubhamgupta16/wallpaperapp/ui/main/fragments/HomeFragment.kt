@@ -33,6 +33,9 @@ class HomeFragment : Fragment() {
         binding.newlyAddedHeader.setOnMoreClickListener {
             ListingActivity.open(requireContext(), "Newly Added")
         }
+        binding.popularHeader.setOnMoreClickListener {
+            ListingActivity.open(requireContext(), "Popular", orderBy = "downloads")
+        }
 
         childFragmentManager.beginTransaction()
             .replace(binding.colorsFragment.id, HorizontalColorsFragment().apply {

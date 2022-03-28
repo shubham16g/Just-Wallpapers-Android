@@ -43,6 +43,6 @@ interface ApiService {
 
     companion object {
         fun build(context: Context) =
-            ApiServiceBuilder.build(context, "wall-cache", 10 * 1024 * 1024, ApiService::class.java)
+            ApiServiceBuilder.build(context, ApiService::class.java)
     }
 }
