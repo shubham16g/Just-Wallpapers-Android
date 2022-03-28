@@ -14,7 +14,7 @@ class WallRepository @Inject constructor(private val apiService: ApiService, pri
 
 
     suspend fun downloadWallpaper(wallId: Int){
-        apiService.downloadWallpaper(wallId)
+        ApiResponse.from { apiService.downloadWallpaper(wallId) }
     }
 
     suspend fun getWalls(
@@ -25,8 +25,18 @@ class WallRepository @Inject constructor(private val apiService: ApiService, pri
         category: String? = null,
         color: String? = null,
     ): ApiResponse<WallpaperPageModel> {
-        val response = apiService.getWalls(page, perPage, s, orderBy, category, color)
-        return filterFav(response)
+        return ApiResponse.from { apiService.getWalls(page, perPage, s, orderBy, category, color) }
+            .apply {
+                this.data?.data?.let { filterFavorites(it) }
+            }
+
+        /*return try {
+            val response = apiService.getWalls(page, perPage, s, orderBy, category, color)
+            filterFav(response)
+        } catch (e:IOException){
+            Log.d("Repo", "error: ${e.message}")
+            ApiResponse(800, e.message)
+        }*/
     }
 
     suspend fun getWallsWithIds(
@@ -34,12 +44,14 @@ class WallRepository @Inject constructor(private val apiService: ApiService, pri
         page: Int = 1,
         perPage: Int? = null,
     ): ApiResponse<WallpaperPageModel> {
-        val response = apiService.getWallsWithIds(
+        return ApiResponse.from { apiService.getWallsWithIds(
             RequestIdModel(wallIds),
             page,
             perPage
-        )
-        return filterFav(response)
+        ) }.apply {
+            this.data?.data?.let { filterFavorites(it) }
+//            filterFavorite(this)
+        }
     }
 
     suspend fun getFavoriteWallpapers(
@@ -69,8 +81,15 @@ class WallRepository @Inject constructor(private val apiService: ApiService, pri
         favDao.insertFav(FavWallModel(wallId = wallId))
     }
 
-
-    private suspend fun filterFav(response: Response<WallpaperPageModel>): ApiResponse<WallpaperPageModel> {
+    /*private suspend fun filterFavorite(response: ApiResponse<WallpaperPageModel>) {
+        if (response.data != null) {
+            for ((i, wall) in response.data!!.data.withIndex()) {
+                if (favDao.isFav(wall.wallId) != null)
+                    response.data!!.data[i].isFav = true
+            }
+        }
+    }*/
+    /*private suspend fun filterFav(response: Response<WallpaperPageModel>): ApiResponse<WallpaperPageModel> {
         return if (response.isSuccessful) {
             if (response.body() != null) {
                 for ((i, wall) in response.body()!!.data.withIndex()) {
@@ -83,9 +102,9 @@ class WallRepository @Inject constructor(private val apiService: ApiService, pri
         } else {
             ApiResponse(response.code())
         }
-    }
+    }*/
 
-    suspend fun filterFavorites(_list: ArrayList<WallModel?>) {
+    suspend fun filterFavorites(_list: List<WallModel?>) {
         for ((i, wall) in _list.withIndex()) {
             if (wall == null) continue
             _list[i]?.isFav = favDao.isFav(wall.wallId) != null

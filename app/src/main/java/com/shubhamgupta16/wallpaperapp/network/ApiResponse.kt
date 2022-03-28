@@ -1,5 +1,9 @@
 package com.shubhamgupta16.wallpaperapp.network
 
+import android.util.Log
+import retrofit2.Response
+import java.io.IOException
+
 class ApiResponse<T> {
     val isSuccessful: Boolean get() = code in 200..299
     var data: T? = null
@@ -23,6 +27,25 @@ class ApiResponse<T> {
     constructor(code: Int, message: String? = null) {
         this._code = code
         this.msg = message
+    }
+
+    companion object {
+        suspend fun<T> from(caller: suspend ()->Response<T>): ApiResponse<T>{
+            return try {
+                val response = caller()
+                return if (response.isSuccessful) {
+                    if (response.body() != null) {
+                        ApiResponse(response.body()!!)
+                    } else
+                        ApiResponse(500)
+                } else {
+                    ApiResponse(response.code())
+                }
+            }catch (e: IOException){
+                Log.d("Repo", "error: ${e.message}")
+                ApiResponse(800, e.message)
+            }
+        }
     }
 }
 

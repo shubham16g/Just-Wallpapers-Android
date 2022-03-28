@@ -37,7 +37,6 @@ import com.shubhamgupta16.wallpaperapp.viewmodels.PagerViewModel
 import com.shubhamgupta16.wallpaperapp.viewmodels.live_observer.ListCase
 import dagger.hilt.android.AndroidEntryPoint
 import jp.wasabeef.glide.transformations.ColorFilterTransformation
-import jp.wasabeef.glide.transformations.CropCircleWithBorderTransformation
 import jp.wasabeef.glide.transformations.gpu.BrightnessFilterTransformation
 
 
@@ -45,7 +44,7 @@ import jp.wasabeef.glide.transformations.gpu.BrightnessFilterTransformation
 class FullWallpaperActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityFullWallpaperBinding
-    private var permissionLauncher: ActivityResultLauncher<Array<String>>?=null
+    private var permissionLauncher: ActivityResultLauncher<Array<String>>? = null
     private val viewModel: PagerViewModel by viewModels()
     private var adapter: SingleImageAdapter? = null
     private var screenMeasure: ScreenMeasure? = null
@@ -74,7 +73,8 @@ class FullWallpaperActivity : AppCompatActivity() {
         binding.navigationOverlay.setPadding(0, 0, 0, navigationHeight)
         setupViewPager()
 
-        val position = intent.getIntExtra("position", 0)
+        val position = if (viewModel.currentPosition >= 0) viewModel.currentPosition
+        else intent.getIntExtra("position", 0)
         val data: Uri? = intent.data
         when {
             intent.hasExtra("list") -> {
@@ -165,26 +165,31 @@ class FullWallpaperActivity : AppCompatActivity() {
         }
 
         binding.setWallpaperButton.setOnClickListener {
+            if (isOrientationLandscape()) {
+                Toast.makeText(this, "Set Wallpapers only in Portrait Mode", Toast.LENGTH_SHORT)
+                    .show()
+                return@setOnClickListener
+            }
             val model = viewModel.list[viewModel.currentPosition]
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 val sheetLayout =
                     SheetLayoutSetOnBinding.inflate(layoutInflater)
                 val dialog = alertDialog(sheetLayout)
                 sheetLayout.onHomeScreenBtn.setOnClickListener {
-                    fetchAndApplyWallpaper(model, WallpaperManager.FLAG_SYSTEM)
+                    viewModel.applyWallpaper(this, model, WallpaperManager.FLAG_SYSTEM)
                     dialog.dismiss()
                 }
                 sheetLayout.onLockScreenBtn.setOnClickListener {
-                    fetchAndApplyWallpaper(model, WallpaperManager.FLAG_LOCK)
+                    viewModel.applyWallpaper(this, model, WallpaperManager.FLAG_LOCK)
                     dialog.dismiss()
                 }
                 sheetLayout.onBothScreenBtn.setOnClickListener {
-                    fetchAndApplyWallpaper(model)
+                    viewModel.applyWallpaper(this, model)
                     dialog.dismiss()
                 }
                 dialog.show()
             } else {
-                fetchAndApplyWallpaper(model)
+                viewModel.applyWallpaper(this, model)
             }
         }
 
@@ -201,56 +206,6 @@ class FullWallpaperActivity : AppCompatActivity() {
     private fun processDownloadWallpaper() {
         val model = viewModel.list[viewModel.currentPosition]
         viewModel.downloadWallpaper(this, model)
-        /*binding.downloadProgress.visibility = View.VISIBLE
-        ImageFetcher(this, model.urls.raw ?: model.urls.full, rotation = model.rotation?:0).onSuccess {
-            lifecycleScope.launch(Dispatchers.IO) {
-                saveImageToExternal("app", "wallpaper_${model.wallId}", it).also {
-                    withContext(Dispatchers.Main){
-                        if (!it) {
-                            viewModel.downloadWallpaper(model.wallId)
-                            Toast.makeText(
-                                this@FullWallpaperActivity,
-                                "Some Error Occurred",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        } else {
-                            binding.downloadDoneTick?.playAndHide()
-                            *//*Toast.makeText(
-                                this@FullWallpaperActivity,
-                                "Image saved successfully!",
-                                Toast.LENGTH_SHORT
-                            ).show()*//*
-                        }
-                        binding.downloadProgress.fadeVisibility(View.INVISIBLE)
-                    }
-                }
-            }
-        }.onError {
-            binding.downloadProgress.fadeVisibility(View.INVISIBLE)
-            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
-        }*/
-    }
-
-
-    private fun fetchAndApplyWallpaper(model: WallModel, flag: Int? = null) {
-        if (isOrientationLandscape()) {
-            Toast.makeText(this, "Set Wallpapers only in Portrait Mode", Toast.LENGTH_SHORT).show()
-            return
-        }
-        viewModel.applyWallpaper(this, model, flag)
-        /*ImageFetcher(this, model.urls.full, rotation = model.rotation?:0).onSuccess {
-            lifecycleScope.launch(Dispatchers.IO) {
-                applyWall(it, it.width, it.height, flag)
-                withContext(Dispatchers.Main){
-                    binding.setWallpaperProgress.fadeVisibility(View.INVISIBLE)
-                    viewModel.downloadWallpaper(model.wallId)
-                    binding.setDoneTick?.playAndHide()
-                }
-            }
-        }.onError {
-            binding.setWallpaperProgress.fadeVisibility(View.INVISIBLE)
-            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
-        }*/
     }
 
     private fun processOnUri(uri: Uri) {
@@ -359,10 +314,11 @@ class FullWallpaperActivity : AppCompatActivity() {
             animator.start()
         }
     }
+
     private fun animateZoom() {
         binding.backButton.playForward(1.5f)
         initScreenMeasure()
-        val interpolatorCompat = PathInterpolatorCompat.create(0.4f,-0.03f,.26f,1.1f)
+        val interpolatorCompat = PathInterpolatorCompat.create(0.4f, -0.03f, .26f, 1.1f)
 //        val interpolatorCompat = PathInterpolatorCompat.create(0.32f,0.41f,1f,.26f)
         isZoom = true
         binding.viewPager2.animate().scaleX(screenMeasure!!.scale()).scaleY(screenMeasure!!.scale())
@@ -418,7 +374,7 @@ class FullWallpaperActivity : AppCompatActivity() {
         }
         binding.authorContainer.visibility = View.VISIBLE
         binding.authorName.text = author.name
-        Glide.with(this).load(author.image).transform(CropCircleWithBorderTransformation())
+        Glide.with(this).load(author.image).centerCrop().circleCrop()
             .transition(DrawableTransitionOptions.withCrossFade())
             .into(binding.authorProfile)
     }

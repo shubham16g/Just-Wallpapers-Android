@@ -1,9 +1,7 @@
 package com.shubhamgupta16.wallpaperapp.viewmodels
 
 import android.content.Context
-import android.graphics.Bitmap
-import android.view.View
-import android.widget.Toast
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -13,8 +11,6 @@ import com.shubhamgupta16.wallpaperapp.models.wallpapers.WallModel
 import com.shubhamgupta16.wallpaperapp.repositories.GlideRepository
 import com.shubhamgupta16.wallpaperapp.repositories.WallRepository
 import com.shubhamgupta16.wallpaperapp.utils.applyWall
-import com.shubhamgupta16.wallpaperapp.utils.fadeVisibility
-import com.shubhamgupta16.wallpaperapp.utils.playAndHide
 import com.shubhamgupta16.wallpaperapp.utils.saveImageToExternal
 import com.shubhamgupta16.wallpaperapp.viewmodels.live_observer.ListCase
 import com.shubhamgupta16.wallpaperapp.viewmodels.live_observer.ListObserver
@@ -31,7 +27,7 @@ class PagerViewModel
     private val glideRepository: GlideRepository
 ) :
     ViewModel() {
-    var currentPosition = 0
+    var currentPosition = -1
 
     private val _listObserver = MutableLiveData<ListObserver>()
     val listObserver: LiveData<ListObserver> = _listObserver
@@ -106,11 +102,12 @@ class PagerViewModel
     private val _wallBitmapLoading = MutableLiveData<Boolean?>(null)
     val wallBitmapLoading get() :LiveData<Boolean?> = _wallBitmapLoading
 
-    fun applyWallpaper(context: Context, wallModel: WallModel, flag: Int?) {
+    fun applyWallpaper(context: Context, wallModel: WallModel, flag: Int? = null) {
         _wallBitmapLoading.value = true
         viewModelScope.launch(Dispatchers.IO) {
             val bmp = glideRepository.downloadImage(wallModel.urls.full, wallModel.rotation ?: 0)
             if (bmp != null) {
+                Log.d("TAG", "applyWallpaper: DONE")
                 context.applyWall(bmp, bmp.width, bmp.height, flag)
                 withContext(Dispatchers.Main) {
                     downloadWallpaper(wallModel.wallId)
@@ -118,7 +115,9 @@ class PagerViewModel
                     _wallBitmapLoading.value = null
                 }
             } else {
-                _wallBitmapLoading.postValue(null)
+                withContext(Dispatchers.Main) {
+                    _downloadBitmapLoading.value = null
+                }
             }
         }
     }
@@ -133,14 +132,16 @@ class PagerViewModel
                         if (!it) {
 //                            _downloadBitmapLoading.value = null
                         } else {
-                            downloadWallpaper(wallModel.wallId)
+//                            downloadWallpaper(wallModel.wallId)
                             _downloadBitmapLoading.value = false
                         }
                         _downloadBitmapLoading.value = null
                     }
                 }
             } else {
-                _downloadBitmapLoading.postValue(null)
+                withContext(Dispatchers.Main) {
+                    _downloadBitmapLoading.value = null
+                }
             }
         }
     }

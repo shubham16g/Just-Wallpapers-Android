@@ -38,8 +38,7 @@ class GlideService @Inject constructor(@ApplicationContext val context: Context)
                         target: Target<Bitmap>?,
                         isFirstResource: Boolean
                     ): Boolean {
-                        Log.d("TAG", "onLoadFailed: $e")
-                        cont.resumeWith(Result.failure(e ?: Exception("Unknown Exception")))
+                        cont.resumeWith(Result.success(null))
                         return false
                     }
                 }).submit()
