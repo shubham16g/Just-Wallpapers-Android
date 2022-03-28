@@ -64,8 +64,8 @@ class HorizontalWallpapersFragment : Fragment() {
         }
     }
 
-    fun fetch(query: String? = null, category: String? = null, color: String? = null) {
-        viewModel.init(query, category,color)
+    fun fetch(query: String? = null, category: String? = null, color: String? = null, orderBy:String? = null) {
+        viewModel.init(query, category,color,orderBy)
         if (viewModel.list.isEmpty())
             viewModel.fetch()
     }

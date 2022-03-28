@@ -13,12 +13,12 @@ import com.shubhamgupta16.wallpaperapp.R
 import com.shubhamgupta16.wallpaperapp.adapters.ImagesAdapter
 import com.shubhamgupta16.wallpaperapp.databinding.FragmentForVerticalWallpapersBinding
 import com.shubhamgupta16.wallpaperapp.models.wallpapers.WallModelListHolder
-import com.shubhamgupta16.wallpaperapp.viewmodels.live_observer.ListCase
 import com.shubhamgupta16.wallpaperapp.ui.FullWallpaperActivity
 import com.shubhamgupta16.wallpaperapp.utils.BounceEdgeEffectFactory
 import com.shubhamgupta16.wallpaperapp.utils.PaginationController
 import com.shubhamgupta16.wallpaperapp.utils.fadeVisibility
 import com.shubhamgupta16.wallpaperapp.viewmodels.WallpapersViewModel
+import com.shubhamgupta16.wallpaperapp.viewmodels.live_observer.ListCase
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -36,7 +36,12 @@ class VerticalWallpapersFragment : Fragment() {
             if (it.containsKey(FAVORITE))
                 viewModel.initForFavList()
             else
-                viewModel.init(it.getString(QUERY), it.getString(CATEGORY), it.getString(COLOR))
+                viewModel.init(
+                    it.getString(QUERY),
+                    it.getString(CATEGORY),
+                    it.getString(COLOR),
+                    it.getString(ORDER_BY)
+                )
         }
     }
 
@@ -169,13 +174,15 @@ class VerticalWallpapersFragment : Fragment() {
         fun getInstance(
             query: String? = null,
             category: String? = null,
-            color: String? = null
+            color: String? = null,
+            orderBy: String? = null
         ): VerticalWallpapersFragment {
             return VerticalWallpapersFragment().apply {
                 arguments = Bundle().apply {
                     putString(QUERY, query)
                     putString(CATEGORY, category)
                     putString(COLOR, color)
+                    putString(ORDER_BY, orderBy)
                 }
             }
         }

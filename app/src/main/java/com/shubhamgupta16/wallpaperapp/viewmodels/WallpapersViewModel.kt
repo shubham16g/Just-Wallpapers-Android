@@ -28,6 +28,7 @@ class WallpapersViewModel
     private var _query: String? = null
     private var _category: String? = null
     private var _color: String? = null
+    private var _orderBy: String? = null
     private var isFavList: Boolean = false
 
     val page get() = _page
@@ -35,6 +36,7 @@ class WallpapersViewModel
     val query get() = _query
     val category get() = _category
     val color get() = _color
+    val orderBy get() = _color
 
     fun fetch() {
         if (_page > _lastPage) return
@@ -55,7 +57,8 @@ class WallpapersViewModel
                     page = _page,
                     s = _query,
                     category = _category,
-                    color = _color
+                    color = _color,
+                    orderBy = _orderBy
                 )
 
             if (response.isSuccessful && response.body != null) {
@@ -91,11 +94,12 @@ class WallpapersViewModel
         }
     }
 
-    fun init(query: String? = null, category: String? = null, color: String? = null) {
+    fun init(query: String? = null, category: String? = null, color: String? = null, orderBy:String? = null) {
         _page = 1
         this._query = query
         this._category = category
         this._color = color
+        this._orderBy = orderBy
         this.isFavList = false
     }
 
@@ -104,6 +108,7 @@ class WallpapersViewModel
         this._query = null
         this._category = null
         this._color = null
+        this._orderBy = null
         this.isFavList = true
     }
 
