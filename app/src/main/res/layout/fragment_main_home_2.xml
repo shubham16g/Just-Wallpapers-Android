@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/bouncyScrollView"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.main.fragments.HomeFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="20dp">
+        <ImageView
+            android:id="@+id/header_image"
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:scaleType="centerCrop" />
+        <EditText
+            android:id="@+id/search_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_margin="15dp"
+            android:backgroundTint="@color/cardBackground" />
+
+        <com.shubhamgupta16.wallpaperapp.customviews.HeaderView
+            android:id="@+id/newly_added_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:moreButtonVisible="true"
+            app:title="Newly Added" />
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/latest_wallpaper_fragment"
+            android:name="com.shubhamgupta16.wallpaperapp.ui.components.HorizontalWallpapersFragment"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:tag="latest" />
+
+        <com.shubhamgupta16.wallpaperapp.customviews.HeaderView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:moreButtonVisible="false"
+            app:title="Colours" />
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/colors_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="50dp" />
+
+        <com.shubhamgupta16.wallpaperapp.customviews.HeaderView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:moreButtonVisible="false"
+            app:title="Categories" />
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/categories_fragment"
+            android:name="com.shubhamgupta16.wallpaperapp.ui.components.HorizontalCategoriesFragment"
+            android:layout_width="match_parent"
+            android:layout_height="90dp"
+            android:tag="categories_in_home" />
+
+        <com.shubhamgupta16.wallpaperapp.customviews.HeaderView
+            android:id="@+id/popular_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:moreButtonVisible="true"
+            app:title="Popular" />
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/popular_wallpaper_fragment"
+            android:name="com.shubhamgupta16.wallpaperapp.ui.components.HorizontalWallpapersFragment"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:tag="popular" />
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>

@@ -3,6 +3,7 @@ package com.shubhamgupta16.wallpaperapp.models.init
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 @Entity(tableName = "categories")
 data class CategoryModel(
@@ -12,4 +13,4 @@ data class CategoryModel(
     val name: String,
     @SerializedName("popularity")
     val popularity: Int
-)
+): Serializable

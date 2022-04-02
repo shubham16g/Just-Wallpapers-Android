@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.shubhamgupta16.wallpaperapp.databinding.FragmentMainHome2Binding
 import com.shubhamgupta16.wallpaperapp.databinding.FragmentMainHomeBinding
 import com.shubhamgupta16.wallpaperapp.ui.ListingActivity
 import com.shubhamgupta16.wallpaperapp.ui.components.HorizontalCategoriesFragment
@@ -37,10 +38,7 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         requireActivity().setTransparentStatusBar()
-        if (requireContext().isOrientationLandscape()){
-            binding.bouncyScrollView.overscrollAnimationSize = 0f
-        }
-        Glide.with(this).load("https://picsum.photos/480/720")
+        Glide.with(requireContext()).load("https://picsum.photos/480/720")
             .diskCacheStrategy(DiskCacheStrategy.NONE)
             .transition(DrawableTransitionOptions.withCrossFade()).into(binding.headerImage)
 
@@ -79,6 +77,5 @@ class HomeFragment : Fragment() {
 
         (childFragmentManager.findFragmentById(binding.latestWallpaperFragment.id) as HorizontalWallpapersFragment).fetch()
         (childFragmentManager.findFragmentById(binding.popularWallpaperFragment.id) as HorizontalWallpapersFragment).fetch(orderBy = "downloads")
-
     }
 }
