@@ -11,8 +11,7 @@ import com.shubhamgupta16.wallpaperapp.databinding.ActivityMainBinding
 import com.shubhamgupta16.wallpaperapp.ui.main.fragments.CategoriesFragment
 import com.shubhamgupta16.wallpaperapp.ui.main.fragments.FavoritesFragment
 import com.shubhamgupta16.wallpaperapp.ui.main.fragments.HomeFragment
-import com.shubhamgupta16.wallpaperapp.utils.fitFullScreen
-import com.shubhamgupta16.wallpaperapp.utils.setTransparentStatusBar
+import com.shubhamgupta16.wallpaperapp.utils.*
 import com.shubhamgupta16.wallpaperapp.viewmodels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -28,7 +27,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        fitFullScreen()
+        fullStatusBar()
         setTransparentStatusBar()
 
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -80,11 +79,6 @@ class MainActivity : AppCompatActivity() {
         Log.d(TAG, "swapFragment: swapFragment()")
         viewModel.currentFrag = id
 //        todo animation
-        /*if (!isUsingNightMode()) {
-            if (id == R.id.action_home)
-                nonLightStatusBar()
-            else lightStatusBar()
-        }*/
         supportFragmentManager.beginTransaction().replace(binding.container.id, frag).commit()
         updateToolbarTitle()
         return true

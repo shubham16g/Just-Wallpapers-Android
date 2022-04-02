@@ -60,6 +60,7 @@ class FullWallpaperActivity : AppCompatActivity() {
         binding = ActivityFullWallpaperBinding.inflate(layoutInflater)
         fitFullScreen()
         setTransparentStatusBar()
+        setTransparentNavigation()
         setContentView(binding.root)
 
         permissionLauncher = getPermissionLauncher { isAllPermissionGranted, _ ->

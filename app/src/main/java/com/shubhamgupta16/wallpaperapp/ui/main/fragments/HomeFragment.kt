@@ -17,6 +17,7 @@ import com.shubhamgupta16.wallpaperapp.ui.components.HorizontalWallpapersFragmen
 import com.shubhamgupta16.wallpaperapp.utils.setTransparentStatusBar
 import dagger.hilt.android.AndroidEntryPoint
 
+
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
 
@@ -34,17 +35,31 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         requireActivity().setTransparentStatusBar()
+
         Glide.with(requireContext()).load("https://picsum.photos/480/720")
             .diskCacheStrategy(DiskCacheStrategy.NONE)
             .transition(DrawableTransitionOptions.withCrossFade()).into(binding.headerImage)
 
-        binding.searchBar.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+        /*binding.appbar.addOnOffsetChangedListener(OnOffsetChangedListener { appBarLayout, verticalOffset ->
+            if (requireContext().isUsingNightMode()) return@OnOffsetChangedListener
+            if (abs(verticalOffset) - appBarLayout.totalScrollRange == 0) {
+                requireActivity().lightStatusBar()
+            } else {
+                requireActivity().nonLightStatusBar()
+            }
+        })*/
+
+        binding.searchBar.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
-                ListingActivity.open(requireContext(), "Showing results for '$query'", query = query)
+                ListingActivity.open(
+                    requireContext(),
+                    "Showing results for '$query'",
+                    query = query
+                )
                 return true
             }
 
-            override fun onQueryTextChange(newText: String?)=true
+            override fun onQueryTextChange(newText: String?) = true
 
         })
 
