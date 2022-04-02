@@ -9,17 +9,13 @@ import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import com.shubhamgupta16.wallpaperapp.databinding.FragmentMainHome2Binding
 import com.shubhamgupta16.wallpaperapp.databinding.FragmentMainHomeBinding
 import com.shubhamgupta16.wallpaperapp.ui.ListingActivity
 import com.shubhamgupta16.wallpaperapp.ui.components.HorizontalCategoriesFragment
 import com.shubhamgupta16.wallpaperapp.ui.components.HorizontalColorsFragment
 import com.shubhamgupta16.wallpaperapp.ui.components.HorizontalWallpapersFragment
-import com.shubhamgupta16.wallpaperapp.utils.isOrientationLandscape
-import com.shubhamgupta16.wallpaperapp.utils.setNormalStatusBar
 import com.shubhamgupta16.wallpaperapp.utils.setTransparentStatusBar
 import dagger.hilt.android.AndroidEntryPoint
-
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
