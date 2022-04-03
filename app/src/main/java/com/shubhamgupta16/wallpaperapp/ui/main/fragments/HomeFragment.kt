@@ -51,7 +51,7 @@ class HomeFragment : Fragment() {
             }
         })*/
 
-        binding.searchBar.setSearchViewFont(R.font.nunito_medium)
+        binding.searchBar.setSearchViewFont(R.font.product_sans_regular)
         binding.searchBar.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
                 ListingActivity.open(

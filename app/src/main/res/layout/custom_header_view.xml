@@ -11,7 +11,7 @@
     android:layout_height="wrap_content">
 
     <TextView
-        android:fontFamily="@font/poppins_medium"
+        android:fontFamily="@font/montserrat_medium"
         android:id="@+id/custom_header_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -30,7 +30,7 @@
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
         android:background="@drawable/btn_primary"
-        android:fontFamily="@font/poppins_medium"
+        android:fontFamily="@font/montserrat_medium"
         app:backgroundTint="@color/app_background"
         android:drawableEnd="@drawable/ic_baseline_keyboard_arrow_right_24"
         android:gravity="end|center_vertical"

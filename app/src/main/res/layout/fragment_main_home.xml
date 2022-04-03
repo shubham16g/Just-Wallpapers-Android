@@ -75,6 +75,7 @@
                 android:layout_width="match_parent"
                 app:searchIcon="@drawable/ic_icon_search"
                 app:queryHint="Search..."
+                app:queryBackground="@android:color/transparent"
                 android:background="@drawable/btn_primary"
                 android:layout_margin="15dp"
                 android:backgroundTint="@color/cardBackground"

@@ -7,6 +7,7 @@
         <item name="colorSecondary">@color/secondary</item>
         <item name="colorSecondaryVariant">@color/secondaryVariant</item>
         <item name="colorOnSecondary">@color/onSecondary</item>
+        <item name="android:textViewStyle">@style/TextViewStyle</item>
         <item name="android:windowBackground">@color/app_background</item>
         <item name="android:statusBarColor">@color/status_bar</item>
         <item name="android:navigationBarColor">@color/navigation_bar</item>
@@ -24,6 +25,7 @@
         <item name="colorSecondary">@color/secondary</item>
         <item name="colorSecondaryVariant">@color/secondaryVariant</item>
         <item name="colorOnSecondary">@color/onSecondary</item>
+        <item name="android:textViewStyle">@style/TextViewStyle</item>
         <item name="android:statusBarColor">@color/status_bar</item>
         <item name="android:windowLayoutInDisplayCutoutMode" tools:targetApi="o_mr1">shortEdges</item>
         <item name="android:windowBackground">@color/fullWallpaperBackground</item>
