@@ -12,10 +12,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.shubhamgupta16.wallpaperapp.R
 import com.shubhamgupta16.wallpaperapp.adapters.ViewPager2Adapter
 import com.shubhamgupta16.wallpaperapp.databinding.FragmentMainCategoriesBinding
-import com.shubhamgupta16.wallpaperapp.utils.getStatusBarHeight
-import com.shubhamgupta16.wallpaperapp.utils.isOrientationLandscape
-import com.shubhamgupta16.wallpaperapp.utils.reduceDragSensitivity
-import com.shubhamgupta16.wallpaperapp.utils.setNormalStatusBar
+import com.shubhamgupta16.wallpaperapp.utils.*
 import com.shubhamgupta16.wallpaperapp.viewmodels.CategoriesViewModel
 import com.shubhamgupta16.wallpaperapp.viewmodels.live_observer.ListCase
 import dagger.hilt.android.AndroidEntryPoint
@@ -41,6 +38,9 @@ class CategoriesFragment : Fragment() {
         requireActivity().setNormalStatusBar()
         if (requireContext().isOrientationLandscape()){
             binding.toolbar.visibility = View.GONE
+        }
+        if (!requireActivity().isUsingNightMode()) {
+            requireActivity().lightStatusBar()
         }
         binding.root.setPadding(0,requireContext().getStatusBarHeight(),0,0)
         adapter = ViewPager2Adapter(childFragmentManager, lifecycle)

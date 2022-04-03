@@ -138,16 +138,16 @@ fun Activity.hideSystemUI() {
     }
 }
 fun Activity.lightStatusBar() {
-    WindowInsetsControllerCompat(window, window.decorView).apply {
-        isAppearanceLightStatusBars = true
-        isAppearanceLightNavigationBars =true
-    }
+    WindowInsetsControllerCompat(window, window.decorView).isAppearanceLightStatusBars = true
 }
 fun Activity.nonLightStatusBar() {
-    WindowInsetsControllerCompat(window, window.decorView).apply {
-        isAppearanceLightStatusBars = false
-        isAppearanceLightNavigationBars = false
-    }
+    WindowInsetsControllerCompat(window, window.decorView).isAppearanceLightStatusBars = false
+}
+fun Activity.lightNavigationBar() {
+    WindowInsetsControllerCompat(window, window.decorView).isAppearanceLightNavigationBars = true
+}
+fun Activity.nonLightNavigationBar() {
+    WindowInsetsControllerCompat(window, window.decorView).isAppearanceLightNavigationBars = false
 }
 
 fun Activity.showSystemUI() {

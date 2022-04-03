@@ -9,15 +9,16 @@ import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.google.android.material.appbar.AppBarLayout
 import com.shubhamgupta16.wallpaperapp.R
 import com.shubhamgupta16.wallpaperapp.databinding.FragmentMainHomeBinding
 import com.shubhamgupta16.wallpaperapp.ui.ListingActivity
 import com.shubhamgupta16.wallpaperapp.ui.components.HorizontalCategoriesFragment
 import com.shubhamgupta16.wallpaperapp.ui.components.HorizontalColorsFragment
 import com.shubhamgupta16.wallpaperapp.ui.components.HorizontalWallpapersFragment
-import com.shubhamgupta16.wallpaperapp.utils.setSearchViewFont
-import com.shubhamgupta16.wallpaperapp.utils.setTransparentStatusBar
+import com.shubhamgupta16.wallpaperapp.utils.*
 import dagger.hilt.android.AndroidEntryPoint
+import kotlin.math.abs
 
 
 @AndroidEntryPoint
@@ -42,14 +43,14 @@ class HomeFragment : Fragment() {
             .diskCacheStrategy(DiskCacheStrategy.NONE)
             .transition(DrawableTransitionOptions.withCrossFade()).into(binding.headerImage)
 
-        /*binding.appbar.addOnOffsetChangedListener(OnOffsetChangedListener { appBarLayout, verticalOffset ->
+        binding.appbar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
             if (requireContext().isUsingNightMode()) return@OnOffsetChangedListener
             if (abs(verticalOffset) - appBarLayout.totalScrollRange == 0) {
                 requireActivity().lightStatusBar()
             } else {
                 requireActivity().nonLightStatusBar()
             }
-        })*/
+        })
 
         binding.searchBar.setSearchViewFont(R.font.product_sans_regular)
         binding.searchBar.setOnQueryTextListener(object : SearchView.OnQueryTextListener {

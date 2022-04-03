@@ -15,10 +15,7 @@ import com.shubhamgupta16.wallpaperapp.databinding.FragmentMainFavoritesBinding
 import com.shubhamgupta16.wallpaperapp.ui.ListingActivity
 import com.shubhamgupta16.wallpaperapp.ui.components.HorizontalColorsFragment
 import com.shubhamgupta16.wallpaperapp.ui.components.VerticalWallpapersFragment
-import com.shubhamgupta16.wallpaperapp.utils.getStatusBarHeight
-import com.shubhamgupta16.wallpaperapp.utils.isOrientationLandscape
-import com.shubhamgupta16.wallpaperapp.utils.reduceDragSensitivity
-import com.shubhamgupta16.wallpaperapp.utils.setNormalStatusBar
+import com.shubhamgupta16.wallpaperapp.utils.*
 import com.shubhamgupta16.wallpaperapp.viewmodels.CategoriesViewModel
 import com.shubhamgupta16.wallpaperapp.viewmodels.live_observer.ListCase
 import dagger.hilt.android.AndroidEntryPoint
@@ -41,6 +38,9 @@ class FavoritesFragment : Fragment() {
         requireActivity().setNormalStatusBar()
         if (requireContext().isOrientationLandscape()){
             binding.toolbar.visibility = View.GONE
+        }
+        if (!requireActivity().isUsingNightMode()) {
+            requireActivity().lightStatusBar()
         }
         binding.root.setPadding(0,requireContext().getStatusBarHeight(),0,0)
 
