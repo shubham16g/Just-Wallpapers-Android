@@ -9,11 +9,13 @@ import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.shubhamgupta16.wallpaperapp.R
 import com.shubhamgupta16.wallpaperapp.databinding.FragmentMainHomeBinding
 import com.shubhamgupta16.wallpaperapp.ui.ListingActivity
 import com.shubhamgupta16.wallpaperapp.ui.components.HorizontalCategoriesFragment
 import com.shubhamgupta16.wallpaperapp.ui.components.HorizontalColorsFragment
 import com.shubhamgupta16.wallpaperapp.ui.components.HorizontalWallpapersFragment
+import com.shubhamgupta16.wallpaperapp.utils.setSearchViewFont
 import com.shubhamgupta16.wallpaperapp.utils.setTransparentStatusBar
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -49,6 +51,7 @@ class HomeFragment : Fragment() {
             }
         })*/
 
+        binding.searchBar.setSearchViewFont(R.font.nunito_medium)
         binding.searchBar.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
                 ListingActivity.open(

@@ -11,6 +11,7 @@
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/drawable/btn_primary.xml" value="0.1325" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/drawable/ic_arrow_back_asset.xml" value="0.1415" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/drawable/ic_baseline_favorite_border_24.xml" value="0.1575" />
+        <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/drawable/ic_baseline_keyboard_arrow_down_24.xml" value="0.1475" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/drawable/ic_iconsearch.xml" value="0.1415" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/drawable/ic_no_result.xml" value="0.1325" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/drawable/image_card.xml" value="0.119" />
@@ -30,7 +31,7 @@
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/activity_full_wallpaper_alt.xml" value="0.16" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/activity_full_wallpaper_i.xml" value="0.2" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/activity_listing.xml" value="0.33" />
-        <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/activity_main.xml" value="0.2" />
+        <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/activity_splash.xml" value="0.2" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/bottom_nav.xml" value="0.2" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/custom_header_view.xml" value="0.25" />
@@ -43,7 +44,7 @@
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/fragment_listing.xml" value="0.19692307692307692" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/fragment_main_categories.xml" value="0.2" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/fragment_main_favorite.xml" value="0.2" />
-        <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/fragment_main_favorites.xml" value="0.2" />
+        <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/fragment_main_favorites.xml" value="1.1" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/fragment_main_home.xml" value="0.2" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/fragment_main_home_2.xml" value="0.2" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/item_category.xml" value="0.2" />

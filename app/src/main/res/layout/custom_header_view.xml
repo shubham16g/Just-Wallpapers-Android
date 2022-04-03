@@ -11,6 +11,7 @@
     android:layout_height="wrap_content">
 
     <TextView
+        android:fontFamily="@font/poppins_medium"
         android:id="@+id/custom_header_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -20,22 +21,22 @@
         android:ellipsize="end"
         android:textSize="14sp"
         android:layout_toStartOf="@+id/custom_header_more_btn"
-        android:textColor="@color/textPrimary"
-        android:textStyle="bold" />
+        android:textColor="@color/textPrimary" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/custom_header_more_btn"
         android:layout_width="wrap_content"
-        app:rippleColor="@color/primary"
-        android:layout_height="40dp"
-        android:gravity="end|center_vertical"
+        android:layout_height="30dp"
         android:layout_alignParentEnd="true"
-        android:drawableEnd="@drawable/ic_baseline_keyboard_arrow_down_24"
         android:layout_centerVertical="true"
-        android:background="@android:color/transparent"
-        android:stateListAnimator="@null"
+        android:background="@drawable/btn_primary"
+        android:fontFamily="@font/poppins_medium"
+        app:backgroundTint="@color/app_background"
+        android:drawableEnd="@drawable/ic_baseline_keyboard_arrow_right_24"
+        android:gravity="end|center_vertical"
         android:includeFontPadding="false"
         android:padding="0dp"
+        android:stateListAnimator="@null"
         android:text="@string/more"
         android:textColor="@color/primary" />
 </RelativeLayout>

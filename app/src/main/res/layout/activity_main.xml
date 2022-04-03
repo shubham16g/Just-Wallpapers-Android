@@ -17,6 +17,8 @@
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_nav"
+        app:itemTextAppearanceInactive="@style/BottomNavigationView"
+        app:itemTextAppearanceActive="@style/BottomNavigationView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/background_bottom_sheet"

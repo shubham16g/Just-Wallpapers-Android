@@ -5,26 +5,20 @@ import android.content.Context
 import android.content.res.Configuration
 import android.content.res.Resources
 import android.graphics.Bitmap
-import android.graphics.Canvas
 import android.graphics.Color
-import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.ColorDrawable
-import android.graphics.drawable.TransitionDrawable
-import android.os.Handler
-import android.os.Looper
+import android.graphics.Typeface
 import android.transition.Fade
 import android.transition.Transition
 import android.transition.TransitionManager
 import android.util.DisplayMetrics
-import android.util.Log
 import android.view.View
 import android.view.View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
 import android.view.View.SYSTEM_UI_FLAG_LAYOUT_STABLE
 import android.view.ViewGroup
-import android.view.WindowInsetsController
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
-import android.widget.ImageView
+import android.widget.TextView
+import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.ColorUtils
@@ -33,18 +27,14 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
-import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestBuilder
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.shubhamgupta16.wallpaperapp.R
-import kotlinx.coroutines.suspendCancellableCoroutine
-import kotlin.math.abs
-import kotlin.math.max
-import kotlin.math.min
 import kotlin.math.roundToInt
+
 
 val Int.dp get() = (this / (Resources.getSystem().displayMetrics.densityDpi.toFloat() / DisplayMetrics.DENSITY_DEFAULT)).roundToInt()
 val Float.dp get() = this / (Resources.getSystem().displayMetrics.densityDpi.toFloat() / DisplayMetrics.DENSITY_DEFAULT)
@@ -123,8 +113,11 @@ fun Activity.fullStatusBar(){
     window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
     window.decorView.systemUiVisibility =
         SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or SYSTEM_UI_FLAG_LAYOUT_STABLE
-    lightStatusBar()
-    WindowInsetsControllerCompat(window, window.decorView).isAppearanceLightNavigationBars = true
+}
+
+fun SearchView.setSearchViewFont(font:Int){
+    val myCustomFont = ResourcesCompat.getFont(context,font)
+    findViewById<TextView>(androidx.appcompat.R.id.search_src_text).typeface = myCustomFont
 }
 
 fun Activity.setTransparentStatusBar() {
@@ -145,10 +138,16 @@ fun Activity.hideSystemUI() {
     }
 }
 fun Activity.lightStatusBar() {
-    WindowInsetsControllerCompat(window, window.decorView).isAppearanceLightStatusBars = true
+    WindowInsetsControllerCompat(window, window.decorView).apply {
+        isAppearanceLightStatusBars = true
+        isAppearanceLightNavigationBars =true
+    }
 }
 fun Activity.nonLightStatusBar() {
-    WindowInsetsControllerCompat(window, window.decorView).isAppearanceLightStatusBars = false
+    WindowInsetsControllerCompat(window, window.decorView).apply {
+        isAppearanceLightStatusBars = false
+        isAppearanceLightNavigationBars = false
+    }
 }
 
 fun Activity.showSystemUI() {

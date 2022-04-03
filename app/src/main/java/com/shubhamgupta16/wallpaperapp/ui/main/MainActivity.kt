@@ -28,6 +28,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         fullStatusBar()
+        if (!isUsingNightMode()) {
+            lightStatusBar()
+        }
         setTransparentStatusBar()
 
         binding = ActivityMainBinding.inflate(layoutInflater)

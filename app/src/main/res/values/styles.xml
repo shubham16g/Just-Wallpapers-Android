@@ -21,13 +21,20 @@
 
     <style name="ToolbarTitle" parent="Widget.MaterialComponents.TextView">
         <item name="textAllCaps">true</item>
-        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">@font/josefin_medium</item>
         <item name="android:textColor">@color/textPrimary</item>
         <item name="android:textSize">20sp</item>
     </style>
 
+    <style name="BottomNavigationView">
+        <item name="fontFamily">@font/poppins_medium</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
     <style name="SearchViewTheme" parent="Widget.AppCompat.SearchView">
         <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">@font/poppins_regular</item>
+        <item name="fontFamily">@font/poppins_regular</item>
         <item name="android:textColorHint">@color/primary</item>
         <item name="queryBackground">@android:color/transparent</item>
         <item name="color">@color/textPrimary</item>
