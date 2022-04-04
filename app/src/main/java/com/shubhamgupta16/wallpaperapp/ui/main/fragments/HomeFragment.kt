@@ -1,6 +1,7 @@
 package com.shubhamgupta16.wallpaperapp.ui.main.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +14,7 @@ import com.google.android.material.appbar.AppBarLayout
 import com.shubhamgupta16.wallpaperapp.R
 import com.shubhamgupta16.wallpaperapp.databinding.FragmentMainHomeBinding
 import com.shubhamgupta16.wallpaperapp.ui.ListingActivity
+import com.shubhamgupta16.wallpaperapp.ui.components.FeaturedFragment
 import com.shubhamgupta16.wallpaperapp.ui.components.HorizontalCategoriesFragment
 import com.shubhamgupta16.wallpaperapp.ui.components.HorizontalColorsFragment
 import com.shubhamgupta16.wallpaperapp.ui.components.HorizontalWallpapersFragment
@@ -39,11 +41,12 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         requireActivity().setTransparentStatusBar()
 
-        Glide.with(requireContext()).load("https://picsum.photos/480/720")
+        /*Glide.with(requireContext()).load("https://picsum.photos/480/720")
             .diskCacheStrategy(DiskCacheStrategy.NONE)
-            .transition(DrawableTransitionOptions.withCrossFade()).into(binding.headerImage)
+            .transition(DrawableTransitionOptions.withCrossFade()).into(binding.headerImage)*/
 
         binding.appbar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
+            Log.d("TAG", "onViewCreated: ${abs(verticalOffset) - appBarLayout.totalScrollRange == 0}")
             if (requireContext().isUsingNightMode()) return@OnOffsetChangedListener
             if (abs(verticalOffset) - appBarLayout.totalScrollRange == 0) {
                 requireActivity().lightStatusBar()
@@ -73,6 +76,9 @@ class HomeFragment : Fragment() {
         binding.popularHeader.setOnMoreClickListener {
             ListingActivity.open(requireContext(), "Popular", orderBy = "downloads")
         }
+
+        childFragmentManager.beginTransaction()
+            .replace(binding.featuredFragment.id, FeaturedFragment()).commit()
 
         childFragmentManager.beginTransaction()
             .replace(binding.colorsFragment.id, HorizontalColorsFragment().apply {

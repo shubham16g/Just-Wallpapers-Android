@@ -306,8 +306,8 @@ class FullWallpaperActivity : AppCompatActivity() {
 
     private fun updateFavButton(fav: Boolean) {
         binding.favButton.setImageResource(
-            if (fav) R.drawable.ic_baseline_favorite_24
-            else R.drawable.ic_baseline_favorite_border_24
+            if (fav) R.drawable.ic_favorite_active
+            else R.drawable.ic_favorite
         )
     }
 

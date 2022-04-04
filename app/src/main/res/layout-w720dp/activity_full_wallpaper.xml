@@ -189,7 +189,7 @@
             android:layout_width="@dimen/action_icon_size"
             android:layout_height="@dimen/action_icon_size"
             android:background="@drawable/round_btn_dark"
-            android:src="@drawable/ic_baseline_favorite_border_24"
+            android:src="@drawable/ic_favorite"
             app:tint="@color/white" />
 
 
@@ -198,7 +198,7 @@
             android:layout_width="@dimen/action_icon_size"
             android:layout_height="@dimen/action_icon_size"
             android:background="@drawable/round_btn_dark"
-            android:src="@drawable/ic_baseline_share_24"
+            android:src="@drawable/ic_share"
             app:tint="@color/white" />
 
 
@@ -207,7 +207,7 @@
             android:layout_width="@dimen/action_icon_size"
             android:layout_height="@dimen/action_icon_size"
             android:background="@drawable/round_btn_dark"
-            android:src="@drawable/three_dots"
+            android:src="@drawable/ic_three_dots"
             app:tint="@color/white" />
 
         <LinearLayout

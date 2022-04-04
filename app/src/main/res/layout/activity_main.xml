@@ -23,6 +23,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/background_bottom_sheet"
         app:elevation="8dp"
+        app:itemIconSize="22dp"
         app:itemIconTint="@color/bottom_nav_item"
         app:itemTextColor="@color/bottom_nav_item"
         app:layout_constraintBottom_toBottomOf="parent"

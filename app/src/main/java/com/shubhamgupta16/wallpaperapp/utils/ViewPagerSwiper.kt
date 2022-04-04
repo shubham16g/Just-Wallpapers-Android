@@ -9,15 +9,19 @@ import kotlin.math.abs
 
 
 fun ViewPager2.apply3DSwiper(){
+    val currentItemHorizontalMarginPx = resources.getDimensionPixelSize(R.dimen.view_pager_item_margin)
+    val nextItemVisiblePx = resources.getDimension(R.dimen.view_pager_next_visible_item)
+    val abs = 0.25f
+    applyCarousels(currentItemHorizontalMarginPx, nextItemVisiblePx, abs)
+}
+
+fun ViewPager2.applyCarousels(currentItemHorizontalMarginPx:Int, nextItemVisiblePx:Float, abs:Float){
     this.apply {
         clipToPadding = false   // allow full width shown with padding
         clipChildren = false    // allow left/right item is not clipped
         offscreenPageLimit = 2  // make sure left/right item is rendered
     }
 
-    val currentItemHorizontalMarginPx = resources.getDimensionPixelSize(R.dimen.view_pager_item_margin)
-    val nextItemVisiblePx = resources.getDimension(R.dimen.view_pager_next_visible_item)
-    val abs = 0.25f
     val pageTranslationX = nextItemVisiblePx + currentItemHorizontalMarginPx
     val pageTransformer = ViewPager2.PageTransformer { page, position ->
         page.translationX = -pageTranslationX * position
@@ -27,9 +31,9 @@ fun ViewPager2.apply3DSwiper(){
     setPageTransformer(pageTransformer)
 
     val itemDecoration = HorizontalMarginItemDecoration(
-            currentItemHorizontalMarginPx
-        )
-        addItemDecoration(itemDecoration)
+        currentItemHorizontalMarginPx
+    )
+    addItemDecoration(itemDecoration)
 
 }
 
