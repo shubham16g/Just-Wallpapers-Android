@@ -10,18 +10,27 @@
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/drawable/background_card.xml" value="0.1415" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/drawable/background_status_bar.xml" value="0.143" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/drawable/btn_primary.xml" value="0.1325" />
+        <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/drawable/ic_account.xml" value="0.1235" />
+        <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/drawable/ic_account_active.xml" value="0.1235" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/drawable/ic_arrow_back_asset.xml" value="0.1415" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/drawable/ic_baseline_arrow_downward_24.xml" value="0.1445" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/drawable/ic_baseline_favorite_24.xml" value="0.1445" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/drawable/ic_baseline_favorite_border_24.xml" value="0.1575" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/drawable/ic_baseline_keyboard_arrow_down_24.xml" value="0.1475" />
+        <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/drawable/ic_baseline_photo_size_select_actual_24.xml" value="0.1445" />
+        <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/drawable/ic_baseline_rotate_90_degrees_ccw_24.xml" value="0.1445" />
+        <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/drawable/ic_baseline_search_24.xml" value="0.1445" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/drawable/ic_baseline_share_24.xml" value="0.1445" />
+        <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/drawable/ic_baseline_wallpaper_24.xml" value="0.1445" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/drawable/ic_category.xml" value="0.159" />
+        <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/drawable/ic_category_active.xml" value="0.1445" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/drawable/ic_home.xml" value="0.159" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/drawable/ic_home_active.xml" value="0.159" />
+        <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/drawable/ic_icon_search.xml" value="0.1445" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/drawable/ic_iconsearch.xml" value="0.1415" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/drawable/ic_launcher_background.xml" value="0.159" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/drawable/ic_no_result.xml" value="0.1325" />
+        <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/drawable/ic_three_dots.xml" value="0.1445" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/drawable/image_card.xml" value="0.119" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/drawable/indicator_selector.xml" value="0.159" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/drawable/inidcator_selcector.xml" value="0.159" />
@@ -45,7 +54,7 @@
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/activity_full_wallpaper_alt.xml" value="0.16" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/activity_full_wallpaper_i.xml" value="0.2" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/activity_listing.xml" value="0.33" />
-        <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/activity_main.xml" value="0.33" />
+        <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/activity_main.xml" value="0.2" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/activity_splash.xml" value="0.2" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/bottom_nav.xml" value="0.2" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/custom_header_view.xml" value="0.25" />
@@ -60,7 +69,7 @@
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/fragment_main_categories.xml" value="0.2" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/fragment_main_favorite.xml" value="0.2" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/fragment_main_favorites.xml" value="0.18" />
-        <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/fragment_main_home.xml" value="0.2" />
+        <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/fragment_main_home.xml" value="0.22" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/fragment_main_home_2.xml" value="0.2" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/item_category.xml" value="0.2" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/item_category_horizontal.xml" value="0.33" />
@@ -71,6 +80,7 @@
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/item_wall.xml" value="0.2" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/item_wall_client.xml" value="0.2" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/item_wall_horizontal.xml" value="0.33" />
+        <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/layout_info.xml" value="0.25" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/sheet_layout_set_on.xml" value="0.2" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/menu/main_menu.xml" value="0.2" />
       </map>

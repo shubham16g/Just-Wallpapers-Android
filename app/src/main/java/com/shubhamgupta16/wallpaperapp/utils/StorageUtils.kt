@@ -116,12 +116,7 @@ fun Context.saveImageToExternal(
                 if (!bm.compress(Bitmap.CompressFormat.JPEG, 95, stream))
                     throw IOException("Can't save bitmap")
             }
-            /*MediaScannerConnection.scanFile(
-            this, arrayOf(imageFile.absolutePath), null
-            ) { path, uri ->
-                Log.i("ExternalStorage", "Scanned $path:")
-                Log.i("ExternalStorage", "-> uri=$uri")
-            }*/
+
             true
         }
     } catch (e: IOException) {

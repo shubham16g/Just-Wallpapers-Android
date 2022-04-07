@@ -21,8 +21,6 @@
             app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
             app:titleEnabled="false">
 
-
-
             <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/featured_fragment"
                 android:layout_width="match_parent"

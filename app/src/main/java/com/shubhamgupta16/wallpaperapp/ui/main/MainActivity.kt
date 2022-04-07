@@ -8,10 +8,14 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.navigation.NavigationBarView
 import com.shubhamgupta16.wallpaperapp.R
 import com.shubhamgupta16.wallpaperapp.databinding.ActivityMainBinding
+import com.shubhamgupta16.wallpaperapp.ui.main.fragments.AccountFragment
 import com.shubhamgupta16.wallpaperapp.ui.main.fragments.CategoriesFragment
 import com.shubhamgupta16.wallpaperapp.ui.main.fragments.FavoritesFragment
 import com.shubhamgupta16.wallpaperapp.ui.main.fragments.HomeFragment
-import com.shubhamgupta16.wallpaperapp.utils.*
+import com.shubhamgupta16.wallpaperapp.utils.fullStatusBar
+import com.shubhamgupta16.wallpaperapp.utils.isUsingNightMode
+import com.shubhamgupta16.wallpaperapp.utils.lightNavigationBar
+import com.shubhamgupta16.wallpaperapp.utils.setTransparentStatusBar
 import com.shubhamgupta16.wallpaperapp.viewmodels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -57,12 +61,14 @@ class MainActivity : AppCompatActivity() {
                 getCategoryFragment(viewModel.categoryName)
             )
             R.id.action_fav -> swapFragment(itemId, getFavoriteFragment())
+            R.id.action_account -> swapFragment(itemId, getAccountFragment())
             else -> false
         }
     }
 
     private fun getFavoriteFragment() = FavoritesFragment()
 
+    private fun getAccountFragment() = AccountFragment()
 
     private fun getHomeFragment() = HomeFragment().apply {
         categoryClickListener = { categoryName ->

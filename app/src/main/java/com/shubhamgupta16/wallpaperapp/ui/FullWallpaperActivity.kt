@@ -28,7 +28,8 @@ import com.bumptech.glide.request.target.Target
 import com.shubhamgupta16.wallpaperapp.R
 import com.shubhamgupta16.wallpaperapp.adapters.SingleImageAdapter
 import com.shubhamgupta16.wallpaperapp.databinding.ActivityFullWallpaperBinding
-import com.shubhamgupta16.wallpaperapp.databinding.SheetLayoutSetOnBinding
+import com.shubhamgupta16.wallpaperapp.databinding.LayoutInfoBinding
+import com.shubhamgupta16.wallpaperapp.databinding.LayoutSetOnBinding
 import com.shubhamgupta16.wallpaperapp.models.wallpapers.Author
 import com.shubhamgupta16.wallpaperapp.models.wallpapers.WallModel
 import com.shubhamgupta16.wallpaperapp.models.wallpapers.WallModelListHolder
@@ -181,6 +182,15 @@ class FullWallpaperActivity : AppCompatActivity() {
 
         }
 
+        val infoLayout =LayoutInfoBinding.inflate(layoutInflater)
+        val infoDialog = alertDialog(infoLayout)
+        binding.infoButton.setOnClickListener {
+            infoDialog.show()
+        }
+
+        val setOnDialog =
+            LayoutSetOnBinding.inflate(layoutInflater)
+        val dialog = alertDialog(setOnDialog)
         binding.setWallpaperButton.setOnClickListener {
             if (isOrientationLandscape()) {
                 Toast.makeText(this, "Set Wallpapers only in Portrait Mode", Toast.LENGTH_SHORT)
@@ -189,18 +199,15 @@ class FullWallpaperActivity : AppCompatActivity() {
             }
             val model = viewModel.list[viewModel.currentPosition]
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                val sheetLayout =
-                    SheetLayoutSetOnBinding.inflate(layoutInflater)
-                val dialog = alertDialog(sheetLayout)
-                sheetLayout.onHomeScreenBtn.setOnClickListener {
+                setOnDialog.onHomeScreenBtn.setOnClickListener {
                     viewModel.applyWallpaper(this, model, WallpaperManager.FLAG_SYSTEM)
                     dialog.dismiss()
                 }
-                sheetLayout.onLockScreenBtn.setOnClickListener {
+                setOnDialog.onLockScreenBtn.setOnClickListener {
                     viewModel.applyWallpaper(this, model, WallpaperManager.FLAG_LOCK)
                     dialog.dismiss()
                 }
-                sheetLayout.onBothScreenBtn.setOnClickListener {
+                setOnDialog.onBothScreenBtn.setOnClickListener {
                     viewModel.applyWallpaper(this, model)
                     dialog.dismiss()
                 }

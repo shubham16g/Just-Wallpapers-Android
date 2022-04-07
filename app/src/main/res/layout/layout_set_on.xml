@@ -4,8 +4,7 @@
     android:orientation="vertical"
     android:layout_height="wrap_content"
     android:gravity="center_horizontal"
-    android:paddingBottom="30dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:paddingBottom="30dp">
 
     <TextView
         android:id="@+id/set_wallpaper_as"
