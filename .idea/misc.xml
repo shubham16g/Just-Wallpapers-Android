@@ -34,6 +34,7 @@
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/drawable/image_card.xml" value="0.119" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/drawable/indicator_selector.xml" value="0.159" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/drawable/inidcator_selcector.xml" value="0.159" />
+        <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/drawable/main_ic_account.xml" value="0.1235" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/drawable/main_ic_category.xml" value="0.159" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/drawable/main_ic_favorite.xml" value="0.159" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/drawable/main_ic_home.xml" value="0.159" />
@@ -66,11 +67,13 @@
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/fragment_full_wallpaper.xml" value="0.19692307692307692" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/fragment_home.xml" value="0.2" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/fragment_listing.xml" value="0.19692307692307692" />
+        <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/fragment_main_account.xml" value="0.2" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/fragment_main_categories.xml" value="0.2" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/fragment_main_favorite.xml" value="0.2" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/fragment_main_favorites.xml" value="0.18" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/fragment_main_home.xml" value="0.22" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/fragment_main_home_2.xml" value="0.2" />
+        <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/item_account_row.xml" value="0.2" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/item_category.xml" value="0.2" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/item_category_horizontal.xml" value="0.33" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/item_color_horizontal.xml" value="0.5" />

@@ -20,6 +20,7 @@
         app:itemTextAppearanceInactive="@style/BottomNavigationView"
         app:itemTextAppearanceActive="@style/BottomNavigationView"
         android:layout_width="0dp"
+        app:labelVisibilityMode="labeled"
         android:layout_height="wrap_content"
         android:background="@drawable/background_bottom_sheet"
         app:elevation="8dp"
