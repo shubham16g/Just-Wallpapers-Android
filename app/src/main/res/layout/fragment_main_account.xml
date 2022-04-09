@@ -23,16 +23,24 @@
             android:layout_height="wrap_content"/>
     </androidx.appcompat.widget.Toolbar>
 
-    <ImageView
-        android:id="@+id/imageView"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/imageCard"
         android:layout_marginTop="10dp"
         android:layout_width="100dp"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="0dp"
         android:layout_height="0dp"
-        android:src="@drawable/background_card"
         app:layout_constraintDimensionRatio="h,9:16"
+        app:cardBackgroundColor="@color/cardBackground"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" >
+        <ImageView
+            android:id="@+id/currentWall"
+            android:scaleType="centerCrop"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </androidx.cardview.widget.CardView>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
@@ -42,7 +50,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:layout_constraintTop_toBottomOf="@+id/imageCard"
         tools:listitem="@layout/item_account_row" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

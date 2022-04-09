@@ -1,30 +1,30 @@
 package com.shubhamgupta16.wallpaperapp.ui.main.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
-import androidx.core.view.doOnLayout
+import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
-import com.google.android.material.tabs.TabLayoutMediator
-import com.shubhamgupta16.wallpaperapp.adapters.ViewPager2Adapter
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.shubhamgupta16.wallpaperapp.R
+import com.shubhamgupta16.wallpaperapp.adapters.AccountSettingsAdapter
+import com.shubhamgupta16.wallpaperapp.adapters.AccountSettingsModel
 import com.shubhamgupta16.wallpaperapp.databinding.FragmentMainAccountBinding
-import com.shubhamgupta16.wallpaperapp.databinding.FragmentMainCategoriesBinding
-import com.shubhamgupta16.wallpaperapp.databinding.FragmentMainFavoritesBinding
-import com.shubhamgupta16.wallpaperapp.ui.ListingActivity
-import com.shubhamgupta16.wallpaperapp.ui.components.HorizontalColorsFragment
-import com.shubhamgupta16.wallpaperapp.ui.components.VerticalWallpapersFragment
 import com.shubhamgupta16.wallpaperapp.utils.*
-import com.shubhamgupta16.wallpaperapp.viewmodels.CategoriesViewModel
-import com.shubhamgupta16.wallpaperapp.viewmodels.live_observer.ListCase
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class AccountFragment : Fragment() {
 
     private lateinit var binding: FragmentMainAccountBinding
+    private val permissionLauncher = getPermissionLauncher { isAllPermissionGranted, map ->
+        if (isAllPermissionGranted)
+            binding.currentWall.setImageDrawable(requireContext().getCurrentWall())
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,17 +34,35 @@ class AccountFragment : Fragment() {
         return binding.root
     }
 
+    private val settingsList = listOf(
+        AccountSettingsModel(R.drawable.ic_icon_search, "Search")
+    )
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         requireActivity().setNormalStatusBar()
-        if (requireContext().isOrientationLandscape()){
+
+        permissionLauncher.launchPermission(requireContext(), true)
+        if (requireContext().isOrientationLandscape()) {
             binding.toolbar.visibility = View.GONE
         }
         if (!requireActivity().isUsingNightMode()) {
             requireActivity().lightStatusBar()
         }
-        binding.root.setPadding(0,requireContext().getStatusBarHeight(),0,0)
+        binding.root.setPadding(0, requireContext().getStatusBarHeight(), 0, 0)
 
+        binding.recyclerView.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = AccountSettingsAdapter(settingsList) {
+                when (it) {
+                    "Search" -> Toast.makeText(requireContext(), "SEARCH", Toast.LENGTH_SHORT)
+                        .show()
+                }
+            }
+        }
+
+
+        binding.currentWall.setImageDrawable(requireContext().getCurrentWall())
 //        childFragmentManager.beginTransaction()
 //            .replace(binding.fragmentContainerView.id, VerticalWallpapersFragment.getInstanceForFavorite()).commit()
 //        binding.viewPager2.isUserInputEnabled = false

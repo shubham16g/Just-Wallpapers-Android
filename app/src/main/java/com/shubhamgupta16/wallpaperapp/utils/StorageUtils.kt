@@ -10,6 +10,7 @@ import android.provider.MediaStore
 import androidx.activity.ComponentActivity
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.fragment.app.Fragment
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -18,6 +19,12 @@ import java.io.OutputStream
 /** Permissions */
 
 fun ComponentActivity.getPermissionLauncher(listener: (isAllPermissionGranted:Boolean, Map<String,Boolean>)->Unit): ActivityResultLauncher<Array<String>> {
+    return registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) {
+        listener(it.values.all { value-> value }, it)
+    }
+}
+
+fun Fragment.getPermissionLauncher(listener: (isAllPermissionGranted:Boolean, Map<String,Boolean>)->Unit): ActivityResultLauncher<Array<String>> {
     return registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) {
         listener(it.values.all { value-> value }, it)
     }
