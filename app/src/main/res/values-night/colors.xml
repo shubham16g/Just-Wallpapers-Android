@@ -4,9 +4,9 @@
 
     <color name="primary">#FFBB86FC</color>
 
-    <color name="toolbar">#111111</color>
+    <color name="toolbar">#171717</color>
+    <color name="status_bar">#171717</color>
     <color name="onToolbar">#ffffff</color>
-    <color name="status_bar">#111111</color>
     <color name="navigation_bar">#090C0E</color>
 
     <!--Bottom Navigation-->
