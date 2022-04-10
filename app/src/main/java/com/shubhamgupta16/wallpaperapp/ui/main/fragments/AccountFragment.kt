@@ -1,6 +1,7 @@
 package com.shubhamgupta16.wallpaperapp.ui.main.fragments
 
 import android.annotation.SuppressLint
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -25,6 +26,10 @@ class AccountFragment : Fragment() {
     private val permissionLauncher = getPermissionLauncher { isAllPermissionGranted, map ->
         if (isAllPermissionGranted)
             updateCurrentWallCards()
+    }
+    override fun onStart() {
+        super.onStart()
+        updateCurrentWallCards()
     }
 
     override fun onCreateView(
@@ -61,6 +66,22 @@ class AccountFragment : Fragment() {
             }
 
         }
+        wallpaperHelper.getLockScreenWall()?.let {
+            if (it.bitmap != null) {
+                binding.currentWall2.visibility = View.VISIBLE
+                binding.liveWallIcon2.visibility = View.INVISIBLE
+                binding.liveWallText2.visibility = View.INVISIBLE
+                binding.currentWall2.setImageBitmap(it.bitmap)
+            }
+            else {
+                binding.currentWall2.visibility = View.INVISIBLE
+                binding.liveWallIcon2.visibility = View.VISIBLE
+                binding.liveWallText2.visibility = View.VISIBLE
+                binding.liveWallIcon2.setImageDrawable(it.icon)
+                binding.liveWallText2.text = "${it.description}\nLive Wallpaper"
+            }
+
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -68,28 +89,23 @@ class AccountFragment : Fragment() {
         requireActivity().setNormalStatusBar()
 
         permissionLauncher.launchPermission(requireContext(), true)
-        if (requireContext().isOrientationLandscape()) {
-            binding.toolbar.visibility = View.GONE
-        }
         if (!requireActivity().isUsingNightMode()) {
             requireActivity().lightStatusBar()
         }
         binding.root.setPadding(0, requireContext().getStatusBarHeight(), 0, 0)
 
-        binding.recyclerView.apply {
-            layoutManager = LinearLayoutManager(requireContext())
-            adapter = AccountSettingsAdapter(settingsList) {
-                when (it) {
-                    "Search" -> Toast.makeText(requireContext(), "SEARCH", Toast.LENGTH_SHORT)
-                        .show()
-                }
+        binding.deviceName.text = Build.MODEL
+
+        val ad = AccountSettingsAdapter(settingsList) {
+            when (it) {
+                "Search" -> Toast.makeText(requireContext(), "SEARCH", Toast.LENGTH_SHORT)
+                    .show()
             }
         }
-
-        updateCurrentWallCards()
-
-//        childFragmentManager.beginTransaction()
-//            .replace(binding.fragmentContainerView.id, VerticalWallpapersFragment.getInstanceForFavorite()).commit()
-//        binding.viewPager2.isUserInputEnabled = false
+        binding.recyclerView.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            itemAnimator = null
+            adapter = ad
+        }
     }
 }

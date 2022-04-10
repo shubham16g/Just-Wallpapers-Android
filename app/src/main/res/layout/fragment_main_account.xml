@@ -7,70 +7,117 @@
     android:orientation="vertical"
     tools:context=".ui.main.fragments.CategoriesFragment">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="0dp"
-        android:layout_height="20dp"
-        android:background="@color/toolbar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" >
-        <TextView
-            android:id="@+id/toolbar_title"
-            style="@style/ToolbarTitle"
-            android:text=""
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-    </androidx.appcompat.widget.Toolbar>
-
     <androidx.cardview.widget.CardView
         android:id="@+id/imageCard"
-        android:layout_marginTop="10dp"
         android:layout_width="120dp"
-        app:cardCornerRadius="8dp"
-        app:cardElevation="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="15dp"
-        android:layout_marginEnd="15dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintDimensionRatio="h,9:16"
+        android:layout_marginEnd="25dp"
+        android:layout_marginTop="50dp"
         app:cardBackgroundColor="@color/cardBackground"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="20dp"
+        app:layout_constraintDimensionRatio="h,9:16"
+        app:layout_constraintEnd_toStartOf="@+id/imageCard2"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar" >
+        app:layout_constraintTop_toTopOf="parent">
+
         <ImageView
             android:id="@+id/currentWall"
-            android:scaleType="centerCrop"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop" />
 
         <ImageView
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="50dp"
             android:id="@+id/liveWallIcon"
             android:layout_width="50dp"
-            android:layout_height="50dp"/>
+            android:layout_height="50dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="50dp" />
 
         <TextView
+            android:id="@+id/liveWallText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="120dp"
-            android:id="@+id/liveWallText"
-            android:textColor="@color/textSecondary"
-            android:textSize="15sp"
             android:gravity="center"
+            android:textColor="@color/textSecondary"
+            android:textSize="14sp" />
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/imageCard2"
+        android:layout_width="100dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="15dp"
+        app:cardBackgroundColor="@color/cardBackground"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="15dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageCard"
+        app:layout_constraintDimensionRatio="h,9:16"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/imageCard"
+        app:layout_constraintTop_toTopOf="@+id/imageCard">
+
+        <ImageView
+            android:id="@+id/currentWall2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop" />
+
+        <ImageView
+            android:id="@+id/liveWallIcon2"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="40dp" />
+
+        <TextView
+            android:id="@+id/liveWallText2"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="100dp"
+            android:gravity="center"
+            android:textColor="@color/textSecondary"
+            android:textSize="12sp" />
     </androidx.cardview.widget.CardView>
 
     <TextView
-        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:text="Lock"
+        android:textColor="@color/textTertiary"
+        android:textSize="12sp"
+        android:layout_marginTop="5dp"
+        app:layout_constraintEnd_toEndOf="@+id/imageCard2"
+        app:layout_constraintStart_toStartOf="@+id/imageCard2"
+        app:layout_constraintTop_toBottomOf="@+id/imageCard2" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Home"
+        android:textColor="@color/textTertiary"
+        android:textSize="12sp"
+        android:layout_marginTop="5dp"
+        app:layout_constraintEnd_toEndOf="@+id/imageCard"
+        app:layout_constraintStart_toStartOf="@+id/imageCard"
+        app:layout_constraintTop_toBottomOf="@+id/imageCard" />
+
+    <TextView
+        android:id="@+id/deviceName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
         android:fontFamily="@font/kumbh_semi_bold"
-        android:text="Mi A3"
         android:textColor="@color/textPrimary"
         android:textSize="22sp"
-        app:layout_constraintEnd_toEndOf="@+id/imageCard"
+        app:layout_constraintEnd_toEndOf="@+id/imageCard2"
         app:layout_constraintHorizontal_bias="0.483"
         app:layout_constraintStart_toStartOf="@+id/imageCard"
         app:layout_constraintTop_toBottomOf="@+id/imageCard" />
@@ -80,11 +127,12 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="20dp"
+        android:layoutAnimation="@anim/anim_recycler_fall_down"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/deviceName"
         app:layout_constraintVertical_bias="1.0"
         tools:listitem="@layout/item_account_row" />
 

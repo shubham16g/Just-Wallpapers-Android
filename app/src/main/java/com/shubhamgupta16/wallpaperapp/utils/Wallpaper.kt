@@ -9,6 +9,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.Drawable
 import android.os.Build
+import androidx.annotation.RequiresPermission
 import androidx.core.app.ActivityCompat
 import androidx.core.graphics.drawable.toBitmap
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -38,12 +39,7 @@ class WallpaperHelper @Inject constructor(@ApplicationContext val context: Conte
             ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE)
             == PackageManager.PERMISSION_GRANTED
         ) {
-            if (wallpaperManager.wallpaperInfo != null)
-                return CurrentWallpaper(
-                    wallpaperManager.wallpaperInfo.loadDescription(context.packageManager),
-                    wallpaperManager.wallpaperInfo.loadThumbnail(context.packageManager)
-                )
-            CurrentWallpaper(wallpaperManager.drawable.toBitmap())
+            loadCurrentWall()
         } else null
     }
 
@@ -52,11 +48,7 @@ class WallpaperHelper @Inject constructor(@ApplicationContext val context: Conte
             ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE)
             == PackageManager.PERMISSION_GRANTED
         ) {
-            if (wallpaperManager.wallpaperInfo != null)
-                return CurrentWallpaper(
-                    wallpaperManager.wallpaperInfo.loadDescription(context.packageManager),
-                    wallpaperManager.wallpaperInfo.loadThumbnail(context.packageManager)
-                )
+
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 val descriptor = wallpaperManager.getWallpaperFile(WallpaperManager.FLAG_LOCK)
                 if (descriptor != null) CurrentWallpaper(
@@ -64,10 +56,20 @@ class WallpaperHelper @Inject constructor(@ApplicationContext val context: Conte
                         descriptor.fileDescriptor
                     )
                 )
-                else CurrentWallpaper(wallpaperManager.drawable.toBitmap())
+                else loadCurrentWall()
             } else
-                CurrentWallpaper(wallpaperManager.drawable.toBitmap())
+                loadCurrentWall()
         } else null
+    }
+
+    @RequiresPermission(value = "android.permission.READ_EXTERNAL_STORAGE")
+    private fun loadCurrentWall(): CurrentWallpaper {
+        if (wallpaperManager.wallpaperInfo != null)
+            return CurrentWallpaper(
+                wallpaperManager.wallpaperInfo.loadDescription(context.packageManager),
+                wallpaperManager.wallpaperInfo.loadThumbnail(context.packageManager)
+            )
+        return CurrentWallpaper(wallpaperManager.drawable.toBitmap())
     }
 }
 
