@@ -33,6 +33,7 @@
     <color name="textTertiary">#707070</color>
 
     <color name="dark_ripple">#999999</color>
+    <color name="textSecondaryInvert">#cccccc</color>
 
     <color name="cardBackground">#eeeeee</color>
 </resources>

@@ -1,5 +1,6 @@
 package com.shubhamgupta16.wallpaperapp.ui
 
+import android.annotation.SuppressLint
 import android.app.WallpaperManager
 import android.content.Context
 import android.content.Intent
@@ -16,6 +17,7 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.net.toUri
 import androidx.core.view.animation.PathInterpolatorCompat
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
@@ -30,7 +32,6 @@ import com.shubhamgupta16.wallpaperapp.adapters.SingleImageAdapter
 import com.shubhamgupta16.wallpaperapp.databinding.ActivityFullWallpaperBinding
 import com.shubhamgupta16.wallpaperapp.databinding.LayoutInfoBinding
 import com.shubhamgupta16.wallpaperapp.databinding.LayoutSetOnBinding
-import com.shubhamgupta16.wallpaperapp.models.wallpapers.Author
 import com.shubhamgupta16.wallpaperapp.models.wallpapers.WallModel
 import com.shubhamgupta16.wallpaperapp.models.wallpapers.WallModelListHolder
 import com.shubhamgupta16.wallpaperapp.utils.*
@@ -56,6 +57,7 @@ class FullWallpaperActivity : AppCompatActivity() {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityFullWallpaperBinding.inflate(layoutInflater)
@@ -182,9 +184,24 @@ class FullWallpaperActivity : AppCompatActivity() {
 
         }
 
-        val infoLayout =LayoutInfoBinding.inflate(layoutInflater)
+        val infoLayout = LayoutInfoBinding.inflate(layoutInflater)
         val infoDialog = alertDialog(infoLayout)
         binding.infoButton.setOnClickListener {
+            val model = viewModel.list[viewModel.currentPosition]
+            infoLayout.link.text = model.source
+            infoLayout.authority.text = model.source.toUri().authority?.substringBefore(".", "")
+                ?.replaceFirstChar { it.uppercase() }
+            infoLayout.downloads.text = "Downloads: ${model.downloads}"
+            infoLayout.license.text = model.license
+            if (model.author == null) {
+                infoLayout.authorContainer.visibility = View.INVISIBLE
+                return@setOnClickListener
+            }
+            infoLayout.authorContainer.visibility = View.VISIBLE
+            infoLayout.authorName.text = model.author.name
+            Glide.with(this).load(model.author.image).centerCrop().circleCrop()
+                .transition(DrawableTransitionOptions.withCrossFade())
+                .into(infoLayout.authorProfile)
             infoDialog.show()
         }
 
@@ -262,7 +279,7 @@ class FullWallpaperActivity : AppCompatActivity() {
         if (position == viewModel.list.lastIndex)
             viewModel.fetch()
         val wallModel = viewModel.list[position]
-        updateAuthor(wallModel.author)
+        updateDetails(wallModel)
         updateFavButton(wallModel.isFav)
 
         val multiTransformation = MultiTransformation(
@@ -391,14 +408,17 @@ class FullWallpaperActivity : AppCompatActivity() {
 
     }
 
-    private fun updateAuthor(author: Author?) {
-        if (author == null) {
+    @SuppressLint("SetTextI18n")
+    private fun updateDetails(model: WallModel) {
+        binding.license.text = model.license
+        binding.downloads.text = "Downloads: ${model.downloads}"
+        if (model.author == null) {
             binding.authorContainer.visibility = View.INVISIBLE
             return
         }
         binding.authorContainer.visibility = View.VISIBLE
-        binding.authorName.text = author.name
-        Glide.with(this).load(author.image).centerCrop().circleCrop()
+        binding.authorName.text = model.author.name
+        Glide.with(this).load(model.author.image).centerCrop().circleCrop()
             .transition(DrawableTransitionOptions.withCrossFade())
             .into(binding.authorProfile)
     }

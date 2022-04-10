@@ -17,8 +17,11 @@
     <color name="bottom_nav_item_active">#000000</color>-->
 
     <color name="textPrimary">#f0f0f0</color>
-    <color name="textSecondary">#bbbbbb</color>
+    <color name="textSecondary">#cccccc</color>
     <color name="textTertiary">#999999</color>
+
+
+    <color name="textSecondaryInvert">#444444</color>
 
     <color name="cardBackground">#3A3B3C</color>
 

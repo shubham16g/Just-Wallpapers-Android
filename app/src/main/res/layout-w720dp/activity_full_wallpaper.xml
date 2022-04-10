@@ -60,7 +60,6 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0"
             app:layout_wrapBehaviorInParent="horizontal_only" />
 
         <RelativeLayout
@@ -76,13 +75,13 @@
             app:layout_constraintBottom_toTopOf="@id/navigation_overlay"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintWidth_max="300dp">
+            app:layout_constraintWidth_max="260dp">
 
             <LinearLayout
                 android:id="@+id/author_container"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
+                android:layout_marginStart="65dp"
                 android:layout_marginTop="24dp"
                 android:background="@drawable/background_card"
                 android:gravity="center"
@@ -106,6 +105,59 @@
                     android:minWidth="60dp"
                     android:textColor="@color/white" />
             </LinearLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="90dp"
+                android:layout_marginStart="65dp">
+
+
+                <ImageView
+                    android:id="@+id/downloads_icon"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_baseline_arrow_downward_24"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="@color/textSecondaryInvert" />
+
+                <TextView
+                    android:id="@+id/downloads"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:fontFamily="@font/kumbh_medium"
+                    android:text="Downloads: 52"
+                    android:textColor="@color/textSecondaryInvert"
+                    android:textSize="13sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/downloads_icon"
+                    app:layout_constraintStart_toEndOf="@+id/downloads_icon"
+                    app:layout_constraintTop_toTopOf="@+id/downloads_icon" />
+
+                <ImageView
+                    android:id="@+id/license_icon"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginTop="12dp"
+                    android:src="@drawable/ic_info"
+                    app:layout_constraintEnd_toEndOf="@+id/downloads_icon"
+                    app:layout_constraintStart_toStartOf="@+id/downloads_icon"
+                    app:layout_constraintTop_toBottomOf="@+id/downloads_icon"
+                    app:tint="@color/textSecondaryInvert" />
+
+                <TextView
+                    android:id="@+id/license"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/kumbh_medium"
+                    android:text="Unsplash Licesnse"
+                    android:textColor="@color/textSecondaryInvert"
+                    android:textSize="13sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/license_icon"
+                    app:layout_constraintStart_toStartOf="@+id/downloads"
+                    app:layout_constraintTop_toTopOf="@+id/license_icon" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </RelativeLayout>
 

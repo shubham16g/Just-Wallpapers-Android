@@ -42,4 +42,9 @@
         <item name="queryBackground">@android:color/transparent</item>
         <item name="color">@color/textPrimary</item>
     </style>
+
+    <style name="tagsTextAppearance" parent="TextAppearance.MaterialComponents.Chip">
+        <item name="android:textSize">12sp</item>
+        <item name="android:fontFamily">@font/kumbh_regular</item>
+    </style>
 </resources>
