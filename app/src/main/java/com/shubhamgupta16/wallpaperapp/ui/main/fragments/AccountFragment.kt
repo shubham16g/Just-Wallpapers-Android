@@ -1,13 +1,10 @@
 package com.shubhamgupta16.wallpaperapp.ui.main.fragments
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.shubhamgupta16.wallpaperapp.R
@@ -16,14 +13,17 @@ import com.shubhamgupta16.wallpaperapp.adapters.AccountSettingsModel
 import com.shubhamgupta16.wallpaperapp.databinding.FragmentMainAccountBinding
 import com.shubhamgupta16.wallpaperapp.utils.*
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class AccountFragment : Fragment() {
 
     private lateinit var binding: FragmentMainAccountBinding
+    @Inject
+    lateinit var wallpaperHelper: WallpaperHelper
     private val permissionLauncher = getPermissionLauncher { isAllPermissionGranted, map ->
         if (isAllPermissionGranted)
-            binding.currentWall.setImageDrawable(requireContext().getCurrentWall())
+            updateCurrentWallCards()
     }
 
     override fun onCreateView(
@@ -35,8 +35,22 @@ class AccountFragment : Fragment() {
     }
 
     private val settingsList = listOf(
-        AccountSettingsModel(R.drawable.ic_icon_search, "Search")
+        AccountSettingsModel(R.drawable.ic_send, "Tell a Friend"),
+        AccountSettingsModel(R.drawable.ic_feedback, "Feedback"),
+        AccountSettingsModel(R.drawable.ic_night, "Night Mode"),
+        AccountSettingsModel(R.drawable.ic_info, "About"),
+        AccountSettingsModel(R.drawable.ic_help, "Privacy Policy"),
     )
+
+    private fun updateCurrentWallCards() {
+        wallpaperHelper.getCurrentWall()?.let {
+            if (it.bitmap != null)
+                binding.currentWall.setImageBitmap(it.bitmap)
+            else
+                binding.currentWall.setImageDrawable(it.icon)
+
+        }
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -61,8 +75,8 @@ class AccountFragment : Fragment() {
             }
         }
 
+        updateCurrentWallCards()
 
-        binding.currentWall.setImageDrawable(requireContext().getCurrentWall())
 //        childFragmentManager.beginTransaction()
 //            .replace(binding.fragmentContainerView.id, VerticalWallpapersFragment.getInstanceForFavorite()).commit()
 //        binding.viewPager2.isUserInputEnabled = false
