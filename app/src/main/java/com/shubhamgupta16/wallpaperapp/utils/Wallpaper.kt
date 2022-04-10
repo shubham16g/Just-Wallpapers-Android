@@ -41,7 +41,7 @@ class WallpaperHelper @Inject constructor(@ApplicationContext val context: Conte
             if (wallpaperManager.wallpaperInfo != null)
                 return CurrentWallpaper(
                     wallpaperManager.wallpaperInfo.loadDescription(context.packageManager),
-                    wallpaperManager.wallpaperInfo.loadIcon(context.packageManager)
+                    wallpaperManager.wallpaperInfo.loadThumbnail(context.packageManager)
                 )
             CurrentWallpaper(wallpaperManager.drawable.toBitmap())
         } else null
@@ -55,7 +55,7 @@ class WallpaperHelper @Inject constructor(@ApplicationContext val context: Conte
             if (wallpaperManager.wallpaperInfo != null)
                 return CurrentWallpaper(
                     wallpaperManager.wallpaperInfo.loadDescription(context.packageManager),
-                    wallpaperManager.wallpaperInfo.loadIcon(context.packageManager)
+                    wallpaperManager.wallpaperInfo.loadThumbnail(context.packageManager)
                 )
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 val descriptor = wallpaperManager.getWallpaperFile(WallpaperManager.FLAG_LOCK)

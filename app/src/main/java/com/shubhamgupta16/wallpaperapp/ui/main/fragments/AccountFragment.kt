@@ -1,5 +1,6 @@
 package com.shubhamgupta16.wallpaperapp.ui.main.fragments
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -42,12 +43,22 @@ class AccountFragment : Fragment() {
         AccountSettingsModel(R.drawable.ic_help, "Privacy Policy"),
     )
 
+    @SuppressLint("SetTextI18n")
     private fun updateCurrentWallCards() {
         wallpaperHelper.getCurrentWall()?.let {
-            if (it.bitmap != null)
+            if (it.bitmap != null) {
+                binding.currentWall.visibility = View.VISIBLE
+                binding.liveWallIcon.visibility = View.INVISIBLE
+                binding.liveWallText.visibility = View.INVISIBLE
                 binding.currentWall.setImageBitmap(it.bitmap)
-            else
-                binding.currentWall.setImageDrawable(it.icon)
+            }
+            else {
+                binding.currentWall.visibility = View.INVISIBLE
+                binding.liveWallIcon.visibility = View.VISIBLE
+                binding.liveWallText.visibility = View.VISIBLE
+                binding.liveWallIcon.setImageDrawable(it.icon)
+                binding.liveWallText.text = "${it.description}\nLive Wallpaper"
+            }
 
         }
     }
