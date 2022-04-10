@@ -27,6 +27,8 @@ import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
+import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipGroup
 import com.shubhamgupta16.wallpaperapp.R
 import com.shubhamgupta16.wallpaperapp.adapters.SingleImageAdapter
 import com.shubhamgupta16.wallpaperapp.databinding.ActivityFullWallpaperBinding
@@ -164,15 +166,10 @@ class FullWallpaperActivity : AppCompatActivity() {
         }
 
         binding.shareButton.setOnClickListener {
-            val intent = Intent(Intent.ACTION_SEND).apply {
-                type = "text/plain"
-                putExtra(Intent.EXTRA_SUBJECT, "Checkout this Cool Wallpaper - Wallpaper App")
-                putExtra(
-                    Intent.EXTRA_TEXT,
-                    "Checkout this Cool Wallpaper\n ${getString(R.string.SCHEMA)}://${getString(R.string.BASE_URL)}/id/${viewModel.list[viewModel.currentPosition].wallId}"
-                )
-            }
-            startActivity(Intent.createChooser(intent, "Share via"))
+            shareText(
+                "Checkout this Cool Wallpaper - Wallpaper App",
+                "Checkout this Cool Wallpaper\n ${getString(R.string.SCHEMA)}://${getString(R.string.BASE_URL)}/id/${viewModel.list[viewModel.currentPosition].wallId}"
+            )
         }
 
         binding.downloadButton.setOnClickListener {
@@ -181,9 +178,21 @@ class FullWallpaperActivity : AppCompatActivity() {
             } else {
                 permissionLauncher?.launchPermission(this, write = true)
             }
-
         }
 
+        setupInfoAlert()
+
+        setupSetWallAlert()
+
+        binding.viewPager2.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                renderOtherComponents(position)
+            }
+        })
+    }
+
+    private fun setupInfoAlert(){
         val infoLayout = LayoutInfoBinding.inflate(layoutInflater)
         val infoDialog = alertDialog(infoLayout)
         binding.infoButton.setOnClickListener {
@@ -193,6 +202,9 @@ class FullWallpaperActivity : AppCompatActivity() {
                 ?.replaceFirstChar { it.uppercase() }
             infoLayout.downloads.text = "Downloads: ${model.downloads}"
             infoLayout.license.text = model.license
+            addTags(
+                infoLayout.chipGroup,
+                model.categories + model.tags.map { it.replaceFirstChar { c -> c.uppercase() } })
             if (model.author == null) {
                 infoLayout.authorContainer.visibility = View.INVISIBLE
                 return@setOnClickListener
@@ -204,7 +216,9 @@ class FullWallpaperActivity : AppCompatActivity() {
                 .into(infoLayout.authorProfile)
             infoDialog.show()
         }
+    }
 
+    private fun setupSetWallAlert(){
         val setOnDialog =
             LayoutSetOnBinding.inflate(layoutInflater)
         val dialog = alertDialog(setOnDialog)
@@ -233,15 +247,16 @@ class FullWallpaperActivity : AppCompatActivity() {
                 viewModel.applyWallpaper(this, model)
             }
         }
+    }
 
-//        binding.viewPager2.reduceDragSensitivity()
-
-        binding.viewPager2.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-            override fun onPageSelected(position: Int) {
-                super.onPageSelected(position)
-                renderOtherComponents(position)
-            }
-        })
+    private fun addTags(chipGroup: ChipGroup, list: List<String>) {
+        chipGroup.removeAllViews()
+        for (i in list) {
+            chipGroup.addView((layoutInflater.inflate(R.layout.chip_tag, chipGroup, false)
+                    as Chip).apply {
+                text = i
+            })
+        }
     }
 
     private fun processDownloadWallpaper() {

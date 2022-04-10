@@ -64,6 +64,7 @@
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/activity_main.xml" value="0.2" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/activity_splash.xml" value="0.2" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/bottom_nav.xml" value="0.2" />
+        <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/chip_tag.xml" value="0.2" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/custom_header_view.xml" value="0.25" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/fragment_blank.xml" value="0.2" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/fragment_featured.xml" value="0.2" />
@@ -90,6 +91,7 @@
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/item_wall_client.xml" value="0.2" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/item_wall_horizontal.xml" value="0.33" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/layout_info.xml" value="0.22" />
+        <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/layout_set_on.xml" value="0.22" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/sheet_layout_set_on.xml" value="0.2" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/menu/main_menu.xml" value="0.2" />
       </map>

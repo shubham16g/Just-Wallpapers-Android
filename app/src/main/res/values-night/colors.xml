@@ -20,9 +20,6 @@
     <color name="textSecondary">#cccccc</color>
     <color name="textTertiary">#999999</color>
 
-
-    <color name="textSecondaryInvert">#444444</color>
-
     <color name="cardBackground">#3A3B3C</color>
 
 </resources>

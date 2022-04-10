@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:layout_height="wrap_content"
+    android:background="@color/app_background"
     android:gravity="center_horizontal"
     android:paddingBottom="30dp">
 
@@ -12,9 +13,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="Set Wallpaper as"
+        android:fontFamily="@font/kumbh_semi_bold"
         android:textColor="@color/textPrimary"
-        android:textSize="18sp"
-        android:textStyle="bold"/>
+        android:textSize="18sp"/>
 
     <LinearLayout
         android:layout_width="match_parent"

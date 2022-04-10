@@ -2,6 +2,7 @@ package com.shubhamgupta16.wallpaperapp.utils
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.content.res.Configuration
 import android.content.res.Resources
 import android.graphics.Bitmap
@@ -54,6 +55,15 @@ fun Activity.closeKeyboard() {
         val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
         imm?.hideSoftInputFromWindow(view.windowToken, 0)
     }
+}
+
+fun Context.shareText(subject:String, content:String){
+    val intent = Intent(Intent.ACTION_SEND).apply {
+        type = "text/plain"
+        putExtra(Intent.EXTRA_SUBJECT, subject)
+        putExtra(Intent.EXTRA_TEXT, content)
+    }
+    startActivity(Intent.createChooser(intent, "Share via"))
 }
 
 fun RequestBuilder<Bitmap>.addBitmapListener(
