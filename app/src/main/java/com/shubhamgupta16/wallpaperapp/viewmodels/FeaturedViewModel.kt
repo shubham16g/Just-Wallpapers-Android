@@ -5,10 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.shubhamgupta16.wallpaperapp.models.init.CategoryModel
 import com.shubhamgupta16.wallpaperapp.models.wallpapers.WallModel
-import com.shubhamgupta16.wallpaperapp.viewmodels.live_observer.ListCase
-import com.shubhamgupta16.wallpaperapp.viewmodels.live_observer.ListObserver
 import com.shubhamgupta16.wallpaperapp.repositories.InitRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -19,30 +16,34 @@ import javax.inject.Inject
 @HiltViewModel
 class FeaturedViewModel @Inject constructor(private val initRepository: InitRepository) :
     ViewModel() {
-    private val _listObserver = MutableLiveData<ListObserver>()
-    val listObserver: LiveData<ListObserver> = _listObserver
+    private val _liveIsLoading = MutableLiveData<Boolean>()
+    val liveIsLoading: LiveData<Boolean> = _liveIsLoading
 
-    private val _list = ArrayList<WallModel>()
-    val list: List<WallModel> = _list
+    private var _title: String? = null
+    val title get() = _title
 
-    private val _titles = ArrayList<String>()
-    val titles: List<String> = _titles
+    private var _subTitle: String? = null
+    val subTitle get() = _subTitle
+
+    private var _wallModel: WallModel? = null
+    val wallModel get() = _wallModel
 
     fun fetch() {
-        if (_list.isNotEmpty()) return
+        if (wallModel != null) return
+        _liveIsLoading.value = true
         viewModelScope.launch(Dispatchers.IO) {
             val featured = initRepository.getFeatured()
             Log.d(TAG, "fetch: $featured")
-            _list.addAll(featured.data)
-            _titles.addAll(featured.titles)
+            _wallModel = featured?.data
+            _title = featured?.title
+            _subTitle = featured?.subTitle
             withContext(Dispatchers.Main) {
-                _listObserver.value =
-                    ListObserver(ListCase.ADDED_RANGE, from = 0, itemCount = _list.size)
+                _liveIsLoading.value = false
             }
         }
     }
 
     companion object {
-        private const val TAG = "CategoryViewModel"
+        private const val TAG = "FeaturedViewModel"
     }
 }

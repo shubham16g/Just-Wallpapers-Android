@@ -3,8 +3,8 @@ package com.shubhamgupta16.wallpaperapp.network
 import android.content.Context
 import com.shubhamgupta16.wallpaperapp.models.init.CategoryModel
 import com.shubhamgupta16.wallpaperapp.models.init.ColorModel
+import com.shubhamgupta16.wallpaperapp.models.wallpapers.FeaturedModel
 import com.shubhamgupta16.wallpaperapp.models.wallpapers.MessageModel
-import com.shubhamgupta16.wallpaperapp.models.wallpapers.WallpaperFeaturedModel
 import com.shubhamgupta16.wallpaperapp.models.wallpapers.WallpaperPageModel
 import com.shubhamgupta16.wallpaperapp.network.request.RequestIdModel
 import retrofit2.Response
@@ -41,7 +41,7 @@ interface ApiService {
     suspend fun getCategories(): Response<List<CategoryModel>>
 
     @GET("featured")
-    suspend fun getFeatured(): Response<WallpaperFeaturedModel>
+    suspend fun getFeatured(): Response<FeaturedModel>
 
     companion object {
         fun build(context: Context) =

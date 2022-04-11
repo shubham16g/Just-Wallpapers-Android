@@ -33,6 +33,7 @@ class ApiResponse<T> {
         suspend fun<T> from(caller: suspend ()->Response<T>): ApiResponse<T>{
             return try {
                 val response = caller()
+                Log.d("TAG", "from: $response")
                 return if (response.isSuccessful) {
                     if (response.body() != null) {
                         ApiResponse(response.body()!!)

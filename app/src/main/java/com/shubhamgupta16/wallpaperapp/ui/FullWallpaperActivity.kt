@@ -331,6 +331,11 @@ class FullWallpaperActivity : AppCompatActivity() {
                             400
                         )
                     }
+                    if (binding.thumbView.visibility != View.VISIBLE)
+                        h.postDelayed({
+                            binding.thumbView.fadeVisibility(View.VISIBLE, 400)
+                        }, 100)
+
                     val status = isLastTaskCompleted
                     isLastTaskCompleted = false
                     Log.d("TAG", "onResourceReady: $status")

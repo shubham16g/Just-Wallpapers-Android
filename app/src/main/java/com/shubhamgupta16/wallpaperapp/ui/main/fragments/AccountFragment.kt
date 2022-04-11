@@ -27,7 +27,7 @@ class AccountFragment : Fragment() {
     @Inject lateinit var themeController: ThemeController
     private var themeDialog: AlertDialog? = null
 
-    private val permissionLauncher = getPermissionLauncher { isAllPermissionGranted, map ->
+    private val permissionLauncher = getPermissionLauncher { isAllPermissionGranted, _ ->
         if (isAllPermissionGranted)
             updateCurrentWallCards()
     }

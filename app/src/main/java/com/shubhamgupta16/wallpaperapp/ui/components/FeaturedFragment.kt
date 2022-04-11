@@ -4,19 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.tabs.TabLayoutMediator
-import com.shubhamgupta16.wallpaperapp.adapters.CategoriesAdapter
-import com.shubhamgupta16.wallpaperapp.adapters.ImagesAdapter
 import com.shubhamgupta16.wallpaperapp.adapters.SingleImageAdapter
 import com.shubhamgupta16.wallpaperapp.databinding.FragmentFeaturedBinding
-import com.shubhamgupta16.wallpaperapp.databinding.FragmentForHorizontalListBinding
 import com.shubhamgupta16.wallpaperapp.utils.*
 import com.shubhamgupta16.wallpaperapp.viewmodels.live_observer.ListCase
-import com.shubhamgupta16.wallpaperapp.viewmodels.CategoriesViewModel
 import com.shubhamgupta16.wallpaperapp.viewmodels.FeaturedViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.math.ceil
@@ -37,11 +30,11 @@ class FeaturedFragment : Fragment() {
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    /*override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         setupRecyclerView()
-        viewModel.listObserver.observe(viewLifecycleOwner) {
+        viewModel.liveIsLoading.observe(viewLifecycleOwner) {
             it?.let {
                 when (it.case) {
                     ListCase.UPDATED -> {
@@ -70,16 +63,12 @@ class FeaturedFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        adapter = SingleImageAdapter(requireContext(), viewModel.list) {
+        adapter = SingleImageAdapter(requireContext(), viewModel.list.) {
 //            click it
         }
         binding.viewPager2.adapter = adapter
-        binding.viewPager2.applyCarousels(32.px, 24f.px, 0f)
-
-        TabLayoutMediator(binding.tabLayout, binding.viewPager2) { tab, position ->
-            tab.text = " "
-        }.attach()
-    }
+        binding.viewPager2.isUserInputEnabled = false
+    }*/
 
     /*private fun showFullWallpaperFragment(position: Int) {
         val intent = FullWallpaperActivity.getLaunchingIntent(
