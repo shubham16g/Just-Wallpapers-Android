@@ -47,10 +47,26 @@ class AccountFragment : Fragment() {
     private val settingsList = listOf(
         AccountSettingsModel(R.drawable.ic_send, "Tell a Friend"),
         AccountSettingsModel(R.drawable.ic_feedback, "Feedback"),
-        AccountSettingsModel(R.drawable.ic_night, "Night Mode"),
+        AccountSettingsModel(R.drawable.ic_night, "App Theme"),
         AccountSettingsModel(R.drawable.ic_info, "About"),
         AccountSettingsModel(R.drawable.ic_help, "Privacy Policy"),
     )
+
+    private val ad = AccountSettingsAdapter(settingsList) {
+        when (it) {
+            0 -> requireContext().shareText("Check this app", "Checkout this cool Wallpaper App\n${getString(R.string.app_name)}")
+            1 -> requireContext().openPlayStorePage()
+            2 -> themeDialog?.show()
+        }
+    }
+
+    private fun getModeName() = when (themeController.getMode()) {
+        AppCompatDelegate.MODE_NIGHT_YES -> requireContext().getString(R.string.mode_dark)
+        AppCompatDelegate.MODE_NIGHT_NO -> requireContext().getString(R.string.mode_light)
+        AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM -> requireContext().getString(R.string.mode_follow_system)
+        else -> requireContext().getString(R.string.mode_follow_system)
+    }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -65,18 +81,17 @@ class AccountFragment : Fragment() {
         binding.deviceName.text = Build.MODEL
         themeDialog = getThemeDialog()
 
-        val ad = AccountSettingsAdapter(settingsList) {
-            when (it) {
-                0 -> requireContext().shareText("Check this app", "Checkout this cool Wallpaper App\n${getString(R.string.app_name)}")
-                1 -> requireContext().openPlayStorePage()
-                2 -> themeDialog?.show()
-            }
-        }
         binding.recyclerView.apply {
             layoutManager = LinearLayoutManager(requireContext())
             itemAnimator = null
             adapter = ad
         }
+        updateThemeName()
+    }
+
+    private fun updateThemeName(){
+        settingsList[2].subTitle = getModeName()
+        ad.notifyItemChanged(2)
     }
 
     private fun getThemeDialog(): AlertDialog? {
@@ -85,14 +100,17 @@ class AccountFragment : Fragment() {
         val dialog = requireContext().alertDialog(themeLayout)
         themeLayout.dark.setOnClickListener{
             themeController.setMode(AppCompatDelegate.MODE_NIGHT_YES)
+            updateThemeName()
             dialog.dismiss()
         }
         themeLayout.light.setOnClickListener {
             themeController.setMode(AppCompatDelegate.MODE_NIGHT_NO)
+            updateThemeName()
             dialog.dismiss()
         }
         themeLayout.followSystem.setOnClickListener {
             themeController.setMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+            updateThemeName()
             dialog.dismiss()
         }
         return dialog

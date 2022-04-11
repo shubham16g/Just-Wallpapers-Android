@@ -29,7 +29,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/btn_primary"
-            android:text="Dark Mode" />
+            android:text="@string/mode_dark" />
 
         <Button
             android:id="@+id/light"
@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:background="@drawable/btn_primary"
-            android:text="Light Mode" />
+            android:text="@string/mode_light" />
 
         <Button
             android:id="@+id/follow_system"
@@ -45,6 +45,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:background="@drawable/btn_primary"
-            android:text="Follow System" />
+            android:text="@string/mode_follow_system" />
     </LinearLayout>
 </LinearLayout>

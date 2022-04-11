@@ -5,4 +5,7 @@
     <string name="more">MORE</string>
     <string name="favorites">Favorites</string>
     <string name="categories">Categories</string>
+    <string name="mode_dark">Dark Mode</string>
+    <string name="mode_light">Light Mode</string>
+    <string name="mode_follow_system">Follow System</string>
 </resources>

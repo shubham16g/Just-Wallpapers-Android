@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.shubhamgupta16.wallpaperapp.R
 import com.shubhamgupta16.wallpaperapp.models.init.CategoryModel
 
-data class AccountSettingsModel(val icon:Int, val title: String)
+data class AccountSettingsModel(val icon:Int, val title: String, var subTitle:String?=null)
 
 class AccountSettingsAdapter(
     private val list: List<AccountSettingsModel>,
@@ -23,6 +23,7 @@ class AccountSettingsAdapter(
 
         holder.title.text = model.title
         holder.icon.setImageResource(model.icon)
+        holder.subTitle.text = model.subTitle
 
         holder.itemView.setOnClickListener {
             listener(position)
@@ -43,5 +44,6 @@ class AccountSettingsAdapter(
 
         val icon: ImageView = itemView.findViewById(R.id.icon)
         val title: TextView = itemView.findViewById(R.id.title)
+        val subTitle: TextView = itemView.findViewById(R.id.sub_title)
     }
 }
