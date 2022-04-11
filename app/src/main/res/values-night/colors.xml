@@ -3,6 +3,7 @@
     <color name="app_background">#171717</color>
 
     <color name="primary">#FFBB86FC</color>
+    <color name="onPrimary">#171717</color>
 
     <color name="toolbar">#171717</color>
     <color name="status_bar">#171717</color>

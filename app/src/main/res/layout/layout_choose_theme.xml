@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="Set Wallpaper on"
+        android:text="Choose Theme"
         android:fontFamily="@font/kumbh_semi_bold"
         android:textColor="@color/textPrimary"
         android:textSize="18sp"/>
@@ -25,29 +25,26 @@
         android:orientation="vertical">
 
         <Button
-            android:id="@+id/on_home_screen_btn"
+            android:id="@+id/dark"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/btn_primary"
-            android:text="Home Screen" />
+            android:text="Dark Mode" />
 
         <Button
-            android:id="@+id/on_lock_screen_btn"
+            android:id="@+id/light"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:background="@drawable/btn_primary"
-            android:text="Lock Screen" />
+            android:text="Light Mode" />
 
         <Button
-            android:id="@+id/on_both_screen_btn"
+            android:id="@+id/follow_system"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:background="@drawable/btn_primary"
-            android:text="Both" />
+            android:text="Follow System" />
     </LinearLayout>
-
-
-
 </LinearLayout>

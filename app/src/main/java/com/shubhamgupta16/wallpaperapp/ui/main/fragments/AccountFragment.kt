@@ -1,12 +1,12 @@
 package com.shubhamgupta16.wallpaperapp.ui.main.fragments
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,6 +14,7 @@ import com.shubhamgupta16.wallpaperapp.R
 import com.shubhamgupta16.wallpaperapp.adapters.AccountSettingsAdapter
 import com.shubhamgupta16.wallpaperapp.adapters.AccountSettingsModel
 import com.shubhamgupta16.wallpaperapp.databinding.FragmentMainAccountBinding
+import com.shubhamgupta16.wallpaperapp.databinding.LayoutChooseThemeBinding
 import com.shubhamgupta16.wallpaperapp.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -22,9 +23,9 @@ import javax.inject.Inject
 class AccountFragment : Fragment() {
 
     private lateinit var binding: FragmentMainAccountBinding
-    @Inject
-    lateinit var wallpaperHelper: WallpaperHelper
+    @Inject lateinit var wallpaperHelper: WallpaperHelper
     @Inject lateinit var themeController: ThemeController
+    private var themeDialog: AlertDialog? = null
 
     private val permissionLauncher = getPermissionLauncher { isAllPermissionGranted, map ->
         if (isAllPermissionGranted)
@@ -50,6 +51,52 @@ class AccountFragment : Fragment() {
         AccountSettingsModel(R.drawable.ic_info, "About"),
         AccountSettingsModel(R.drawable.ic_help, "Privacy Policy"),
     )
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        requireActivity().setNormalStatusBar()
+
+        permissionLauncher.launchPermission(requireContext(), true)
+        if (!requireActivity().isUsingNightMode()) {
+            requireActivity().lightStatusBar()
+        }
+        binding.root.setPadding(0, requireContext().getStatusBarHeight(), 0, 0)
+
+        binding.deviceName.text = Build.MODEL
+        themeDialog = getThemeDialog()
+
+        val ad = AccountSettingsAdapter(settingsList) {
+            when (it) {
+                0 -> requireContext().shareText("Check this app", "Checkout this cool Wallpaper App\n${getString(R.string.app_name)}")
+                1 -> requireContext().openPlayStorePage()
+                2 -> themeDialog?.show()
+            }
+        }
+        binding.recyclerView.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            itemAnimator = null
+            adapter = ad
+        }
+    }
+
+    private fun getThemeDialog(): AlertDialog? {
+        val themeLayout =
+            LayoutChooseThemeBinding.inflate(layoutInflater)
+        val dialog = requireContext().alertDialog(themeLayout)
+        themeLayout.dark.setOnClickListener{
+            themeController.setMode(AppCompatDelegate.MODE_NIGHT_YES)
+            dialog.dismiss()
+        }
+        themeLayout.light.setOnClickListener {
+            themeController.setMode(AppCompatDelegate.MODE_NIGHT_NO)
+            dialog.dismiss()
+        }
+        themeLayout.followSystem.setOnClickListener {
+            themeController.setMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+            dialog.dismiss()
+        }
+        return dialog
+    }
 
     @SuppressLint("SetTextI18n")
     private fun updateCurrentWallCards() {
@@ -84,32 +131,6 @@ class AccountFragment : Fragment() {
                 binding.liveWallText2.text = "${it.description}\nLive Wallpaper"
             }
 
-        }
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        requireActivity().setNormalStatusBar()
-
-        permissionLauncher.launchPermission(requireContext(), true)
-        if (!requireActivity().isUsingNightMode()) {
-            requireActivity().lightStatusBar()
-        }
-        binding.root.setPadding(0, requireContext().getStatusBarHeight(), 0, 0)
-
-        binding.deviceName.text = Build.MODEL
-
-        val ad = AccountSettingsAdapter(settingsList) {
-            when (it) {
-                0 -> requireContext().shareText("Check this app", "Checkout this cool Wallpaper App\n${getString(R.string.app_name)}")
-                1 -> requireContext().openPlayStorePage()
-                2 -> themeController.setMode(AppCompatDelegate.MODE_NIGHT_NO)
-            }
-        }
-        binding.recyclerView.apply {
-            layoutManager = LinearLayoutManager(requireContext())
-            itemAnimator = null
-            adapter = ad
         }
     }
 }

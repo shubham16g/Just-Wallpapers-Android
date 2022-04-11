@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import com.shubhamgupta16.wallpaperapp.R
 import com.shubhamgupta16.wallpaperapp.ui.main.MainActivity
 import com.shubhamgupta16.wallpaperapp.utils.ThemeController
@@ -15,12 +16,10 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class SplashActivity : AppCompatActivity() {
 
-    @Inject
-    lateinit var themeController: ThemeController
-
     override fun onCreate(savedInstanceState: Bundle?) {
+//        delegate.localNightMode = AppCompatDelegate.MODE_NIGHT_YES
+//        themeController.init()
         super.onCreate(savedInstanceState)
-        themeController.init()
         setContentView(R.layout.activity_splash)
 
         CoroutineScope(Dispatchers.IO).launch {

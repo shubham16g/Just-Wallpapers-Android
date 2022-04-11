@@ -1,29 +1,18 @@
 package com.shubhamgupta16.wallpaperapp
 
 import android.app.Application
+import com.shubhamgupta16.wallpaperapp.utils.ThemeController
 import dagger.hilt.android.HiltAndroidApp
+import javax.inject.Inject
 
 @HiltAndroidApp
-class MainApp : Application() /*{
+class MainApp : Application(){
 
-    private var initModel:InitModel?=null
-    val initData:InitModel get() = initModel ?: InitModel(ArrayList(), ArrayList())
+    @Inject
+    lateinit var themeController: ThemeController
 
-    val isInitialized get() = initModel != null
-
-    fun initialize(initModel: InitModel){
-        this.initModel = initModel
+    override fun onCreate() {
+        super.onCreate()
+        themeController.init()
     }
 }
-
-val Application.initData: InitModel
-    get() = (this as MainApp).initData
-
-val Application.main: MainApp
-    get() = this as MainApp*/
-
-/** TODOS
- *
- * implement load colors, categories, etc in splash screen ad store it as hilt
- * remove listingFragment and merge code in listing activity
- * */
