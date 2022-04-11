@@ -103,6 +103,11 @@ class VerticalWallpapersFragment : Fragment() {
                         binding.initialLoader.fadeVisibility(View.GONE)
                         binding.noResultContainer.fadeVisibility(View.GONE)
                     }
+                    ListCase.REMOVED -> {
+                        adapter?.notifyItemRemoved(it.at)
+                        binding.initialLoader.fadeVisibility(View.GONE)
+                        binding.noResultContainer.fadeVisibility(View.GONE)
+                    }
                     ListCase.NO_CHANGE -> {
                         paginationController?.notifyDataFetched(true)
                         binding.initialLoader.fadeVisibility(View.GONE)

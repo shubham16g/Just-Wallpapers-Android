@@ -12,6 +12,7 @@ import com.shubhamgupta16.wallpaperapp.viewmodels.live_observer.ListObserver
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -89,8 +90,25 @@ class WallpapersViewModel
     }
 
     fun filterFavorites() {
-        viewModelScope.launch {
-            wallRepository.filterFavorites(_list)
+        if (_listObserver.value == null || _listObserver.value?.case == ListCase.INITIAL_LOADING) return
+        if (isFavList) {
+            viewModelScope.launch {
+                if (_list.isNotEmpty()) {
+                    wallRepository.filterFavorites(_list)
+                    withContext(Dispatchers.Main) {
+                        _list.reversed().forEachIndexed { index, wallModel ->
+                            if (wallModel?.isFav == false) {
+                                _list.removeAt(index)
+                                _listObserver.value = ListObserver(ListCase.REMOVED, at = index)
+                            }
+                        }
+                    }
+                }
+            }
+        } else {
+            viewModelScope.launch {
+                wallRepository.filterFavorites(_list)
+            }
         }
     }
 
