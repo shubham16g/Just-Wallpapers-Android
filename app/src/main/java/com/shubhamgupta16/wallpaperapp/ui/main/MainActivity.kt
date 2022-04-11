@@ -12,12 +12,10 @@ import com.shubhamgupta16.wallpaperapp.ui.main.fragments.AccountFragment
 import com.shubhamgupta16.wallpaperapp.ui.main.fragments.CategoriesFragment
 import com.shubhamgupta16.wallpaperapp.ui.main.fragments.FavoritesFragment
 import com.shubhamgupta16.wallpaperapp.ui.main.fragments.HomeFragment
-import com.shubhamgupta16.wallpaperapp.utils.fullStatusBar
-import com.shubhamgupta16.wallpaperapp.utils.isUsingNightMode
-import com.shubhamgupta16.wallpaperapp.utils.lightNavigationBar
-import com.shubhamgupta16.wallpaperapp.utils.setTransparentStatusBar
+import com.shubhamgupta16.wallpaperapp.utils.*
 import com.shubhamgupta16.wallpaperapp.viewmodels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -28,7 +26,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val viewModel: MainViewModel by viewModels()
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         fullStatusBar()
@@ -36,7 +33,6 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         /*binding.bottomNav.layoutParams = (binding.bottomNav.layoutParams as ConstraintLayout.LayoutParams).apply {
             bottomMargin = getNavigationBarHeight()
         }*/

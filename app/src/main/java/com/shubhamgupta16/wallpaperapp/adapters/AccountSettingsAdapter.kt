@@ -13,7 +13,7 @@ data class AccountSettingsModel(val icon:Int, val title: String)
 
 class AccountSettingsAdapter(
     private val list: List<AccountSettingsModel>,
-    private val listener: (categoryName: String) -> Unit
+    private val listener: (position: Int) -> Unit
 ) :
     RecyclerView.Adapter<AccountSettingsAdapter.ItemViewHolder>() {
 
@@ -25,7 +25,7 @@ class AccountSettingsAdapter(
         holder.icon.setImageResource(model.icon)
 
         holder.itemView.setOnClickListener {
-            listener(model.title)
+            listener(position)
         }
     }
 
@@ -43,9 +43,5 @@ class AccountSettingsAdapter(
 
         val icon: ImageView = itemView.findViewById(R.id.icon)
         val title: TextView = itemView.findViewById(R.id.title)
-        /*
-        val cardView: CardView? =
-            if (viewType == 1) itemView.findViewById(R.id.image_card_container) else null
-        */
     }
 }

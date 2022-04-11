@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.shubhamgupta16.wallpaperapp.R
@@ -23,6 +24,8 @@ class AccountFragment : Fragment() {
     private lateinit var binding: FragmentMainAccountBinding
     @Inject
     lateinit var wallpaperHelper: WallpaperHelper
+    @Inject lateinit var themeController: ThemeController
+
     private val permissionLauncher = getPermissionLauncher { isAllPermissionGranted, map ->
         if (isAllPermissionGranted)
             updateCurrentWallCards()
@@ -98,8 +101,9 @@ class AccountFragment : Fragment() {
 
         val ad = AccountSettingsAdapter(settingsList) {
             when (it) {
-                "Search" -> Toast.makeText(requireContext(), "SEARCH", Toast.LENGTH_SHORT)
-                    .show()
+                0 -> requireContext().shareText("Check this app", "Checkout this cool Wallpaper App\n${getString(R.string.app_name)}")
+                1 -> requireContext().openPlayStorePage()
+                2 -> themeController.setMode(AppCompatDelegate.MODE_NIGHT_NO)
             }
         }
         binding.recyclerView.apply {
