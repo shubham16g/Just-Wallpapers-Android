@@ -11,9 +11,12 @@ import android.graphics.drawable.Drawable
 import android.os.Build
 import androidx.annotation.RequiresPermission
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
+import com.shubhamgupta16.wallpaperapp.R
 import dagger.hilt.android.qualifiers.ApplicationContext
 import java.io.IOException
+import java.lang.Exception
 import javax.inject.Inject
 
 class CurrentWallpaper {
@@ -25,7 +28,7 @@ class CurrentWallpaper {
         this.bitmap = bitmap
     }
 
-    constructor(description: CharSequence, icon: Drawable) {
+    constructor(description: CharSequence, icon: Drawable?) {
         this.description = description
         this.icon = icon
     }
@@ -66,8 +69,16 @@ class WallpaperHelper @Inject constructor(@ApplicationContext val context: Conte
     private fun loadCurrentWall(): CurrentWallpaper {
         if (wallpaperManager.wallpaperInfo != null)
             return CurrentWallpaper(
-                wallpaperManager.wallpaperInfo.loadDescription(context.packageManager),
-                wallpaperManager.wallpaperInfo.loadThumbnail(context.packageManager)
+                try {
+                    wallpaperManager.wallpaperInfo.loadDescription(context.packageManager)
+                } catch (e: Exception){
+                    "Unknown"
+                },
+                try {
+                    wallpaperManager.wallpaperInfo.loadThumbnail(context.packageManager)
+                } catch (e: Exception){
+                    ContextCompat.getDrawable(context, R.drawable.ic_baseline_wallpaper_24)
+                },
             )
         return CurrentWallpaper(wallpaperManager.drawable.toBitmap())
     }
