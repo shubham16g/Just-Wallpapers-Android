@@ -7,8 +7,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <ProgressBar
+    <com.google.android.material.progressindicator.CircularProgressIndicator
         app:layout_constraintTop_toTopOf="parent"
+        app:trackCornerRadius="4dp"
+        android:indeterminate="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

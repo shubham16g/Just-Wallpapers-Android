@@ -6,7 +6,7 @@ import com.shubhamgupta16.wallpaperapp.models.init.ColorModel
 import com.shubhamgupta16.wallpaperapp.models.wallpapers.FeaturedModel
 import com.shubhamgupta16.wallpaperapp.models.wallpapers.MessageModel
 import com.shubhamgupta16.wallpaperapp.models.wallpapers.WallpaperPageModel
-import com.shubhamgupta16.wallpaperapp.network.request.RequestIdModel
+import com.shubhamgupta16.wallpaperapp.models.request.RequestIdModel
 import retrofit2.Response
 import retrofit2.http.*
 

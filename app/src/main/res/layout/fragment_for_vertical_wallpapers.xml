@@ -21,8 +21,10 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ProgressBar
+    <com.google.android.material.progressindicator.CircularProgressIndicator
         android:id="@+id/initial_loader"
+        android:indeterminate="true"
+        app:trackCornerRadius="4dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -40,8 +42,13 @@
         android:layout_width="wrap_content"
         android:orientation="vertical"
         android:layout_height="wrap_content">
-        <ImageView
-            android:layout_width="wrap_content"
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/no_result_image"
+            app:lottie_loop="true"
+            app:lottie_autoPlay="true"
+            app:lottie_rawRes="@raw/no_result"
+            android:layout_width="200dp"
+            android:adjustViewBounds="true"
             android:layout_height="wrap_content"
             android:src="@drawable/asset_no_result"/>
         <TextView

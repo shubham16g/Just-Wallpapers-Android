@@ -5,7 +5,7 @@ import com.shubhamgupta16.wallpaperapp.models.wallpapers.WallModel
 import com.shubhamgupta16.wallpaperapp.models.wallpapers.WallpaperPageModel
 import com.shubhamgupta16.wallpaperapp.network.ApiResponse
 import com.shubhamgupta16.wallpaperapp.network.ApiService
-import com.shubhamgupta16.wallpaperapp.network.request.RequestIdModel
+import com.shubhamgupta16.wallpaperapp.models.request.RequestIdModel
 import com.shubhamgupta16.wallpaperapp.room.FavWallDao
 import javax.inject.Inject
 

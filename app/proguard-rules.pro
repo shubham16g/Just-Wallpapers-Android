@@ -19,3 +19,23 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+# ************** Glide ********************
+-keep public class * implements com.bumptech.glide.module.GlideModule
+-keep class * extends com.bumptech.glide.module.AppGlideModule {
+ <init>(...);
+}
+-keep public enum com.bumptech.glide.load.ImageHeaderParser$** {
+  **[] $VALUES;
+  public *;
+}
+-keep class com.bumptech.glide.load.data.ParcelFileDescriptorRewinder$InternalRewinder {
+  *** rewind();
+}
+
+# ************* Data Classes *****************
+-keep class com.shubhamgupta16.wallpaperapp.models.wallpapers** { *; }
+-keep class com.shubhamgupta16.wallpaperapp.models.roommodels** { *; }
+-keep class com.shubhamgupta16.wallpaperapp.models.init** { *; }
+-keep class com.shubhamgupta16.wallpaperapp.models.request** { *; }
+

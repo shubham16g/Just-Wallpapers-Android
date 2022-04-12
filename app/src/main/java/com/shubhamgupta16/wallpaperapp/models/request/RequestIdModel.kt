@@ -1,4 +1,4 @@
-package com.shubhamgupta16.wallpaperapp.network.request
+package com.shubhamgupta16.wallpaperapp.models.request
 
 import com.google.gson.annotations.SerializedName
 
