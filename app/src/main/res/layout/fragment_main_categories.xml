@@ -26,6 +26,7 @@
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tab_layout"
         android:layout_width="0dp"
+        android:background="@color/app_background"
         android:layout_height="42dp"
         app:tabTextAppearance="@style/Tabs.TextAppearance"
         app:tabGravity="start"
