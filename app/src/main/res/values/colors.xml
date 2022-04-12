@@ -5,15 +5,15 @@
 
     <color name="app_background">#fefefe</color>
 
-    <color name="primary">#7532EC</color>
+    <color name="primary">#7E2BF4</color>
     <color name="primaryDark">#FFBB86FC</color>
     <!--    <color name="primary">#F36359</color>-->
     <!--    <color name="primaryDark">#F39089</color>-->
     <color name="primaryVariant">#FF3700B3</color>
     <color name="onPrimary">#FFFFFF</color>
 
-    <color name="secondary">#FF03DAC5</color>
-    <color name="secondaryVariant">#FF018786</color>
+    <color name="secondary">#2196F3</color>
+    <color name="secondaryVariant">#2196F3</color>
     <color name="onSecondary">#000000</color>
 
     <!--Bottom Navigation-->
