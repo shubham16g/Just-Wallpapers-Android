@@ -7,8 +7,8 @@
 
     <color name="primary">#7E2BF4</color>
     <color name="primaryDark">#FFBB86FC</color>
-    <!--    <color name="primary">#F36359</color>-->
-    <!--    <color name="primaryDark">#F39089</color>-->
+<!--        <color name="primary">#F36359</color>-->
+<!--        <color name="primaryDark">#F39089</color>-->
     <color name="primaryVariant">#FF3700B3</color>
     <color name="onPrimary">#FFFFFF</color>
 

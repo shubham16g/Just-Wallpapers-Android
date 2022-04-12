@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.WallpaperUI" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+
+        <item name="android:forceDarkAllowed">false</item>
+    </style>
+
+    <style name="Theme.WallpaperUI.FullWallpaper" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="android:forceDarkAllowed">false</item>
+        <item name="android:windowLayoutInDisplayCutoutMode">shortEdges</item>
+    </style>
+
+    <style name="Theme.WallpaperUI.Main">
+        <item name="android:forceDarkAllowed">false</item>
+    </style>
+</resources>

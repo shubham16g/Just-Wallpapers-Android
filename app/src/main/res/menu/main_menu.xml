@@ -3,23 +3,23 @@
 
     <item
         android:icon="@drawable/main_ic_home"
-        android:title="Home"
+        android:title="@string/home"
         android:id="@+id/action_home"/>
 
 
     <item
         android:icon="@drawable/main_ic_category"
-        android:title="Categories"
+        android:title="@string/categories"
         android:id="@+id/action_category"/>
 
 
     <item
         android:icon="@drawable/main_ic_favorite"
-        android:title="Favorites"
+        android:title="@string/favorites"
         android:id="@+id/action_fav"/>
 
     <item
         android:icon="@drawable/main_ic_account"
-        android:title="Account"
+        android:title="@string/account"
         android:id="@+id/action_account"/>
 </menu>

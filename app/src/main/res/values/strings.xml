@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Wall Cafe</string>
+    <string name="app_name">Just Wallpapers</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="more">MORE</string>
@@ -8,4 +8,10 @@
     <string name="mode_dark">Dark Mode</string>
     <string name="mode_light">Light Mode</string>
     <string name="mode_follow_system">Follow System</string>
+    <string name="creator_studio">Acoder Studio</string>
+    <string name="creator_icon">Creator Icon</string>
+    <string name="home">Home</string>
+    <string name="categories">Categories</string>
+    <string name="favorites">Favorites</string>
+    <string name="account">Account</string>
 </resources>
