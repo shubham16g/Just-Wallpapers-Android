@@ -108,7 +108,7 @@ class PagerViewModel
             val bmp = glideRepository.downloadImage(wallModel.urls.full, wallModel.rotation ?: 0)
             if (bmp != null) {
                 Log.d("TAG", "applyWallpaper: DONE")
-                context.applyWall(bmp, bmp.width, bmp.height, flag)
+                context.applyWall(bmp, flag)
                 withContext(Dispatchers.Main) {
                     downloadWallpaper(wallModel.wallId)
                     _wallBitmapLoading.value = false

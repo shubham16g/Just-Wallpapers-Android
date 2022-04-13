@@ -212,3 +212,11 @@ fun Context.getStatusBarHeight(): Int {
     } else
         0
 }
+
+fun getScreenWidth(): Int {
+    return Resources.getSystem().displayMetrics.widthPixels
+}
+
+fun getScreenHeight(): Int {
+    return Resources.getSystem().displayMetrics.heightPixels
+}

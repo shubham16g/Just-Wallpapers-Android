@@ -8,6 +8,7 @@ import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.Drawable
+import android.media.ThumbnailUtils
 import android.os.Build
 import androidx.annotation.RequiresPermission
 import androidx.core.app.ActivityCompat
@@ -16,8 +17,8 @@ import androidx.core.graphics.drawable.toBitmap
 import com.shubhamgupta16.wallpaperapp.R
 import dagger.hilt.android.qualifiers.ApplicationContext
 import java.io.IOException
-import java.lang.Exception
 import javax.inject.Inject
+import kotlin.math.roundToInt
 
 class CurrentWallpaper {
     var bitmap: Bitmap? = null
@@ -85,9 +86,19 @@ class WallpaperHelper @Inject constructor(@ApplicationContext val context: Conte
 }
 
 
-fun Context.applyWall(bmap2: Bitmap, width: Int, height: Int, flag: Int? = null) {
-    val bitmap = bmap2
-//    val bitmap = Bitmap.createScaledBitmap(bmap2, width, height, true)
+fun Context.applyWall(bmap2: Bitmap, flag: Int? = null, screenCropped: Boolean = false) {
+//    val bitmap = bmap2
+
+    val screenHeight = getScreenHeight()
+    val screenWidth = getScreenWidth()
+    val ratio: Float = screenHeight / bmap2.height.toFloat() // 16/9 which is grater then 1
+    val h = if (bmap2.height > screenHeight) screenHeight else bmap2.height
+    val w = if (bmap2.height > screenHeight) (bmap2.width * ratio).roundToInt() else bmap2.width
+
+    val scaledBitmap = Bitmap.createScaledBitmap(bmap2, w, h, true)
+    val bitmap =
+        if (screenCropped) ThumbnailUtils.extractThumbnail(scaledBitmap, screenWidth, screenHeight)
+        else scaledBitmap
     val wallpaperManager = WallpaperManager.getInstance(this)
     try {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
