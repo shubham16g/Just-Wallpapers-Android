@@ -16,7 +16,7 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
-class WallpapersViewModel
+class ListingWallpapersViewModel
 @Inject constructor(private val wallRepository: WallRepository) : ViewModel() {
     private val _listObserver = MutableLiveData<ListObserver>()
     val listObserver: LiveData<ListObserver> = _listObserver
@@ -37,7 +37,7 @@ class WallpapersViewModel
     val query get() = _query
     val category get() = _category
     val color get() = _color
-    val orderBy get() = _color
+    val orderBy get() = _orderBy
 
     fun fetch() {
         if (_page > _lastPage) return

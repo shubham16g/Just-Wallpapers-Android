@@ -1,20 +1,20 @@
 package com.shubhamgupta16.wallpaperapp.ui.components
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.shubhamgupta16.wallpaperapp.adapters.HorizontalImagesAdapter
 import com.shubhamgupta16.wallpaperapp.adapters.ImagesAdapter
 import com.shubhamgupta16.wallpaperapp.databinding.FragmentForHorizontalListBinding
 import com.shubhamgupta16.wallpaperapp.models.wallpapers.WallModelListHolder
 import com.shubhamgupta16.wallpaperapp.viewmodels.live_observer.ListCase
 import com.shubhamgupta16.wallpaperapp.ui.FullWallpaperActivity
 import com.shubhamgupta16.wallpaperapp.utils.BounceEdgeEffectFactory
-import com.shubhamgupta16.wallpaperapp.viewmodels.WallpapersViewModel
+import com.shubhamgupta16.wallpaperapp.viewmodels.StaticWallpapersViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -23,9 +23,9 @@ class HorizontalWallpapersFragment : Fragment() {
     companion object{
         private const val TAG = "HorizontalWallpapersFra"
     }
-    private val viewModel: WallpapersViewModel by viewModels()
+    private val viewModel: StaticWallpapersViewModel by viewModels()
     private lateinit var binding: FragmentForHorizontalListBinding
-    private var adapter: ImagesAdapter? = null
+    private var adapter: HorizontalImagesAdapter? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -77,7 +77,7 @@ class HorizontalWallpapersFragment : Fragment() {
         binding.recyclerView.layoutManager = manager
         binding.recyclerView.itemAnimator = null
         binding.recyclerView.edgeEffectFactory = BounceEdgeEffectFactory(true)
-        adapter = ImagesAdapter(requireContext(), viewModel.list, true) { wallModel, i ->
+        adapter = HorizontalImagesAdapter(requireContext(), viewModel.list) { _, i ->
             showFullWallpaperFragment(i)
         }
         binding.recyclerView.adapter = adapter
@@ -85,8 +85,8 @@ class HorizontalWallpapersFragment : Fragment() {
 
     private fun showFullWallpaperFragment(position: Int) {
         val intent = FullWallpaperActivity.getLaunchingIntent(
-            requireContext(), WallModelListHolder(viewModel.list.filterNotNull()), position,
-            viewModel.page,
+            requireContext(), WallModelListHolder(viewModel.list), position,
+            1,
             viewModel.lastPage,
             viewModel.query,
             viewModel.color,

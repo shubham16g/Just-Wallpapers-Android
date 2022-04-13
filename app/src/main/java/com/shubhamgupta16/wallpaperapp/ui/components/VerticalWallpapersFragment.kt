@@ -17,15 +17,14 @@ import com.shubhamgupta16.wallpaperapp.ui.FullWallpaperActivity
 import com.shubhamgupta16.wallpaperapp.utils.BounceEdgeEffectFactory
 import com.shubhamgupta16.wallpaperapp.utils.PaginationController
 import com.shubhamgupta16.wallpaperapp.utils.fadeVisibility
-import com.shubhamgupta16.wallpaperapp.utils.isUsingNightMode
-import com.shubhamgupta16.wallpaperapp.viewmodels.WallpapersViewModel
+import com.shubhamgupta16.wallpaperapp.viewmodels.ListingWallpapersViewModel
 import com.shubhamgupta16.wallpaperapp.viewmodels.live_observer.ListCase
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class VerticalWallpapersFragment : Fragment() {
 
-    private val viewModel: WallpapersViewModel by viewModels()
+    private val viewModel: ListingWallpapersViewModel by viewModels()
     private lateinit var binding: FragmentForVerticalWallpapersBinding
 
     private var paginationController: PaginationController? = null
