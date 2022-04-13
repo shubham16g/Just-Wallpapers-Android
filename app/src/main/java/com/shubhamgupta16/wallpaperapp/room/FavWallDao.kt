@@ -1,10 +1,7 @@
 package com.shubhamgupta16.wallpaperapp.room
 
 import androidx.room.*
-import com.shubhamgupta16.wallpaperapp.models.init.CategoryModel
-import com.shubhamgupta16.wallpaperapp.models.init.ColorModel
 import com.shubhamgupta16.wallpaperapp.models.roommodels.FavWallModel
-import com.shubhamgupta16.wallpaperapp.models.wallpapers.WallModel
 
 @Dao
 interface FavWallDao {

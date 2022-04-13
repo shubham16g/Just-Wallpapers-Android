@@ -157,7 +157,8 @@ class VerticalWallpapersFragment : Fragment() {
 
 
     private fun showFullWallpaperFragment(position:Int) {
-        val intent = FullWallpaperActivity.getLaunchingIntent(
+//        todo open new activity
+        /*val intent = FullWallpaperActivity.getLaunchingIntent(
             requireContext(), WallModelListHolder(viewModel.list.filterNotNull()), position,
             viewModel.page,
             viewModel.lastPage,
@@ -165,7 +166,7 @@ class VerticalWallpapersFragment : Fragment() {
             viewModel.color,
             viewModel.category
         )
-        startActivity(intent)
+        startActivity(intent)*/
     }
 
 

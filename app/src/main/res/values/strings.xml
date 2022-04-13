@@ -12,4 +12,5 @@
     <string name="creator_icon">Creator Icon</string>
     <string name="home">Home</string>
     <string name="account">Account</string>
+    <string name="ad_icon">Ad Icon</string>
 </resources>

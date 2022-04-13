@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.shubhamgupta16.wallpaperapp.models.ad.BaseAdModel
 import com.shubhamgupta16.wallpaperapp.models.wallpapers.WallModel
 import com.shubhamgupta16.wallpaperapp.repositories.WallRepository
 import com.shubhamgupta16.wallpaperapp.viewmodels.live_observer.ListCase
@@ -21,8 +22,8 @@ class ListingWallpapersViewModel
     private val _listObserver = MutableLiveData<ListObserver>()
     val listObserver: LiveData<ListObserver> = _listObserver
 
-    private val _list = ArrayList<WallModel?>()
-    val list: List<WallModel?> = _list
+    private val _list = ArrayList<BaseAdModel?>()
+    val list: List<BaseAdModel?> = _list
 
     private var _page = 1
     private var _lastPage = 1
@@ -68,7 +69,11 @@ class ListingWallpapersViewModel
                 val size = _list.size
                 if (_list.isNotEmpty())
                     _list.removeAt(_list.lastIndex)
-                _list.addAll(response.body!!.data)
+                response.body!!.data.forEachIndexed { i, it->
+                    if (i == 9)
+                        _list.add(BaseAdModel())
+                    _list.add(it)
+                }
                 if (_lastPage > _page)
                     _list.add(null)
                 _page++
@@ -94,10 +99,10 @@ class ListingWallpapersViewModel
         if (isFavList) {
             viewModelScope.launch {
                 if (_list.isNotEmpty()) {
-                    wallRepository.filterFavorites(_list)
+                    wallRepository.filterListingFavorites(_list)
                     withContext(Dispatchers.Main) {
                         _list.reversed().forEachIndexed { index, wallModel ->
-                            if (wallModel?.isFav == false) {
+                            if (wallModel != null && wallModel is WallModel && wallModel.isFav) {
                                 _list.removeAt(index)
                                 _listObserver.value = ListObserver(ListCase.REMOVED, at = index)
                             }
@@ -107,7 +112,7 @@ class ListingWallpapersViewModel
             }
         } else {
             viewModelScope.launch {
-                wallRepository.filterFavorites(_list)
+                wallRepository.filterListingFavorites(_list)
             }
         }
     }
