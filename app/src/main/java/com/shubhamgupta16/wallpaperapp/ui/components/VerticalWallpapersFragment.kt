@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.shubhamgupta16.wallpaperapp.R
 import com.shubhamgupta16.wallpaperapp.adapters.ImagesAdapter
 import com.shubhamgupta16.wallpaperapp.databinding.FragmentForVerticalWallpapersBinding
+import com.shubhamgupta16.wallpaperapp.models.ad.NativeAdModel
+import com.shubhamgupta16.wallpaperapp.models.wallpapers.WallModel
 import com.shubhamgupta16.wallpaperapp.models.wallpapers.WallModelListHolder
 import com.shubhamgupta16.wallpaperapp.ui.FullWallpaperActivity
 import com.shubhamgupta16.wallpaperapp.utils.BounceEdgeEffectFactory
@@ -158,17 +160,19 @@ class VerticalWallpapersFragment : Fragment() {
 
     private fun showFullWallpaperFragment(position:Int) {
 //        todo open new activity
-        /*val intent = FullWallpaperActivity.getLaunchingIntent(
-            requireContext(), WallModelListHolder(viewModel.list.filterNotNull()), position,
+        val intent = FullWallpaperActivity.getLaunchingIntent(
+            requireContext(),
+            WallModelListHolder(
+                viewModel.list.filterIsInstance<WallModel>()),
+            position,
             viewModel.page,
             viewModel.lastPage,
             viewModel.query,
             viewModel.color,
             viewModel.category
         )
-        startActivity(intent)*/
+        startActivity(intent)
     }
-
 
     companion object {
         private const val TAG = "VerticalWallpapersFrag"

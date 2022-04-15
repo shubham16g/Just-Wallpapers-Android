@@ -26,6 +26,7 @@ import com.google.android.gms.ads.nativead.NativeAdOptions
 import com.google.android.gms.ads.nativead.NativeAdView
 import com.shubhamgupta16.wallpaperapp.R
 import com.shubhamgupta16.wallpaperapp.models.ad.BaseAdModel
+import com.shubhamgupta16.wallpaperapp.models.ad.NativeAdModel
 import com.shubhamgupta16.wallpaperapp.models.wallpapers.WallModel
 import com.shubhamgupta16.wallpaperapp.utils.RotationTransform
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation
@@ -47,8 +48,7 @@ class ImagesAdapter(
     }
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         holder.imageView?.requestLayout()
-        val model = list[position]
-        when (model) {
+        when (val model = list[position]) {
             null -> goFullSpan(holder)
             is WallModel -> {
 
@@ -78,29 +78,43 @@ class ImagesAdapter(
             }
             else -> {
                 goFullSpan(holder)
-                val adLoader = AdLoader.Builder(context, "ca-app-pub-3940256099942544/2247696110")
-                    .forNativeAd { nativeAd ->
-                        val unifiedNativeAdView = holder.adView
-                        unifiedNativeAdView!!.visibility = View.VISIBLE
-                        mapUnifiedNativeAdToLayout(nativeAd, unifiedNativeAdView)
-                    }
-                    .withAdListener(object : AdListener() {
-                        override fun onAdFailedToLoad(adError: LoadAdError) {
-    //                            holder.adView.setVisibility(View.GONE);
-                            // Handle the failure by logging, altering the UI, and so on.
-                        }
-                    })
-                    .withNativeAdOptions(
-                        NativeAdOptions.Builder() // Methods in the NativeAdOptions.Builder class can be
-                            // used here to specify individual options settings.
-                            .build()
-                    )
-                    .build()
-                adLoader.loadAd(AdRequest.Builder().build())
+                if (model is NativeAdModel && model.nativeAd != null) {
+                    val unifiedNativeAdView = holder.adView
+                    unifiedNativeAdView!!.visibility = View.VISIBLE
+                    mapUnifiedNativeAdToLayout(model.nativeAd!!, unifiedNativeAdView)
+                } else {
+                    loadNativeAd(position)
+                }
+
             }
         }
     }
 
+    private fun loadNativeAd(position: Int) {
+        if (list[position] is NativeAdModel) {
+            val adLoader = AdLoader.Builder(context, "ca-app-pub-3940256099942544/2247696110")
+                .forNativeAd { nativeAd ->
+                    (list[position] as NativeAdModel).nativeAd = nativeAd
+                    notifyItemChanged(position)
+//                val unifiedNativeAdView = holder.adView
+//                unifiedNativeAdView!!.visibility = View.VISIBLE
+//                mapUnifiedNativeAdToLayout(nativeAd, unifiedNativeAdView)
+                }
+                .withAdListener(object : AdListener() {
+                    override fun onAdFailedToLoad(adError: LoadAdError) {
+                        //                            holder.adView.setVisibility(View.GONE);
+                        // Handle the failure by logging, altering the UI, and so on.
+                    }
+                })
+                .withNativeAdOptions(
+                    NativeAdOptions.Builder() // Methods in the NativeAdOptions.Builder class can be
+                        // used here to specify individual options settings.
+                        .build()
+                )
+                .build()
+            adLoader.loadAd(AdRequest.Builder().build())
+        }
+    }
 
     override fun getItemViewType(position: Int): Int {
         return when (list[position]) {

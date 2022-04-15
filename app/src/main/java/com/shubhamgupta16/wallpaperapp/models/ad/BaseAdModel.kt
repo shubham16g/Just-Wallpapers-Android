@@ -1,3 +1,5 @@
 package com.shubhamgupta16.wallpaperapp.models.ad
 
-open class BaseAdModel
+import java.io.Serializable
+
+open class BaseAdModel:Serializable

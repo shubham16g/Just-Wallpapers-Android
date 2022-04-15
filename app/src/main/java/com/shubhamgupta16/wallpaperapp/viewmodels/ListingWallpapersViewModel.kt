@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.shubhamgupta16.wallpaperapp.models.ad.BaseAdModel
+import com.shubhamgupta16.wallpaperapp.models.ad.NativeAdModel
 import com.shubhamgupta16.wallpaperapp.models.wallpapers.WallModel
 import com.shubhamgupta16.wallpaperapp.repositories.WallRepository
 import com.shubhamgupta16.wallpaperapp.viewmodels.live_observer.ListCase
@@ -71,7 +72,7 @@ class ListingWallpapersViewModel
                     _list.removeAt(_list.lastIndex)
                 response.body!!.data.forEachIndexed { i, it->
                     if (i == 9)
-                        _list.add(BaseAdModel())
+                        _list.add(NativeAdModel())
                     _list.add(it)
                 }
                 if (_lastPage > _page)

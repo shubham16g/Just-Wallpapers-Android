@@ -12,6 +12,7 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.shubhamgupta16.wallpaperapp.R
 import com.shubhamgupta16.wallpaperapp.databinding.ItemWallClientBinding
+import com.shubhamgupta16.wallpaperapp.models.ad.BaseAdModel
 import com.shubhamgupta16.wallpaperapp.models.wallpapers.WallModel
 import com.shubhamgupta16.wallpaperapp.utils.RotationTransform
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation
@@ -20,7 +21,7 @@ import kotlin.math.roundToInt
 
 class SingleImageAdapter(
     private val context: Context,
-    private val list: List<WallModel?>,
+    private val list: List<BaseAdModel>,
     private val listener: ()->Unit
 ) :
     RecyclerView.Adapter<SingleImageAdapter.ItemViewHolder>() {
@@ -28,7 +29,8 @@ class SingleImageAdapter(
     private val cardRadius = context.resources.getDimension(R.dimen.full_wall_card_corner_radius)
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
-        val model = list[position] ?: return
+        val model = list[position]
+        if (model !is WallModel) return
         val mlt = MultiTransformation(
             RotationTransform(model.rotation?.toFloat() ?: 0f),
             CenterCrop(),
