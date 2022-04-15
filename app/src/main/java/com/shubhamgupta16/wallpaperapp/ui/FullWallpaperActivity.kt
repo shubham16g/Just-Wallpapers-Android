@@ -27,6 +27,10 @@ import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.MobileAds
+import com.google.android.gms.ads.interstitial.InterstitialAd
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.shubhamgupta16.wallpaperapp.R
@@ -66,6 +70,7 @@ class FullWallpaperActivity : AppCompatActivity() {
         fitFullScreen()
         setTransparentStatusBar()
         setTransparentNavigation()
+        initInterstitial()
         setContentView(binding.root)
 
         permissionLauncher = getPermissionLauncher { isAllPermissionGranted, _ ->
@@ -441,6 +446,30 @@ class FullWallpaperActivity : AppCompatActivity() {
         Glide.with(this).load(model.author.image).centerCrop().circleCrop()
             .transition(DrawableTransitionOptions.withCrossFade())
             .into(binding.authorProfile)
+    }
+
+    private var interstitialAd:InterstitialAd?=null
+    private fun initInterstitial() {
+        MobileAds.initialize(
+            this
+        ) { }
+        InterstitialAd.load(
+            this,
+            "ca-app-pub-3940256099942544/1033173712",
+            AdRequest.Builder().build(),
+            object : InterstitialAdLoadCallback() {
+                override fun onAdLoaded(interstitialAd: InterstitialAd) {
+                    super.onAdLoaded(interstitialAd)
+                    this@FullWallpaperActivity.interstitialAd = interstitialAd
+                }
+            })
+    }
+    private fun showInterstitial() {
+        interstitialAd?.show(this)
+    }
+    override fun onDestroy() {
+        showInterstitial()
+        super.onDestroy()
     }
 
     companion object {
