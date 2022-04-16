@@ -13,4 +13,5 @@
     <string name="home">Home</string>
     <string name="account">Account</string>
     <string name="ad_icon">Ad Icon</string>
+    <string name="ad">Ad</string>
 </resources>

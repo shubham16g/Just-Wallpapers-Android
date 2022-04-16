@@ -8,6 +8,8 @@
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/drawable/background_bottom_nav.xml" value="0.162" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/drawable/background_bottom_sheet.xml" value="0.1325" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/drawable/background_card.xml" value="0.1415" />
+        <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/drawable/background_shimmer.xml" value="0.1115" />
+        <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/drawable/background_shimmer_oval.xml" value="0.1115" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/drawable/background_status_bar.xml" value="0.143" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/drawable/btn_primary.xml" value="0.1325" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/drawable/ic_account.xml" value="0.1235" />
@@ -89,8 +91,8 @@
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/item_image.xml" value="0.19692307692307692" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/item_loader.xml" value="0.25" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/item_wall.xml" value="0.2" />
-        <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/item_wall_ad.xml" value="0.18" />
-        <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/item_wall_ad2.xml" value="0.2" />
+        <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/item_wall_ad.xml" value="0.22" />
+        <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/item_wall_ad2.xml" value="0.22" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/item_wall_client.xml" value="0.2" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/item_wall_horizontal.xml" value="0.33" />
         <entry key="..\:/App_Projects/WallpaperUI/app/src/main/res/layout/layout_choose_theme.xml" value="0.22" />

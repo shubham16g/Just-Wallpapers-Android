@@ -24,7 +24,7 @@ class AccountFragment : Fragment() {
 
     private lateinit var binding: FragmentMainAccountBinding
     @Inject lateinit var wallpaperHelper: WallpaperHelper
-    @Inject lateinit var themeController: ThemeController
+    @Inject lateinit var appMemory: AppMemory
     private var themeDialog: AlertDialog? = null
 
     private val permissionLauncher = getPermissionLauncher { isAllPermissionGranted, _ ->
@@ -60,7 +60,7 @@ class AccountFragment : Fragment() {
         }
     }
 
-    private fun getModeName() = when (themeController.getMode()) {
+    private fun getModeName() = when (appMemory.getMode()) {
         AppCompatDelegate.MODE_NIGHT_YES -> requireContext().getString(R.string.mode_dark)
         AppCompatDelegate.MODE_NIGHT_NO -> requireContext().getString(R.string.mode_light)
         AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM -> requireContext().getString(R.string.mode_follow_system)
@@ -99,21 +99,30 @@ class AccountFragment : Fragment() {
             LayoutChooseThemeBinding.inflate(layoutInflater)
         val dialog = requireContext().alertDialog(themeLayout)
         themeLayout.dark.setOnClickListener{
-            themeController.setMode(AppCompatDelegate.MODE_NIGHT_YES)
+            setMode(AppCompatDelegate.MODE_NIGHT_YES)
             updateThemeName()
             dialog.dismiss()
         }
         themeLayout.light.setOnClickListener {
-            themeController.setMode(AppCompatDelegate.MODE_NIGHT_NO)
+            setMode(AppCompatDelegate.MODE_NIGHT_NO)
             updateThemeName()
             dialog.dismiss()
         }
         themeLayout.followSystem.setOnClickListener {
-            themeController.setMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+            setMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
             updateThemeName()
             dialog.dismiss()
         }
         return dialog
+    }
+
+    private fun setMode(mode: Int) {
+        if (mode == AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM || mode == AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY ||
+            mode == AppCompatDelegate.MODE_NIGHT_YES || mode == AppCompatDelegate.MODE_NIGHT_NO
+        ) {
+            appMemory.saveMode(mode)
+            AppCompatDelegate.setDefaultNightMode(mode)
+        }
     }
 
     @SuppressLint("SetTextI18n")

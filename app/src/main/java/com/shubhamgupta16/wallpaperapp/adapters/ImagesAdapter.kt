@@ -1,15 +1,13 @@
 package com.shubhamgupta16.wallpaperapp.adapters
 
-import android.content.Context
+import android.app.Activity
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.RatingBar
-import android.widget.TextView
+import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.bumptech.glide.Glide
@@ -34,13 +32,13 @@ import kotlin.math.roundToInt
 
 
 class ImagesAdapter(
-    private val context: Context,
+    private val activity: Activity,
     private val list: List<BaseAdModel?>,
     private val listener: (wallModel: WallModel, i: Int) -> Unit
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private val cardRadius = context.resources.getDimension(R.dimen.card_corner_radius)
+    private val cardRadius = activity.resources.getDimension(R.dimen.card_corner_radius)
 
     private fun goFullSpan(holder: RecyclerView.ViewHolder) {
         val layoutParams =
@@ -50,90 +48,95 @@ class ImagesAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val model = list[position]
-        if (holder is ItemViewHolder) {
+        if (holder is ItemViewHolder && model is WallModel) {
 
             holder.imageView.requestLayout()
-            when (model) {
-                is WallModel -> {
 
-                    holder.imageView.let {
-                        val mlt = MultiTransformation(
-                            RotationTransform(model.rotation?.toFloat() ?: 0f),
-                            CenterCrop(),
-                            RoundedCornersTransformation(
-                                cardRadius.roundToInt(),
-                                0
-                            )
-                        )
-                        Glide.with(it.context).load(model.urls.small)
-                            .thumbnail()
-                            .placeholder(GradientDrawable().apply {
-                                setColor(Color.parseColor(model.color))
-                                cornerRadius = cardRadius
-                            })
-                            .transform(mlt)
-                            .transition(DrawableTransitionOptions.withCrossFade())
-                            .into(it)
-                    }
-
-                    holder.itemView.setOnClickListener {
-                        listener(model, position)
-                    }
-                }
+            holder.imageView.let {
+                val mlt = MultiTransformation(
+                    RotationTransform(model.rotation?.toFloat() ?: 0f),
+                    CenterCrop(),
+                    RoundedCornersTransformation(
+                        cardRadius.roundToInt(),
+                        0
+                    )
+                )
+                Glide.with(it.context).load(model.urls.small)
+                    .thumbnail()
+                    .placeholder(GradientDrawable().apply {
+                        setColor(Color.parseColor(model.color))
+                        cornerRadius = cardRadius
+                    })
+                    .transform(mlt)
+                    .transition(DrawableTransitionOptions.withCrossFade())
+                    .into(it)
             }
-        } else if (holder is UnifiedNativeAdViewHolder) {
+
+            holder.itemView.setOnClickListener {
+                listener(model, position)
+            }
+        } else if (holder is UnifiedNativeAdViewHolder && model is NativeAdModel) {
             goFullSpan(holder)
-            if (model is NativeAdModel && model.nativeAd != null) {
-                val unifiedNativeAdView = holder.adView
-                unifiedNativeAdView.visibility = View.VISIBLE
-                populateNativeAdView(model.nativeAd!!, unifiedNativeAdView)
-            } else {
+            val unifiedNativeAdView = holder.adView
+            unifiedNativeAdView.visibility = View.VISIBLE
+            populateNativeAdView(model.nativeAd!!, unifiedNativeAdView)
+
+        } else if (holder is EmptyViewHolder) {
+            goFullSpan(holder)
+            if (model is NativeAdModel && model.nativeAd == null) {
                 loadNativeAd(position)
             }
-
-        } else {
-            goFullSpan(holder)
         }
     }
 
     private fun loadNativeAd(position: Int) {
         if (list[position] is NativeAdModel) {
-            val adLoader = AdLoader.Builder(context, "ca-app-pub-3940256099942544/2247696110")
+            val adLoader = AdLoader.Builder(activity, "ca-app-pub-3940256099942544/2247696110")
                 .forNativeAd { nativeAd ->
+                    if (activity.isDestroyed) {
+                        nativeAd.destroy()
+                        return@forNativeAd
+                    }
                     (list[position] as NativeAdModel).nativeAd = nativeAd
                     notifyItemChanged(position)
-//                val unifiedNativeAdView = holder.adView
-//                unifiedNativeAdView!!.visibility = View.VISIBLE
-//                mapUnifiedNativeAdToLayout(nativeAd, unifiedNativeAdView)
                 }
                 .withAdListener(object : AdListener() {
                     override fun onAdFailedToLoad(adError: LoadAdError) {
-                        //                            holder.adView.setVisibility(View.GONE);
-                        // Handle the failure by logging, altering the UI, and so on.
                     }
                 })
-                .withNativeAdOptions(
-                    NativeAdOptions.Builder() // Methods in the NativeAdOptions.Builder class can be
-                        // used here to specify individual options settings.
-                        .build()
-                )
+                .withNativeAdOptions(NativeAdOptions.Builder().build())
                 .build()
             adLoader.loadAd(AdRequest.Builder().build())
         }
     }
 
     override fun getItemViewType(position: Int): Int {
-        return when (list[position]) {
+        return when (val model = list[position]) {
             null -> 0
             is WallModel -> 1
-            else -> 2
+            is NativeAdModel -> {
+                if (model.nativeAd != null) 2 else 3
+            }
+            else -> 0
         }
     }
 
     override fun getItemCount() = list.size
+
+    /*override fun getItemCount(): Int {
+        val s = list.size
+        var t: Int = s + s / ADS_AFTER
+        if (s > 0) t++ // +1 when list is not empty
+        Log.e(TAG, "☺☺☺ total is $t, real are $s")
+        return t
+    }*/
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = when (viewType) {
-        0 -> LoaderViewHolder(
+        0 -> EmptyViewHolder(
             LayoutInflater.from(parent.context).inflate(R.layout.item_loader, parent, false)
+        )
+        3 -> EmptyViewHolder(
+            LayoutInflater.from(parent.context).inflate(R.layout.item_wall_ad2, parent, false)
         )
         1 -> ItemViewHolder(
             LayoutInflater.from(parent.context).inflate(R.layout.item_wall, parent, false)
@@ -190,65 +193,13 @@ class ImagesAdapter(
         // Assign native ad object to the native view.
         adView.setNativeAd(nativeAd)
     }
-/*
-
-    private fun mapUnifiedNativeAdToLayout(adFromGoogle: NativeAd, myAdView: NativeAdView) {
-        val mediaView: MediaView = myAdView.findViewById(R.id.ad_media)
-        myAdView.mediaView = mediaView
-        myAdView.headlineView = myAdView.findViewById(R.id.ad_headline)
-        myAdView.bodyView = myAdView.findViewById(R.id.ad_body)
-        myAdView.callToActionView = myAdView.findViewById(R.id.ad_call_to_action)
-        myAdView.iconView = myAdView.findViewById(R.id.ad_icon)
-        myAdView.priceView = myAdView.findViewById(R.id.ad_price)
-        myAdView.starRatingView = myAdView.findViewById(R.id.ad_rating)
-        myAdView.storeView = myAdView.findViewById(R.id.ad_store)
-        myAdView.advertiserView = myAdView.findViewById(R.id.ad_advertiser)
-        (myAdView.headlineView as TextView).text = adFromGoogle.headline
-        if (adFromGoogle.body == null) {
-            myAdView.bodyView.visibility = View.GONE
-        } else {
-            (myAdView.bodyView as TextView).text = adFromGoogle.body
-        }
-        if (adFromGoogle.callToAction == null) {
-            myAdView.callToActionView.visibility = View.GONE
-        } else {
-            (myAdView.callToActionView as Button).text = adFromGoogle.callToAction
-        }
-        if (adFromGoogle.icon == null) {
-            myAdView.iconView.visibility = View.GONE
-        } else {
-            (myAdView.iconView as ImageView).setImageDrawable(adFromGoogle.icon.drawable)
-        }
-        if (adFromGoogle.price == null) {
-            myAdView.priceView.visibility = View.GONE
-        } else {
-            (myAdView.priceView as TextView).text = adFromGoogle.price
-        }
-        if (adFromGoogle.starRating == null) {
-            myAdView.starRatingView.visibility = View.GONE
-        } else {
-            (myAdView.starRatingView as RatingBar).rating = adFromGoogle.starRating.toFloat()
-        }
-        if (adFromGoogle.store == null) {
-            myAdView.storeView.visibility = View.GONE
-        } else {
-            (myAdView.storeView as TextView).text = adFromGoogle.store
-        }
-        if (adFromGoogle.advertiser == null) {
-            myAdView.advertiserView.visibility = View.GONE
-        } else {
-            (myAdView.advertiserView as TextView).text = adFromGoogle.advertiser
-        }
-        myAdView.setNativeAd(adFromGoogle)
-    }
-*/
 
     class ItemViewHolder(itemView: View) :
         RecyclerView.ViewHolder(itemView) {
         val imageView: ImageView = itemView.findViewById(R.id.image_view)
     }
 
-    class LoaderViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+    class EmptyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
     class UnifiedNativeAdViewHolder internal constructor(view: View) :
         RecyclerView.ViewHolder(view) {
