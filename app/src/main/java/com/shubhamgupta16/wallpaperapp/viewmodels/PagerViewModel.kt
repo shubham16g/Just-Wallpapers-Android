@@ -10,7 +10,7 @@ import com.shubhamgupta16.wallpaperapp.R
 import com.shubhamgupta16.wallpaperapp.models.wallpapers.WallModel
 import com.shubhamgupta16.wallpaperapp.repositories.GlideRepository
 import com.shubhamgupta16.wallpaperapp.repositories.WallRepository
-import com.shubhamgupta16.wallpaperapp.utils.applyWall
+import com.shubhamgupta16.wallpaperapp.utils.WallpaperHelper
 import com.shubhamgupta16.wallpaperapp.utils.saveImageToExternal
 import com.shubhamgupta16.wallpaperapp.viewmodels.live_observer.ListCase
 import com.shubhamgupta16.wallpaperapp.viewmodels.live_observer.ListObserver
@@ -24,9 +24,12 @@ import javax.inject.Inject
 class PagerViewModel
 @Inject constructor(
     private val wallRepository: WallRepository,
-    private val glideRepository: GlideRepository
+    private val glideRepository: GlideRepository,
 ) :
     ViewModel() {
+
+    @Inject lateinit var wallpaperHelper: WallpaperHelper
+
     var currentPosition = -1
 
     private val _listObserver = MutableLiveData<ListObserver>()
@@ -102,13 +105,13 @@ class PagerViewModel
     private val _wallBitmapLoading = MutableLiveData<Boolean?>(null)
     val wallBitmapLoading get() :LiveData<Boolean?> = _wallBitmapLoading
 
-    fun applyWallpaper(context: Context, wallModel: WallModel, flag: Int? = null) {
+    fun applyWallpaper(wallModel: WallModel, flag: Int? = null) {
         _wallBitmapLoading.value = true
         viewModelScope.launch(Dispatchers.IO) {
             val bmp = glideRepository.downloadImage(wallModel.urls.full, wallModel.rotation ?: 0)
             if (bmp != null) {
                 Log.d("TAG", "applyWallpaper: DONE")
-                context.applyWall(bmp, flag)
+                wallpaperHelper.applyWall(bmp, flag)
                 withContext(Dispatchers.Main) {
                     downloadWallpaper(wallModel.wallId)
                     _wallBitmapLoading.value = false

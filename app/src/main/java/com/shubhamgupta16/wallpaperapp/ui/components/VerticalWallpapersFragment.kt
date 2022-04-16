@@ -61,23 +61,8 @@ class VerticalWallpapersFragment : Fragment() {
         return binding.root
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-//        Log.d(TAG, "onAttach: ${viewModel.category}")
-    }
-
-    override fun onViewStateRestored(savedInstanceState: Bundle?) {
-        super.onViewStateRestored(savedInstanceState)
-        Log.d(TAG, "onViewStateRestored: ${TAG}")
-//        Log.d(TAG, "onViewStateRestored: ${viewModel.list}")
-
-    }
-
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.d(TAG, "onVCreated: ${viewModel.category}")
-        Log.d(TAG, "onVCreated: ${viewModel.list}")
 
         setupRecyclerView()
         viewModel.listObserver.observe(viewLifecycleOwner) {
@@ -93,7 +78,7 @@ class VerticalWallpapersFragment : Fragment() {
                         adapter?.notifyItemRangeInserted(it.from, it.itemCount)
                         if (viewModel.list.isNotEmpty() && it.from == 0)
                             binding.recyclerView.smoothScrollToPosition(0)
-                        paginationController?.notifyDataFetched(true)
+                        paginationController?.notifyDataFetched()
                         if (it.from == 0)
                             binding.recyclerView.scheduleLayoutAnimation()
 
@@ -111,7 +96,7 @@ class VerticalWallpapersFragment : Fragment() {
                         binding.noResultContainer.fadeVisibility(View.GONE)
                     }
                     ListCase.NO_CHANGE -> {
-                        paginationController?.notifyDataFetched(true)
+                        paginationController?.notifyDataFetched()
                         binding.initialLoader.fadeVisibility(View.GONE)
                         binding.noResultContainer.fadeVisibility(View.GONE)
                     }
@@ -159,7 +144,6 @@ class VerticalWallpapersFragment : Fragment() {
 
 
     private fun showFullWallpaperFragment(position:Int) {
-//        todo open new activity
         val intent = FullWallpaperActivity.getLaunchingIntent(
             requireContext(),
             WallModelListHolder(

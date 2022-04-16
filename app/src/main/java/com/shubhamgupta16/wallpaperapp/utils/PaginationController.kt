@@ -11,11 +11,9 @@ class PaginationController(
 ) {
 
     private var isLoading = false
-    private var hasNextPage = false
 
-    fun notifyDataFetched(hasNextPage:Boolean) {
+    fun notifyDataFetched() {
         isLoading = false
-        this.hasNextPage = hasNextPage
     }
 
     init {
@@ -27,7 +25,7 @@ class PaginationController(
                     is StaggeredGridLayoutManager ->{ manager.findFirstVisibleItemPositions(null).last()}
                     else -> 0
                 }
-                    if (!isLoading && hasNextPage && manager.childCount + firstVisibleItemPosition >= manager.itemCount) {
+                    if (!isLoading && manager.childCount + firstVisibleItemPosition >= manager.itemCount) {
                         Log.d("TAG", "onScrolled: onScrolled")
                         isLoading = true
                         listener()

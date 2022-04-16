@@ -10,12 +10,6 @@ class ThemeController @Inject constructor(@ApplicationContext private val contex
 
     private val sharedPref = context.getSharedPreferences("ThemePref", Context.MODE_PRIVATE)
 
-
-//    fun getMode(): Int {
-//        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY)
-//        return sharedPref.getInt("mode", AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
-//    }
-
     fun init() {
         AppCompatDelegate.setDefaultNightMode(getMode())
     }
@@ -28,8 +22,6 @@ class ThemeController @Inject constructor(@ApplicationContext private val contex
             AppCompatDelegate.setDefaultNightMode(mode)
         }
     }
-
-
 
     fun getMode() = sharedPref.getInt("mode", AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
     private fun saveMode(mode:Int){

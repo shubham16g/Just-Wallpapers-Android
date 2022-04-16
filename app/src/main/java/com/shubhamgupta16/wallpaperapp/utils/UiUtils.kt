@@ -76,8 +76,6 @@ fun Context.openLink(url:String){
 fun Context.openPlayStorePage(){
     val uri: Uri = Uri.parse("market://details?id=$packageName")
     val goToMarket = Intent(Intent.ACTION_VIEW, uri)
-    // To count with Play market backstack, After pressing back button,
-    // to taken back to our application, we need to add following flags to intent.
     goToMarket.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY or
             Intent.FLAG_ACTIVITY_NEW_DOCUMENT or
             Intent.FLAG_ACTIVITY_MULTIPLE_TASK)
@@ -219,4 +217,8 @@ fun getScreenWidth(): Int {
 
 fun getScreenHeight(): Int {
     return Resources.getSystem().displayMetrics.heightPixels
+}
+fun Context.isOrientationLandscape(): Boolean {
+    val orientation: Int = resources.configuration.orientation
+    return orientation == Configuration.ORIENTATION_LANDSCAPE
 }
