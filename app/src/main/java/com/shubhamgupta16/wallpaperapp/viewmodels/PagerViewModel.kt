@@ -44,6 +44,7 @@ class PagerViewModel
     private var query: String? = null
     private var category: String? = null
     private var color: String? = null
+    private var orderBy: String? = null
 
     fun init(
         list: List<WallModel>,
@@ -51,7 +52,8 @@ class PagerViewModel
         lastPage: Int,
         query: String? = null,
         color: String? = null,
-        category: String? = null
+        category: String? = null,
+        orderBy: String? = null,
     ) {
         if (_list.isNotEmpty()) return
         _list.addAll(list)
@@ -60,6 +62,7 @@ class PagerViewModel
         this.query = query
         this.color = color
         this.category = category
+        this.orderBy = orderBy
         this.id = 0
     }
 
@@ -75,7 +78,7 @@ class PagerViewModel
         _listObserver.value = ListObserver(ListCase.INITIAL_LOADING)
         viewModelScope.launch(Dispatchers.IO) {
             val response = if (id == 0)
-                wallRepository.getWalls(page = page, s = query, category = category, color = color)
+                wallRepository.getWalls(page = page, s = query, category = category, color = color, orderBy = orderBy)
             else
                 wallRepository.getWallsWithIds(listOf(id))
             if (response.isSuccessful && response.body != null) {
