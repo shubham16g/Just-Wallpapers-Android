@@ -71,7 +71,7 @@ class ListingWallpapersViewModel
                 if (_list.isNotEmpty())
                     _list.removeAt(_list.lastIndex)
                 response.body!!.data.forEachIndexed { i, it->
-                    if (i == 9)
+                    if (i == 9 && page % 2 == 0)
                         _list.add(NativeAdModel())
                     _list.add(it)
                 }
