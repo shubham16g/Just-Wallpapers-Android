@@ -286,6 +286,7 @@ class FullWallpaperActivity : AppCompatActivity() {
             query = intent.getStringExtra("query"),
             color = intent.getStringExtra("color"),
             category = intent.getStringExtra("category"),
+            orderBy = intent.getStringExtra("order_by")
         )
     }
 
@@ -487,7 +488,8 @@ class FullWallpaperActivity : AppCompatActivity() {
             lastPage: Int,
             query: String? = null,
             color: String? = null,
-            category: String? = null
+            category: String? = null,
+            orderBy: String? = null,
         ): Intent {
             val intent = Intent(context, FullWallpaperActivity::class.java)
             intent.putExtra("list", listHolder)
@@ -497,6 +499,7 @@ class FullWallpaperActivity : AppCompatActivity() {
             intent.putExtra("query", query)
             intent.putExtra("color", color)
             intent.putExtra("category", category)
+            intent.putExtra("order_by", orderBy)
             return intent
         }
     }
