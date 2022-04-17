@@ -90,7 +90,8 @@ class HorizontalWallpapersFragment : Fragment() {
             viewModel.lastPage,
             viewModel.query,
             viewModel.color,
-            viewModel.category
+            viewModel.category,
+            viewModel.orderBy
         )
         startActivity(intent)
     }

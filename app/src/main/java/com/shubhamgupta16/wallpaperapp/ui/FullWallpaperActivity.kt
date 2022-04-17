@@ -48,7 +48,6 @@ import jp.wasabeef.glide.transformations.ColorFilterTransformation
 import jp.wasabeef.glide.transformations.gpu.BrightnessFilterTransformation
 import javax.inject.Inject
 
-
 @AndroidEntryPoint
 class FullWallpaperActivity : AppCompatActivity() {
 

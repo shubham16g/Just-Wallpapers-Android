@@ -102,7 +102,6 @@
                 android:layout_height="40dp"
                 android:layout_marginTop="14dp"
                 android:background="@drawable/btn_primary"
-                android:fontFamily="@font/kumbh_semi_bold"
                 android:gravity="center"
                 android:minWidth="100dp"
                 android:textSize="12sp"
