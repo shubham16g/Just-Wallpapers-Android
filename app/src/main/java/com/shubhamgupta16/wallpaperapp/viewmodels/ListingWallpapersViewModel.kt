@@ -5,8 +5,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.shubhamgupta16.wallpaperapp.models.ad.BaseAdModel
-import com.shubhamgupta16.wallpaperapp.models.ad.NativeAdModel
 import com.shubhamgupta16.wallpaperapp.models.wallpapers.WallModel
 import com.shubhamgupta16.wallpaperapp.repositories.WallRepository
 import com.shubhamgupta16.wallpaperapp.viewmodels.live_observer.ListCase
@@ -23,8 +21,8 @@ class ListingWallpapersViewModel
     private val _listObserver = MutableLiveData<ListObserver>()
     val listObserver: LiveData<ListObserver> = _listObserver
 
-    private val _list = ArrayList<BaseAdModel?>()
-    val list: List<BaseAdModel?> = _list
+    private val _list = ArrayList<WallModel?>()
+    val list: List<WallModel?> = _list
 
     private var _page = 1
     private var _lastPage = 1
@@ -70,11 +68,7 @@ class ListingWallpapersViewModel
                 val size = _list.size
                 if (_list.isNotEmpty())
                     _list.removeAt(_list.lastIndex)
-                response.body!!.data.forEachIndexed { i, it->
-                    if (i == 9)
-                        _list.add(NativeAdModel())
-                    _list.add(it)
-                }
+                _list.addAll(response.body!!.data)
                 if (_lastPage > _page)
                     _list.add(null)
                 _page++
@@ -118,7 +112,12 @@ class ListingWallpapersViewModel
         }
     }
 
-    fun init(query: String? = null, category: String? = null, color: String? = null, orderBy:String? = null) {
+    fun init(
+        query: String? = null,
+        category: String? = null,
+        color: String? = null,
+        orderBy: String? = null
+    ) {
         _page = 1
         this._query = query
         this._category = category
@@ -135,7 +134,6 @@ class ListingWallpapersViewModel
         this._orderBy = null
         this.isFavList = true
     }
-
 
 
     companion object {
