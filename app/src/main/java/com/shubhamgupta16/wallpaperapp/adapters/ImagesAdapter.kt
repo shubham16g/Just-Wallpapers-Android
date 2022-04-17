@@ -25,6 +25,9 @@ import com.shubhamgupta16.wallpaperapp.models.wallpapers.wall.AdModel
 import com.shubhamgupta16.wallpaperapp.models.wallpapers.wall.WallModel
 import com.shubhamgupta16.wallpaperapp.utils.RotationTransform
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 
 
@@ -78,14 +81,60 @@ class ImagesAdapter(
             val unifiedNativeAdView = holder.adView
             unifiedNativeAdView.visibility = View.VISIBLE
             if (adList.isNotEmpty())
-                populateNativeAdView(
-                    adList[if (model.adPosition < adList.size) model.adPosition else adList.lastIndex],
-                    unifiedNativeAdView
-                )
+                CoroutineScope(Dispatchers.Main).launch {
+                    populateNativeAdView(
+                        adList[if (model.adPosition < adList.size) model.adPosition else adList.lastIndex],
+                        unifiedNativeAdView
+                    )
+                }
 
         } else if (holder is EmptyViewHolder) {
             goFullSpan(holder)
         }
+    }
+
+    private fun populateNativeAdView(
+        nativeAd: NativeAd,
+        adView: NativeAdView
+    ) {
+        (adView.headlineView as? TextView)?.text = nativeAd.headline
+        (adView.bodyView as? TextView)?.text = nativeAd.body
+        (adView.callToActionView as? Button)?.text = nativeAd.callToAction
+
+        val icon: NativeAd.Image? = nativeAd.icon
+        if (icon == null) {
+            adView.iconView?.visibility = View.INVISIBLE
+        } else {
+            (adView.iconView as? ImageView)?.setImageDrawable(icon.drawable)
+            adView.iconView?.visibility = View.VISIBLE
+        }
+        if (nativeAd.price == null) {
+            adView.priceView?.visibility = View.INVISIBLE
+        } else {
+            adView.priceView?.visibility = View.VISIBLE
+            (adView.priceView as? TextView)?.text = nativeAd.price
+        }
+        if (nativeAd.store == null) {
+            adView.storeView?.visibility = View.INVISIBLE
+        } else {
+            adView.storeView?.visibility = View.VISIBLE
+            (adView.storeView as? TextView)?.text = nativeAd.store
+        }
+        if (nativeAd.starRating == null) {
+            adView.starRatingView?.visibility = View.INVISIBLE
+        } else {
+            (adView.starRatingView as? RatingBar)?.rating = nativeAd.starRating?.toFloat()?:0f
+            adView.starRatingView?.visibility = View.VISIBLE
+        }
+        if (nativeAd.advertiser == null) {
+            adView.advertiserView?.visibility = View.INVISIBLE
+        } else {
+            (adView.advertiserView as? TextView)?.text = nativeAd.advertiser
+            adView.advertiserView?.visibility = View.VISIBLE
+        }
+
+        // Assign native ad object to the native view.
+        adView.setNativeAd(nativeAd)
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -93,7 +142,7 @@ class ImagesAdapter(
             null -> 0
             is WallModel -> 1
             is AdModel -> {
-                if (adList.isNotEmpty()) 2 else 3
+                if (adList.isNotEmpty()) 2 else 2
             }
             else -> 0
         }
@@ -114,54 +163,6 @@ class ImagesAdapter(
         else -> UnifiedNativeAdViewHolder(
             LayoutInflater.from(parent.context).inflate(R.layout.item_wall_ad, parent, false)
         )
-    }
-
-
-    private fun populateNativeAdView(
-        nativeAd: NativeAd,
-        adView: NativeAdView
-    ) {
-        // Some assets are guaranteed to be in every UnifiedNativeAd.
-        (adView.headlineView as? TextView)?.text = nativeAd.headline
-        (adView.bodyView as? TextView)?.text = nativeAd.body
-        (adView.callToActionView as? Button)?.text = nativeAd.callToAction
-
-        // These assets aren't guaranteed to be in every UnifiedNativeAd, so it's important to
-        // check before trying to display them.
-        val icon: NativeAd.Image? = nativeAd.icon
-        if (icon == null) {
-            adView.iconView.visibility = View.INVISIBLE
-        } else {
-            (adView.iconView as ImageView).setImageDrawable(icon.drawable)
-            adView.iconView.visibility = View.VISIBLE
-        }
-        if (nativeAd.price == null) {
-            adView.priceView.visibility = View.INVISIBLE
-        } else {
-            adView.priceView.visibility = View.VISIBLE
-            (adView.priceView as TextView).text = nativeAd.price
-        }
-        if (nativeAd.store == null) {
-            adView.storeView.visibility = View.INVISIBLE
-        } else {
-            adView.storeView.visibility = View.VISIBLE
-            (adView.storeView as TextView).text = nativeAd.store
-        }
-        if (nativeAd.starRating == null) {
-            adView.starRatingView.visibility = View.INVISIBLE
-        } else {
-            (adView.starRatingView as RatingBar).rating = nativeAd.starRating.toFloat()
-            adView.starRatingView.visibility = View.VISIBLE
-        }
-        if (nativeAd.advertiser == null) {
-            adView.advertiserView.visibility = View.INVISIBLE
-        } else {
-            (adView.advertiserView as TextView).text = nativeAd.advertiser
-            adView.advertiserView.visibility = View.VISIBLE
-        }
-
-        // Assign native ad object to the native view.
-        adView.setNativeAd(nativeAd)
     }
 
     class ItemViewHolder(itemView: View) :

@@ -12,8 +12,8 @@ import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.nativead.NativeAd
 import com.google.android.gms.ads.nativead.NativeAdOptions
-import com.shubhamgupta16.wallpaperapp.models.wallpapers.wall.BaseWallModel
 import com.shubhamgupta16.wallpaperapp.models.wallpapers.wall.AdModel
+import com.shubhamgupta16.wallpaperapp.models.wallpapers.wall.BaseWallModel
 import com.shubhamgupta16.wallpaperapp.models.wallpapers.wall.WallModel
 import com.shubhamgupta16.wallpaperapp.repositories.WallRepository
 import com.shubhamgupta16.wallpaperapp.viewmodels.live_observer.ListCase
@@ -27,7 +27,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ListingWallpapersViewModel
 @Inject constructor(private val wallRepository: WallRepository) : ViewModel() {
-    private val _listObserver = MutableLiveData<ListObserver>()
+    private val _listObserver = MutableLiveData(ListObserver(ListCase.INITIAL_LOADING))
     val listObserver: LiveData<ListObserver> = _listObserver
 
     private val _list = ArrayList<BaseWallModel?>()
@@ -35,7 +35,8 @@ class ListingWallpapersViewModel
     private val _adList = ArrayList<NativeAd>()
     val adList: List<NativeAd> = _adList
 
-    private var _isStartLoadingAd = false
+    private var _isStartLoadingAd = MutableLiveData<Boolean?>()
+    val isStartLoadingAd: LiveData<Boolean?> = _isStartLoadingAd
 
     private var _page = 1
     private var _lastPage = 1
@@ -55,11 +56,12 @@ class ListingWallpapersViewModel
     fun fetch() {
         if (_page > _lastPage) return
         Log.d(TAG, "fetch: $_lastPage, $_page")
-        if (_page == 1 && _list.isNotEmpty()) {
-            val size = _list.size
-            _list.clear()
-            _listObserver.value = ListObserver(ListCase.REMOVED_RANGE, 0, size)
-        } else if (page == 1 && _list.isEmpty()) {
+        if (_page == 1) {
+            if (_list.isNotEmpty()) {
+                val size = _list.size
+                _list.clear()
+                _listObserver.value = ListObserver(ListCase.REMOVED_RANGE, 0, size)
+            }
             _listObserver.value = ListObserver(ListCase.INITIAL_LOADING)
         }
         viewModelScope.launch(Dispatchers.IO) {
@@ -107,8 +109,8 @@ class ListingWallpapersViewModel
     }
 
     fun loadAds(activity: Activity) {
-        if (_isStartLoadingAd) return
-        _isStartLoadingAd = true
+        if (_isStartLoadingAd.value != null) return
+        _isStartLoadingAd.value = true
         val adLoader = AdLoader.Builder(activity, "ca-app-pub-3940256099942544/2247696110")
             .forNativeAd { nativeAd ->
                 if (activity.isDestroyed) {
@@ -116,6 +118,7 @@ class ListingWallpapersViewModel
                     return@forNativeAd
                 }
                 _adList.add(nativeAd)
+                _isStartLoadingAd.value = false
                 list.forEachIndexed { index, model ->
                     if (model is AdModel) {
                         _listObserver.value = ListObserver(ListCase.UPDATED, at = index)
@@ -124,7 +127,7 @@ class ListingWallpapersViewModel
             }
             .withAdListener(object : AdListener() {
                 override fun onAdFailedToLoad(adError: LoadAdError) {
-                    _isStartLoadingAd = false
+                    _isStartLoadingAd.value = null
                 }
             })
             .withNativeAdOptions(NativeAdOptions.Builder().build())

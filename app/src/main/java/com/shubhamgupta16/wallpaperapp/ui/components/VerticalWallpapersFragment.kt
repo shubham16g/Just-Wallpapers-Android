@@ -83,7 +83,7 @@ class VerticalWallpapersFragment : Fragment() {
 
                         binding.initialLoader.fadeVisibility(View.GONE)
                         binding.noResultContainer.fadeVisibility(View.GONE)
-                        viewModel.loadAds(requireActivity())
+//                        viewModel.loadAds(requireActivity())
                     }
                     ListCase.REMOVED_RANGE -> {
                         adapter?.notifyItemRangeRemoved(it.from, it.itemCount)
@@ -111,6 +111,7 @@ class VerticalWallpapersFragment : Fragment() {
                 }
             }
         }
+        viewModel.loadAds(requireActivity())
         viewModel.fetch()
         Log.d(TAG, "onViewCreated: VERTICAL FETCH")
     }
