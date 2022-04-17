@@ -46,6 +46,7 @@ import com.shubhamgupta16.wallpaperapp.viewmodels.live_observer.ListCase
 import dagger.hilt.android.AndroidEntryPoint
 import jp.wasabeef.glide.transformations.ColorFilterTransformation
 import jp.wasabeef.glide.transformations.gpu.BrightnessFilterTransformation
+import javax.inject.Inject
 
 
 @AndroidEntryPoint
@@ -56,6 +57,7 @@ class FullWallpaperActivity : AppCompatActivity() {
     private val viewModel: PagerViewModel by viewModels()
     private var adapter: SingleImageAdapter? = null
     private var screenMeasure: ScreenMeasure? = null
+    @Inject lateinit var appMemory: AppMemory
     private fun initScreenMeasure() {
         if (screenMeasure == null) {
             screenMeasure = ScreenMeasure(this)
@@ -450,22 +452,25 @@ class FullWallpaperActivity : AppCompatActivity() {
 
     private var interstitialAd:InterstitialAd?=null
     private fun initInterstitial() {
-        MobileAds.initialize(
-            this
-        ) { }
-        InterstitialAd.load(
-            this,
-            "ca-app-pub-3940256099942544/1033173712",
-            AdRequest.Builder().build(),
-            object : InterstitialAdLoadCallback() {
-                override fun onAdLoaded(interstitialAd: InterstitialAd) {
-                    super.onAdLoaded(interstitialAd)
-                    this@FullWallpaperActivity.interstitialAd = interstitialAd
-                }
-            })
+        h.postDelayed({
+            InterstitialAd.load(
+                this,
+                "ca-app-pub-3940256099942544/1033173712",
+                AdRequest.Builder().build(),
+                object : InterstitialAdLoadCallback() {
+                    override fun onAdLoaded(interstitialAd: InterstitialAd) {
+                        super.onAdLoaded(interstitialAd)
+                        this@FullWallpaperActivity.interstitialAd = interstitialAd
+                    }
+                })
+        }, appMemory.getDurationToLoadInterstitialAd())
+
     }
     private fun showInterstitial() {
-        interstitialAd?.show(this)
+        if (interstitialAd != null) {
+            interstitialAd?.show(this)
+            appMemory.interstitialAdShowed()
+        }
     }
     override fun onDestroy() {
         showInterstitial()

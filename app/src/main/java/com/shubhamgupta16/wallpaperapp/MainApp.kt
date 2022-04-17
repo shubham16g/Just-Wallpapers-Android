@@ -1,7 +1,8 @@
 package com.shubhamgupta16.wallpaperapp
 
 import android.app.Application
-import com.shubhamgupta16.wallpaperapp.utils.ThemeController
+import androidx.appcompat.app.AppCompatDelegate
+import com.shubhamgupta16.wallpaperapp.utils.AppMemory
 import dagger.hilt.android.HiltAndroidApp
 import javax.inject.Inject
 
@@ -9,10 +10,10 @@ import javax.inject.Inject
 class MainApp : Application(){
 
     @Inject
-    lateinit var themeController: ThemeController
+    lateinit var appMemory: AppMemory
 
     override fun onCreate() {
         super.onCreate()
-        themeController.init()
+        AppCompatDelegate.setDefaultNightMode(appMemory.getMode())
     }
 }

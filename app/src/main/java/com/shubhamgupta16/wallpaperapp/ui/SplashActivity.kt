@@ -4,13 +4,10 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDelegate
 import com.shubhamgupta16.wallpaperapp.R
 import com.shubhamgupta16.wallpaperapp.ui.main.MainActivity
-import com.shubhamgupta16.wallpaperapp.utils.ThemeController
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
-import javax.inject.Inject
 
 @SuppressLint("CustomSplashScreen")
 @AndroidEntryPoint
