@@ -13,7 +13,7 @@ import com.bumptech.glide.load.MultiTransformation
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.shubhamgupta16.wallpaperapp.R
-import com.shubhamgupta16.wallpaperapp.models.wallpapers.WallModel
+import com.shubhamgupta16.wallpaperapp.models.wallpapers.wall.WallModel
 import com.shubhamgupta16.wallpaperapp.utils.RotationTransform
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation
 import kotlin.math.roundToInt

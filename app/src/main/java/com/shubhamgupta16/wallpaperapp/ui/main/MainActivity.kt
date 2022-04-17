@@ -5,15 +5,9 @@ import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.google.android.gms.ads.AdListener
-import com.google.android.gms.ads.AdLoader
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.LoadAdError
-import com.google.android.gms.ads.nativead.NativeAdOptions
 import com.google.android.material.navigation.NavigationBarView
 import com.shubhamgupta16.wallpaperapp.R
 import com.shubhamgupta16.wallpaperapp.databinding.ActivityMainBinding
-import com.shubhamgupta16.wallpaperapp.models.ad.NativeAdModel
 import com.shubhamgupta16.wallpaperapp.ui.main.fragments.AccountFragment
 import com.shubhamgupta16.wallpaperapp.ui.main.fragments.CategoriesFragment
 import com.shubhamgupta16.wallpaperapp.ui.main.fragments.FavoritesFragment
@@ -21,7 +15,6 @@ import com.shubhamgupta16.wallpaperapp.ui.main.fragments.HomeFragment
 import com.shubhamgupta16.wallpaperapp.utils.*
 import com.shubhamgupta16.wallpaperapp.viewmodels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {

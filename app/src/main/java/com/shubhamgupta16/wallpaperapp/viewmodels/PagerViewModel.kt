@@ -7,7 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.shubhamgupta16.wallpaperapp.R
-import com.shubhamgupta16.wallpaperapp.models.wallpapers.WallModel
+import com.shubhamgupta16.wallpaperapp.models.wallpapers.wall.WallModel
 import com.shubhamgupta16.wallpaperapp.repositories.GlideRepository
 import com.shubhamgupta16.wallpaperapp.repositories.WallRepository
 import com.shubhamgupta16.wallpaperapp.utils.WallpaperHelper

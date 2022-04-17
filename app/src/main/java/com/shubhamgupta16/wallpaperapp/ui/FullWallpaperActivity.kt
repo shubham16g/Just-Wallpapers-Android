@@ -28,7 +28,6 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.google.android.material.chip.Chip
@@ -38,7 +37,7 @@ import com.shubhamgupta16.wallpaperapp.adapters.SingleImageAdapter
 import com.shubhamgupta16.wallpaperapp.databinding.ActivityFullWallpaperBinding
 import com.shubhamgupta16.wallpaperapp.databinding.LayoutInfoBinding
 import com.shubhamgupta16.wallpaperapp.databinding.LayoutSetOnBinding
-import com.shubhamgupta16.wallpaperapp.models.wallpapers.WallModel
+import com.shubhamgupta16.wallpaperapp.models.wallpapers.wall.WallModel
 import com.shubhamgupta16.wallpaperapp.models.wallpapers.WallModelListHolder
 import com.shubhamgupta16.wallpaperapp.utils.*
 import com.shubhamgupta16.wallpaperapp.viewmodels.PagerViewModel

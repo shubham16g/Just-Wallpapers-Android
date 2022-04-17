@@ -1,6 +1,5 @@
 package com.shubhamgupta16.wallpaperapp.ui.components
 
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -12,9 +11,9 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.shubhamgupta16.wallpaperapp.R
 import com.shubhamgupta16.wallpaperapp.adapters.ImagesAdapter
 import com.shubhamgupta16.wallpaperapp.databinding.FragmentForVerticalWallpapersBinding
-import com.shubhamgupta16.wallpaperapp.models.ad.NativeAdModel
-import com.shubhamgupta16.wallpaperapp.models.wallpapers.WallModel
+import com.shubhamgupta16.wallpaperapp.models.wallpapers.wall.WallModel
 import com.shubhamgupta16.wallpaperapp.models.wallpapers.WallModelListHolder
+import com.shubhamgupta16.wallpaperapp.models.wallpapers.wall.AdModel
 import com.shubhamgupta16.wallpaperapp.ui.FullWallpaperActivity
 import com.shubhamgupta16.wallpaperapp.utils.BounceEdgeEffectFactory
 import com.shubhamgupta16.wallpaperapp.utils.PaginationController
@@ -84,6 +83,7 @@ class VerticalWallpapersFragment : Fragment() {
 
                         binding.initialLoader.fadeVisibility(View.GONE)
                         binding.noResultContainer.fadeVisibility(View.GONE)
+                        viewModel.loadAds(requireActivity())
                     }
                     ListCase.REMOVED_RANGE -> {
                         adapter?.notifyItemRangeRemoved(it.from, it.itemCount)
@@ -131,7 +131,7 @@ class VerticalWallpapersFragment : Fragment() {
             StaggeredGridLayoutManager.VERTICAL
         )
         binding.recyclerView.layoutManager = manager
-        adapter = ImagesAdapter(requireActivity(), viewModel.list) { _, i ->
+        adapter = ImagesAdapter(requireContext(), viewModel.list, viewModel.adList) { _, i ->
             showFullWallpaperFragment(i)
         }
         binding.recyclerView.adapter = adapter
@@ -144,11 +144,12 @@ class VerticalWallpapersFragment : Fragment() {
 
 
     private fun showFullWallpaperFragment(position:Int) {
+        val adCount = viewModel.list.subList(0, position).count { it is AdModel }
         val intent = FullWallpaperActivity.getLaunchingIntent(
             requireContext(),
             WallModelListHolder(
                 viewModel.list.filterIsInstance<WallModel>()),
-            position,
+            position - adCount,
             viewModel.page,
             viewModel.lastPage,
             viewModel.query,

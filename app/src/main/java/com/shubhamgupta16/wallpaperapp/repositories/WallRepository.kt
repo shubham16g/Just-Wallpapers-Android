@@ -1,9 +1,9 @@
 package com.shubhamgupta16.wallpaperapp.repositories
 
-import com.shubhamgupta16.wallpaperapp.models.ad.BaseAdModel
+import com.shubhamgupta16.wallpaperapp.models.wallpapers.wall.BaseWallModel
 import com.shubhamgupta16.wallpaperapp.models.request.RequestIdModel
 import com.shubhamgupta16.wallpaperapp.models.roommodels.FavWallModel
-import com.shubhamgupta16.wallpaperapp.models.wallpapers.WallModel
+import com.shubhamgupta16.wallpaperapp.models.wallpapers.wall.WallModel
 import com.shubhamgupta16.wallpaperapp.models.wallpapers.WallpaperPageModel
 import com.shubhamgupta16.wallpaperapp.network.ApiResponse
 import com.shubhamgupta16.wallpaperapp.network.ApiService
@@ -73,7 +73,7 @@ class WallRepository @Inject constructor(private val apiService: ApiService, pri
         }
     }
 
-    suspend fun filterListingFavorites(_list: List<BaseAdModel?>) {
+    suspend fun filterListingFavorites(_list: List<BaseWallModel?>) {
         for ((i, wall) in _list.withIndex()) {
             if (wall != null && wall is WallModel)
                 (_list[i] as WallModel?)?.isFav = favDao.isFav(wall.wallId) != null

@@ -12,8 +12,8 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.shubhamgupta16.wallpaperapp.R
 import com.shubhamgupta16.wallpaperapp.databinding.ItemWallClientBinding
-import com.shubhamgupta16.wallpaperapp.models.ad.BaseAdModel
-import com.shubhamgupta16.wallpaperapp.models.wallpapers.WallModel
+import com.shubhamgupta16.wallpaperapp.models.wallpapers.wall.BaseWallModel
+import com.shubhamgupta16.wallpaperapp.models.wallpapers.wall.WallModel
 import com.shubhamgupta16.wallpaperapp.utils.RotationTransform
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation
 import kotlin.math.roundToInt
@@ -21,7 +21,7 @@ import kotlin.math.roundToInt
 
 class SingleImageAdapter(
     private val context: Context,
-    private val list: List<BaseAdModel>,
+    private val list: List<BaseWallModel>,
     private val listener: ()->Unit
 ) :
     RecyclerView.Adapter<SingleImageAdapter.ItemViewHolder>() {

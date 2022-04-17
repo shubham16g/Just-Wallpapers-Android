@@ -1,13 +1,20 @@
 package com.shubhamgupta16.wallpaperapp.viewmodels
 
+import android.app.Activity
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.shubhamgupta16.wallpaperapp.models.ad.BaseAdModel
-import com.shubhamgupta16.wallpaperapp.models.ad.NativeAdModel
-import com.shubhamgupta16.wallpaperapp.models.wallpapers.WallModel
+import com.google.android.gms.ads.AdListener
+import com.google.android.gms.ads.AdLoader
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.nativead.NativeAd
+import com.google.android.gms.ads.nativead.NativeAdOptions
+import com.shubhamgupta16.wallpaperapp.models.wallpapers.wall.BaseWallModel
+import com.shubhamgupta16.wallpaperapp.models.wallpapers.wall.AdModel
+import com.shubhamgupta16.wallpaperapp.models.wallpapers.wall.WallModel
 import com.shubhamgupta16.wallpaperapp.repositories.WallRepository
 import com.shubhamgupta16.wallpaperapp.viewmodels.live_observer.ListCase
 import com.shubhamgupta16.wallpaperapp.viewmodels.live_observer.ListObserver
@@ -23,8 +30,12 @@ class ListingWallpapersViewModel
     private val _listObserver = MutableLiveData<ListObserver>()
     val listObserver: LiveData<ListObserver> = _listObserver
 
-    private val _list = ArrayList<BaseAdModel?>()
-    val list: List<BaseAdModel?> = _list
+    private val _list = ArrayList<BaseWallModel?>()
+    val list: List<BaseWallModel?> = _list
+    private val _adList = ArrayList<NativeAd>()
+    val adList: List<NativeAd> = _adList
+
+    private var _isStartLoadingAd = false
 
     private var _page = 1
     private var _lastPage = 1
@@ -72,7 +83,7 @@ class ListingWallpapersViewModel
                     _list.removeAt(_list.lastIndex)
                 response.body!!.data.forEachIndexed { i, it->
                     if (i == 9 && page % 2 == 0)
-                        _list.add(NativeAdModel())
+                        _list.add(AdModel(((page - 1) / 2) % 5))
                     _list.add(it)
                 }
                 if (_lastPage > _page)
@@ -93,6 +104,32 @@ class ListingWallpapersViewModel
             } else
                 _listObserver.postValue(ListObserver(ListCase.NO_CHANGE))
         }
+    }
+
+    fun loadAds(activity: Activity) {
+        if (_isStartLoadingAd) return
+        _isStartLoadingAd = true
+        val adLoader = AdLoader.Builder(activity, "ca-app-pub-3940256099942544/2247696110")
+            .forNativeAd { nativeAd ->
+                if (activity.isDestroyed) {
+                    nativeAd.destroy()
+                    return@forNativeAd
+                }
+                _adList.add(nativeAd)
+                list.forEachIndexed { index, model ->
+                    if (model is AdModel) {
+                        _listObserver.value = ListObserver(ListCase.UPDATED, at = index)
+                    }
+                }
+            }
+            .withAdListener(object : AdListener() {
+                override fun onAdFailedToLoad(adError: LoadAdError) {
+                    _isStartLoadingAd = false
+                }
+            })
+            .withNativeAdOptions(NativeAdOptions.Builder().build())
+            .build()
+        adLoader.loadAds(AdRequest.Builder().build(), 5)
     }
 
     fun filterFavorites() {

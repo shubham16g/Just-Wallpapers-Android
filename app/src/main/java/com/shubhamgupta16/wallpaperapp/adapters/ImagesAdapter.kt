@@ -1,44 +1,42 @@
 package com.shubhamgupta16.wallpaperapp.adapters
 
-import android.app.Activity
+import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.RatingBar
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.MultiTransformation
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import com.google.android.gms.ads.AdListener
-import com.google.android.gms.ads.AdLoader
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.nativead.MediaView
 import com.google.android.gms.ads.nativead.NativeAd
-import com.google.android.gms.ads.nativead.NativeAdOptions
 import com.google.android.gms.ads.nativead.NativeAdView
 import com.shubhamgupta16.wallpaperapp.R
-import com.shubhamgupta16.wallpaperapp.models.ad.BaseAdModel
-import com.shubhamgupta16.wallpaperapp.models.ad.NativeAdModel
-import com.shubhamgupta16.wallpaperapp.models.wallpapers.WallModel
+import com.shubhamgupta16.wallpaperapp.models.wallpapers.wall.BaseWallModel
+import com.shubhamgupta16.wallpaperapp.models.wallpapers.wall.AdModel
+import com.shubhamgupta16.wallpaperapp.models.wallpapers.wall.WallModel
 import com.shubhamgupta16.wallpaperapp.utils.RotationTransform
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation
 import kotlin.math.roundToInt
 
 
 class ImagesAdapter(
-    private val activity: Activity,
-    private val list: List<BaseAdModel?>,
+    context: Context,
+    private val list: List<BaseWallModel?>,
+    private val adList: List<NativeAd>,
     private val listener: (wallModel: WallModel, i: Int) -> Unit
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private val cardRadius = activity.resources.getDimension(R.dimen.card_corner_radius)
+    private val cardRadius = context.resources.getDimension(R.dimen.card_corner_radius)
 
     private fun goFullSpan(holder: RecyclerView.ViewHolder) {
         val layoutParams =
@@ -75,61 +73,33 @@ class ImagesAdapter(
             holder.itemView.setOnClickListener {
                 listener(model, position)
             }
-        } else if (holder is UnifiedNativeAdViewHolder && model is NativeAdModel) {
+        } else if (holder is UnifiedNativeAdViewHolder && model is AdModel) {
             goFullSpan(holder)
             val unifiedNativeAdView = holder.adView
             unifiedNativeAdView.visibility = View.VISIBLE
-            populateNativeAdView(model.nativeAd!!, unifiedNativeAdView)
+            if (adList.isNotEmpty())
+                populateNativeAdView(
+                    adList[if (model.adPosition < adList.size) model.adPosition else adList.lastIndex],
+                    unifiedNativeAdView
+                )
 
         } else if (holder is EmptyViewHolder) {
             goFullSpan(holder)
-            if (model is NativeAdModel && model.nativeAd == null) {
-                loadNativeAd(position)
-            }
-        }
-    }
-
-    private fun loadNativeAd(position: Int) {
-        if (list[position] is NativeAdModel) {
-            val adLoader = AdLoader.Builder(activity, "ca-app-pub-3940256099942544/2247696110")
-                .forNativeAd { nativeAd ->
-                    if (activity.isDestroyed) {
-                        nativeAd.destroy()
-                        return@forNativeAd
-                    }
-                    (list[position] as NativeAdModel).nativeAd = nativeAd
-                    notifyItemChanged(position)
-                }
-                .withAdListener(object : AdListener() {
-                    override fun onAdFailedToLoad(adError: LoadAdError) {
-                    }
-                })
-                .withNativeAdOptions(NativeAdOptions.Builder().build())
-                .build()
-            adLoader.loadAd(AdRequest.Builder().build())
         }
     }
 
     override fun getItemViewType(position: Int): Int {
-        return when (val model = list[position]) {
+        return when (list[position]) {
             null -> 0
             is WallModel -> 1
-            is NativeAdModel -> {
-                if (model.nativeAd != null) 2 else 3
+            is AdModel -> {
+                if (adList.isNotEmpty()) 2 else 3
             }
             else -> 0
         }
     }
 
     override fun getItemCount() = list.size
-
-    /*override fun getItemCount(): Int {
-        val s = list.size
-        var t: Int = s + s / ADS_AFTER
-        if (s > 0) t++ // +1 when list is not empty
-        Log.e(TAG, "☺☺☺ total is $t, real are $s")
-        return t
-    }*/
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = when (viewType) {
         0 -> EmptyViewHolder(
