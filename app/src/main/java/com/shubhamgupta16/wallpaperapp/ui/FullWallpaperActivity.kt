@@ -238,20 +238,20 @@ class FullWallpaperActivity : AppCompatActivity() {
             val model = viewModel.list[viewModel.currentPosition]
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 setOnDialog.onHomeScreenBtn.setOnClickListener {
-                    viewModel.applyWallpaper(model, WallpaperManager.FLAG_SYSTEM)
+                    viewModel.applyWallpaper(applicationContext, model, WallpaperManager.FLAG_SYSTEM)
                     dialog.dismiss()
                 }
                 setOnDialog.onLockScreenBtn.setOnClickListener {
-                    viewModel.applyWallpaper(model, WallpaperManager.FLAG_LOCK)
+                    viewModel.applyWallpaper(applicationContext, model, WallpaperManager.FLAG_LOCK)
                     dialog.dismiss()
                 }
                 setOnDialog.onBothScreenBtn.setOnClickListener {
-                    viewModel.applyWallpaper(model)
+                    viewModel.applyWallpaper(applicationContext, model)
                     dialog.dismiss()
                 }
                 dialog.show()
             } else {
-                viewModel.applyWallpaper(model)
+                viewModel.applyWallpaper(applicationContext, model)
             }
         }
     }
@@ -431,7 +431,10 @@ class FullWallpaperActivity : AppCompatActivity() {
                 finish()
             }
             isZoom -> animateZoomOut()
-            else -> super.onBackPressed()
+            else -> {
+                showInterstitial()
+                super.onBackPressed()
+            }
         }
 
     }
@@ -472,10 +475,6 @@ class FullWallpaperActivity : AppCompatActivity() {
             interstitialAd?.show(this)
             appMemory.interstitialAdShowed()
         }
-    }
-    override fun onDestroy() {
-        showInterstitial()
-        super.onDestroy()
     }
 
     companion object {

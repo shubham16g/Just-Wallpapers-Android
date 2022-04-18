@@ -20,9 +20,6 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class HorizontalWallpapersFragment : Fragment() {
 
-    companion object{
-        private const val TAG = "HorizontalWallpapersFra"
-    }
     private val viewModel: StaticWallpapersViewModel by viewModels()
     private lateinit var binding: FragmentForHorizontalListBinding
     private var adapter: HorizontalImagesAdapter? = null
@@ -90,7 +87,8 @@ class HorizontalWallpapersFragment : Fragment() {
             viewModel.lastPage,
             viewModel.query,
             viewModel.color,
-            viewModel.category
+            viewModel.category,
+            viewModel.orderBy
         )
         startActivity(intent)
     }

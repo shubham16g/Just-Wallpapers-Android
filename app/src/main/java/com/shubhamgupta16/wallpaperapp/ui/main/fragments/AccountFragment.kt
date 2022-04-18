@@ -54,7 +54,7 @@ class AccountFragment : Fragment() {
 
     private val ad = AccountSettingsAdapter(settingsList) {
         when (it) {
-            0 -> requireContext().shareText("Check this app", "Checkout this cool Wallpaper App\n${getString(R.string.app_name)}")
+            0 -> requireContext().shareText(getString(R.string.app_name), "Checkout this cool Wallpaper App\n${getString(R.string.app_name)} : https://play.google.com/store/apps/details?id=${requireContext().packageName}")
             1 -> requireContext().openPlayStorePage()
             2 -> themeDialog?.show()
         }

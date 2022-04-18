@@ -97,9 +97,10 @@ class ListingWallpapersViewModel
                     wallRepository.filterListingFavorites(_list)
                     withContext(Dispatchers.Main) {
                         _list.reversed().forEachIndexed { index, wallModel ->
-                            if (wallModel != null && wallModel is WallModel && wallModel.isFav) {
-                                _list.removeAt(index)
-                                _listObserver.value = ListObserver(ListCase.REMOVED, at = index)
+                            if (wallModel != null && !wallModel.isFav) {
+                                val pos = _list.indexOf(wallModel)
+                                _list.remove(wallModel)
+                                _listObserver.value = ListObserver(ListCase.REMOVED, at = pos)
                             }
                         }
                     }

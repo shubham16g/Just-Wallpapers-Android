@@ -92,6 +92,7 @@ class VerticalWallpapersFragment : Fragment() {
                     }
                     ListCase.REMOVED -> {
                         adapter?.notifyItemRemoved(it.at)
+                        adapter?.notifyItemRangeChanged(it.at, viewModel.list.size)
                         binding.initialLoader.fadeVisibility(View.GONE)
                         binding.noResultContainer.fadeVisibility(View.GONE)
                     }

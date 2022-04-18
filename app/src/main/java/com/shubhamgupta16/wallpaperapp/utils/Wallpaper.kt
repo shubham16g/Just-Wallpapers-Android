@@ -83,9 +83,10 @@ class WallpaperHelper @Inject constructor(@ApplicationContext val context: Conte
             )
         return CurrentWallpaper(wallpaperManager.drawable.toBitmap())
     }
+}
 
-
-    fun applyWall(bmap2: Bitmap, flag: Int? = null, screenCropped: Boolean = false) {
+    fun Context.applyWall(bmap2: Bitmap, flag: Int? = null, screenCropped: Boolean = false) {
+        val wallpaperManager = WallpaperManager.getInstance(this)
         val screenHeight = getScreenHeight()
         val screenWidth = getScreenWidth()
         val ratio: Float = screenHeight / bmap2.height.toFloat() // 16/9 which is grater then 1
@@ -113,4 +114,3 @@ class WallpaperHelper @Inject constructor(@ApplicationContext val context: Conte
             e.printStackTrace()
         }
     }
-}
