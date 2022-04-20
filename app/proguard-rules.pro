@@ -34,8 +34,8 @@
 }
 
 # ************* Data Classes *****************
--keep class com.shubhamgupta16.wallpaperapp.models.wallpapers** { *; }
--keep class com.shubhamgupta16.wallpaperapp.models.roommodels** { *; }
--keep class com.shubhamgupta16.wallpaperapp.models.init** { *; }
--keep class com.shubhamgupta16.wallpaperapp.models.request** { *; }
+-keep class com.shubhamgupta16.justwallpapers.models.wallpapers** { *; }
+-keep class com.shubhamgupta16.justwallpapers.models.roommodels** { *; }
+-keep class com.shubhamgupta16.justwallpapers.models.init** { *; }
+-keep class com.shubhamgupta16.justwallpapers.models.request** { *; }
 

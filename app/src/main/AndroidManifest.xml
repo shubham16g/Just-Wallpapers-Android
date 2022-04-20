@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.shubhamgupta16.wallpaperapp">
+    package="com.shubhamgupta16.justwallpapers">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
@@ -11,7 +11,7 @@
 
     <application
         android:allowBackup="true"
-        android:name=".MainApp"
+        android:name="com.shubhamgupta16.justwallpapers.MainApp"
         android:icon="@mipmap/ic_app_icon"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_app_icon_round"
@@ -25,11 +25,11 @@
             android:value="ca-app-pub-3940256099942544~3347511713" />
 
         <activity
-            android:name=".ui.ListingActivity"
+            android:name="com.shubhamgupta16.justwallpapers.ui.ListingActivity"
             android:hardwareAccelerated="true"
             android:exported="false" />
         <activity
-            android:name=".ui.FullWallpaperActivity"
+            android:name="com.shubhamgupta16.justwallpapers.ui.FullWallpaperActivity"
             android:theme="@style/Theme.WallpaperUI.FullWallpaper"
             android:exported="true">
             <intent-filter android:label="@string/app_name">
@@ -43,7 +43,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.SplashActivity"
+            android:name="com.shubhamgupta16.justwallpapers.ui.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -51,7 +51,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.main.MainActivity"
+        <activity android:name="com.shubhamgupta16.justwallpapers.ui.main.MainActivity"
             android:windowSoftInputMode="adjustPan"
             android:hardwareAccelerated="true"
             android:theme="@style/Theme.WallpaperUI.Main"/>
