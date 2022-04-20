@@ -2,7 +2,6 @@ package com.shubhamgupta16.justwallpapers.models.wallpapers
 
 
 import com.google.gson.annotations.SerializedName
-import com.shubhamgupta16.justwallpapers.models.ad.BaseAdModel
 import java.io.Serializable
 
 data class WallModel(
@@ -37,4 +36,4 @@ data class WallModel(
     @SerializedName("updated_at")
     val updatedAt: String,
     var isFav: Boolean = false
-): BaseAdModel(), Serializable
+): Serializable

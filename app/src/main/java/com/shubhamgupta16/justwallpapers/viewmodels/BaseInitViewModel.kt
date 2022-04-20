@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.shubhamgupta16.justwallpapers.models.init.BaseModel
 import com.shubhamgupta16.justwallpapers.models.wallpapers.WallModel
 import com.shubhamgupta16.justwallpapers.repositories.InitRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -14,29 +15,21 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
-class FeaturedViewModel @Inject constructor(private val initRepository: InitRepository) :
+class BaseInitViewModel @Inject constructor(private val initRepository: InitRepository) :
     ViewModel() {
-    private val _liveIsLoading = MutableLiveData<Boolean>()
-    val liveIsLoading: LiveData<Boolean> = _liveIsLoading
+    private val _liveIsLoading = MutableLiveData<Boolean?>()
+    val liveIsLoading: LiveData<Boolean?> = _liveIsLoading
 
-    private var _title: String? = null
-    val title get() = _title
-
-    private var _subTitle: String? = null
-    val subTitle get() = _subTitle
-
-    private var _wallModel: WallModel? = null
-    val wallModel get() = _wallModel
+    private var _baseModel :BaseModel?=null
+    val baseModel:BaseModel? get() = _baseModel
 
     fun fetch() {
-        if (wallModel != null) return
+        if (baseModel != null) return
         _liveIsLoading.value = true
         viewModelScope.launch(Dispatchers.IO) {
-            val featured = initRepository.getFeatured()
-            Log.d(TAG, "fetch: $featured")
-            _wallModel = featured?.data
-            _title = featured?.title
-            _subTitle = featured?.subTitle
+            val baseModel = initRepository.getBase()
+            Log.d(TAG, "fetch: $baseModel")
+            _baseModel = baseModel
             withContext(Dispatchers.Main) {
                 _liveIsLoading.value = false
             }

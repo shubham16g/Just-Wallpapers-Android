@@ -8,14 +8,13 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.shubhamgupta16.justwallpapers.adapters.SingleImageAdapter
 import com.shubhamgupta16.justwallpapers.databinding.FragmentFeaturedBinding
-import com.shubhamgupta16.justwallpapers.utils.*
-import com.shubhamgupta16.justwallpapers.viewmodels.FeaturedViewModel
+import com.shubhamgupta16.justwallpapers.viewmodels.BaseInitViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class FeaturedFragment : Fragment() {
 
-    private val viewModel: FeaturedViewModel by viewModels()
+    private val viewModel: BaseInitViewModel by viewModels()
     private lateinit var binding: FragmentFeaturedBinding
     private var adapter: SingleImageAdapter? = null
 

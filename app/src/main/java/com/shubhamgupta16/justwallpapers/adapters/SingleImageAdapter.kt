@@ -12,7 +12,6 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.shubhamgupta16.justwallpapers.R
 import com.shubhamgupta16.justwallpapers.databinding.ItemWallClientBinding
-import com.shubhamgupta16.justwallpapers.models.ad.BaseAdModel
 import com.shubhamgupta16.justwallpapers.models.wallpapers.WallModel
 import com.shubhamgupta16.justwallpapers.utils.RotationTransform
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation

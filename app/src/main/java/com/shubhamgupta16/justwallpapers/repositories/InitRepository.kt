@@ -1,6 +1,7 @@
 package com.shubhamgupta16.justwallpapers.repositories
 
 import android.util.Log
+import com.shubhamgupta16.justwallpapers.models.init.BaseModel
 import com.shubhamgupta16.justwallpapers.models.init.CategoryModel
 import com.shubhamgupta16.justwallpapers.models.init.ColorModel
 import com.shubhamgupta16.justwallpapers.models.wallpapers.FeaturedModel
@@ -10,9 +11,9 @@ import javax.inject.Inject
 
 class InitRepository @Inject constructor(private val apiService: ApiService) {
 
-    suspend fun getFeatured(): FeaturedModel? {
+    suspend fun getBase(): BaseModel? {
         Log.d("TAG", "getFeatured: INIT")
-        val response = ApiResponse.from { apiService.getFeatured() }
+        val response = ApiResponse.from { apiService.getBase() }
         Log.d("TAG", "getFeatured: $response")
         return response.body
     }

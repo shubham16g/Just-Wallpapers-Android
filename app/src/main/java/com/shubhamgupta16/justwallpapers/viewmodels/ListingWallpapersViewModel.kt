@@ -94,7 +94,7 @@ class ListingWallpapersViewModel
         if (isFavList) {
             viewModelScope.launch {
                 if (_list.isNotEmpty()) {
-                    wallRepository.filterListingFavorites(_list)
+                    wallRepository.filterFavorites(_list)
                     withContext(Dispatchers.Main) {
                         _list.reversed().forEachIndexed { index, wallModel ->
                             if (wallModel != null && !wallModel.isFav) {
@@ -108,7 +108,7 @@ class ListingWallpapersViewModel
             }
         } else {
             viewModelScope.launch {
-                wallRepository.filterListingFavorites(_list)
+                wallRepository.filterFavorites(_list)
             }
         }
     }

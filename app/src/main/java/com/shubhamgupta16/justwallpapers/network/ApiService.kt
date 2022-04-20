@@ -1,6 +1,7 @@
 package com.shubhamgupta16.justwallpapers.network
 
 import android.content.Context
+import com.shubhamgupta16.justwallpapers.models.init.BaseModel
 import com.shubhamgupta16.justwallpapers.models.init.CategoryModel
 import com.shubhamgupta16.justwallpapers.models.init.ColorModel
 import com.shubhamgupta16.justwallpapers.models.wallpapers.FeaturedModel
@@ -40,8 +41,8 @@ interface ApiService {
     @GET("list/category")
     suspend fun getCategories(): Response<List<CategoryModel>>
 
-    @GET("featured")
-    suspend fun getFeatured(): Response<FeaturedModel>
+    @GET("base")
+    suspend fun getBase(): Response<BaseModel>
 
     companion object {
         fun build(context: Context) =

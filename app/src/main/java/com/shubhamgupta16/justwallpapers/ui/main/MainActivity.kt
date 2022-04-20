@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.navigation.NavigationBarView
 import com.shubhamgupta16.justwallpapers.R
 import com.shubhamgupta16.justwallpapers.databinding.ActivityMainBinding
+import com.shubhamgupta16.justwallpapers.models.init.BaseModel
 import com.shubhamgupta16.justwallpapers.ui.main.fragments.AccountFragment
 import com.shubhamgupta16.justwallpapers.ui.main.fragments.CategoriesFragment
 import com.shubhamgupta16.justwallpapers.ui.main.fragments.FavoritesFragment
@@ -35,6 +36,7 @@ class MainActivity : AppCompatActivity() {
         /*binding.bottomNav.layoutParams = (binding.bottomNav.layoutParams as ConstraintLayout.LayoutParams).apply {
             bottomMargin = getNavigationBarHeight()
         }*/
+        viewModel.initBaseModel(intent.getSerializableExtra("baseModel") as BaseModel)
 
         Log.d(TAG, "onCreate: ${getCurrentFragName()}")
 
@@ -65,11 +67,13 @@ class MainActivity : AppCompatActivity() {
 
     private fun getAccountFragment() = AccountFragment()
 
-    private fun getHomeFragment() = HomeFragment().apply {
-        categoryClickListener = { categoryName ->
-            viewModel.categoryName = categoryName
-            binding.bottomNav.selectedItemId = R.id.action_category
-            viewModel.categoryName = null
+    private fun getHomeFragment() = viewModel.getBaseModel().let {
+        HomeFragment.getInstance(it?.featured, it?.featuredTitle, it?.featuredDescription).apply {
+            categoryClickListener = { categoryName ->
+                viewModel.categoryName = categoryName
+                binding.bottomNav.selectedItemId = R.id.action_category
+                viewModel.categoryName = null
+            }
         }
     }
 

@@ -7,13 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.google.android.material.appbar.AppBarLayout
 import com.shubhamgupta16.justwallpapers.R
 import com.shubhamgupta16.justwallpapers.databinding.FragmentMainHomeBinding
+import com.shubhamgupta16.justwallpapers.models.wallpapers.WallModel
 import com.shubhamgupta16.justwallpapers.models.wallpapers.WallModelListHolder
 import com.shubhamgupta16.justwallpapers.ui.FullWallpaperActivity
 import com.shubhamgupta16.justwallpapers.ui.ListingActivity
@@ -21,16 +21,26 @@ import com.shubhamgupta16.justwallpapers.ui.components.HorizontalCategoriesFragm
 import com.shubhamgupta16.justwallpapers.ui.components.HorizontalColorsFragment
 import com.shubhamgupta16.justwallpapers.ui.components.HorizontalWallpapersFragment
 import com.shubhamgupta16.justwallpapers.utils.*
-import com.shubhamgupta16.justwallpapers.viewmodels.FeaturedViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.math.abs
 
 
 @AndroidEntryPoint
-class HomeFragment : Fragment() {
+class HomeFragment private constructor() : Fragment() {
 
     private lateinit var binding: FragmentMainHomeBinding
-    private val viewModel: FeaturedViewModel by viewModels()
+
+    private var featured: WallModel? = null
+    private var featured_title: String? = null
+    private var featured_description: String? = null
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let {
+            featured = it.getSerializable(FEATURED) as? WallModel
+            featured_title = it.getString(FEATURED_TITLE)
+            featured_description = it.getString(FEATURED_DESCRIPTION)
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -62,33 +72,25 @@ class HomeFragment : Fragment() {
                 requireActivity().nonLightStatusBar()
             }
         })
-
-        viewModel.liveIsLoading.observe(viewLifecycleOwner) {
-            it?.let { it ->
-                when (it) {
-                    false -> {
-                        viewModel.wallModel?.let { wallModel ->
-                            Glide.with(requireContext())
-                                .load(wallModel.urls.regular ?: wallModel.urls.small)
-                                .diskCacheStrategy(DiskCacheStrategy.NONE)
-                                .transition(DrawableTransitionOptions.withCrossFade())
-                                .into(binding.headerImage)
-
-
-                            binding.openHeaderImage.setOnClickListener {
-                                FullWallpaperActivity.getLaunchingIntent(requireContext(), WallModelListHolder(
-                                    listOf(wallModel)),0,1,1).let { intent ->
-                                    startActivity(intent)
-                                }
-                            }
-                        }
-                        binding.headerTitle.text = viewModel.title
-                    }
-                    else -> {}
+        featured?.let { wallModel->
+            Glide.with(requireContext())
+                .load(wallModel.urls.regular ?: wallModel.urls.small)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .transition(DrawableTransitionOptions.withCrossFade())
+                .into(binding.headerImage)
+            binding.openHeaderImage.setOnClickListener {
+                FullWallpaperActivity.getLaunchingIntent(
+                    requireContext(), WallModelListHolder(
+                        listOf(wallModel)
+                    ), 0, 1, 1
+                ).let { intent ->
+                    startActivity(intent)
                 }
             }
         }
-        fetchFeatured()
+        binding.headerTitle.text = featured_title
+
+
 
 
 
@@ -137,7 +139,22 @@ class HomeFragment : Fragment() {
         )
     }
 
-    private fun fetchFeatured() {
-        viewModel.fetch()
+    companion object {
+        private const val FEATURED = "featured"
+        private const val FEATURED_TITLE = "featured_title"
+        private const val FEATURED_DESCRIPTION = "featured_description"
+        fun getInstance(
+            featured: WallModel?,
+            featuredTitle: String?,
+            featuredDescription: String?
+        ): HomeFragment {
+            return HomeFragment().apply {
+                arguments = Bundle().apply {
+                    putSerializable(FEATURED, featured)
+                    putString(FEATURED_TITLE, featuredTitle)
+                    putString(FEATURED_DESCRIPTION, featuredDescription)
+                }
+            }
+        }
     }
 }

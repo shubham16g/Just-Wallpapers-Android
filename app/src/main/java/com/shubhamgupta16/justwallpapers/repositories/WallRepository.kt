@@ -1,6 +1,5 @@
 package com.shubhamgupta16.justwallpapers.repositories
 
-import com.shubhamgupta16.justwallpapers.models.ad.BaseAdModel
 import com.shubhamgupta16.justwallpapers.models.request.RequestIdModel
 import com.shubhamgupta16.justwallpapers.models.roommodels.FavWallModel
 import com.shubhamgupta16.justwallpapers.models.wallpapers.WallModel
@@ -70,13 +69,6 @@ class WallRepository @Inject constructor(private val apiService: ApiService, pri
         for ((i, wall) in _list.withIndex()) {
             if (wall == null) continue
             _list[i]?.isFav = favDao.isFav(wall.wallId) != null
-        }
-    }
-
-    suspend fun filterListingFavorites(_list: List<BaseAdModel?>) {
-        for ((i, wall) in _list.withIndex()) {
-            if (wall != null && wall is WallModel)
-                (_list[i] as WallModel?)?.isFav = favDao.isFav(wall.wallId) != null
         }
     }
 }
