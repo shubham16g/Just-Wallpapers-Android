@@ -13,4 +13,6 @@
     <string name="home">Home</string>
     <string name="account">Account</string>
     <string name="ad_icon">Ad Icon</string>
+    <string name="privacy_policy_url">https://pages.flycricket.io/just-wallpapers/privacy.html</string>
+    <string name="terms_and_conditions_url">https://pages.flycricket.io/just-wallpapers/terms.html</string>
 </resources>

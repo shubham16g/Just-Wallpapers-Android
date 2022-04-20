@@ -45,11 +45,11 @@ class AccountFragment : Fragment() {
     }
 
     private val settingsList = listOf(
-        AccountSettingsModel(R.drawable.ic_send, "Tell a Friend"),
+        AccountSettingsModel(R.drawable.ic_send, "Share with Friends"),
         AccountSettingsModel(R.drawable.ic_feedback, "Feedback"),
         AccountSettingsModel(R.drawable.ic_night, "App Theme"),
-        AccountSettingsModel(R.drawable.ic_info, "About"),
         AccountSettingsModel(R.drawable.ic_help, "Privacy Policy"),
+        AccountSettingsModel(R.drawable.ic_info, "Terms & Conditions"),
     )
 
     private val ad = AccountSettingsAdapter(settingsList) {
@@ -57,6 +57,8 @@ class AccountFragment : Fragment() {
             0 -> requireContext().shareText(getString(R.string.app_name), "Checkout this cool Wallpaper App\n${getString(R.string.app_name)} : https://play.google.com/store/apps/details?id=${requireContext().packageName}")
             1 -> requireContext().openPlayStorePage()
             2 -> themeDialog?.show()
+            3 -> requireContext().openLink(getString(R.string.privacy_policy_url))
+            4 -> requireContext().openLink(getString(R.string.terms_and_conditions_url))
         }
     }
 

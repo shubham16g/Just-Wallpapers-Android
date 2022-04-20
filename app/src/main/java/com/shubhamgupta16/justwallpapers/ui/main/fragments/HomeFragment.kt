@@ -75,7 +75,6 @@ class HomeFragment private constructor() : Fragment() {
         featured?.let { wallModel->
             Glide.with(requireContext())
                 .load(wallModel.urls.regular ?: wallModel.urls.small)
-                .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(binding.headerImage)
             binding.openHeaderImage.setOnClickListener {
