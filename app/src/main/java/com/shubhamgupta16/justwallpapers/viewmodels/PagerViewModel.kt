@@ -25,8 +25,7 @@ import javax.inject.Inject
 class PagerViewModel
 @Inject constructor(
     private val wallRepository: WallRepository,
-    private val glideRepository: GlideRepository,
-    @ApplicationContext private val context: Context
+    private val glideRepository: GlideRepository
 ) :
     ViewModel() {
 

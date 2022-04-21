@@ -21,7 +21,7 @@ class AppMemory @Inject constructor(@ApplicationContext private val context: Con
         sharedPref.edit().putInt("mode", mode).apply()
     }
 
-    fun interstitialAdShowed() {
+    /*fun interstitialAdShowed() {
         sharedPref.edit().putLong("interstitialAdShowed", System.currentTimeMillis()).apply()
     }
 
@@ -31,5 +31,5 @@ class AppMemory @Inject constructor(@ApplicationContext private val context: Con
         val ct = if (currentTime >= lastTime) 0 else lastTime - currentTime
         Log.d("TAG", "getDurationToLoadInterstitialAd: $ct")
         return ct
-    }
+    }*/
 }

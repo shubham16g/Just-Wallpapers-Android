@@ -6,9 +6,6 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
 import com.google.android.play.core.appupdate.AppUpdateOptions
 import com.google.android.play.core.install.model.AppUpdateType
@@ -16,7 +13,6 @@ import com.google.android.play.core.install.model.UpdateAvailability
 import com.shubhamgupta16.justwallpapers.BuildConfig
 import com.shubhamgupta16.justwallpapers.R
 import com.shubhamgupta16.justwallpapers.models.init.BaseModel
-import com.shubhamgupta16.justwallpapers.models.wallpapers.WallModelListHolder
 import com.shubhamgupta16.justwallpapers.ui.main.MainActivity
 import com.shubhamgupta16.justwallpapers.viewmodels.BaseInitViewModel
 import dagger.hilt.android.AndroidEntryPoint

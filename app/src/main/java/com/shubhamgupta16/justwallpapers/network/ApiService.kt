@@ -4,10 +4,9 @@ import android.content.Context
 import com.shubhamgupta16.justwallpapers.models.init.BaseModel
 import com.shubhamgupta16.justwallpapers.models.init.CategoryModel
 import com.shubhamgupta16.justwallpapers.models.init.ColorModel
-import com.shubhamgupta16.justwallpapers.models.wallpapers.FeaturedModel
+import com.shubhamgupta16.justwallpapers.models.request.RequestIdModel
 import com.shubhamgupta16.justwallpapers.models.wallpapers.MessageModel
 import com.shubhamgupta16.justwallpapers.models.wallpapers.WallpaperPageModel
-import com.shubhamgupta16.justwallpapers.models.request.RequestIdModel
 import retrofit2.Response
 import retrofit2.http.*
 

@@ -10,7 +10,7 @@ import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.roundToInt
 
-class FastBlurTransform() : BitmapTransformation() {
+class FastBlurTransform : BitmapTransformation() {
 
     override fun transform(
         pool: BitmapPool,

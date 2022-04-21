@@ -32,6 +32,7 @@ fun RecyclerView.animateInsert(onAnimComplete: (() -> Unit)? = null) {
     scheduleLayoutAnimation()
 }
 
+/*
 fun RecyclerView.animateRemove(onAnimComplete: (() -> Unit)? = null) {
     layoutAnimation =
         AnimationUtils.loadLayoutAnimation(context, R.anim.anim_recycler_fall_down_rev)
@@ -46,4 +47,4 @@ fun RecyclerView.animateRemove(onAnimComplete: (() -> Unit)? = null) {
         onAnimComplete?.let { it() }
         scheduleLayoutAnimation()
     }, 500)
-}
+}*/

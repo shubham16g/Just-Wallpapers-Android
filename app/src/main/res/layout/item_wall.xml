@@ -19,5 +19,6 @@
         app:layout_constraintDimensionRatio="h,9:16"
         app:layout_constraintHorizontal_chainStyle="spread"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintRight_toRightOf="parent"
+        android:contentDescription="@string/card_image" />
 </androidx.constraintlayout.widget.ConstraintLayout>

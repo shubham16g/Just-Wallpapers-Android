@@ -17,7 +17,7 @@ fun Context.bottomSheet(
 }
 
 fun Context.alertDialog(binding: ViewBinding, cancelable: Boolean = true) =
-    AlertDialog.Builder(this, R.style.DefaultAlertTheme).setView(binding.root).setCancelable(cancelable).create()
+    AlertDialog.Builder(this, R.style.DefaultAlertTheme).setView(binding.root).setCancelable(cancelable).create()!!
 
 
 /*

@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.shubhamgupta16.justwallpapers.models.init.BaseModel
-import com.shubhamgupta16.justwallpapers.models.wallpapers.WallModel
 import com.shubhamgupta16.justwallpapers.repositories.InitRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
