@@ -22,7 +22,7 @@ class HeaderView @JvmOverloads constructor(
     }
     get() = titleView.text
 
-    var isMoreButtonVisible:Boolean
+    private var isMoreButtonVisible:Boolean
     set(value) {
         moreBtn.visibility = if (value)VISIBLE else GONE
     }
