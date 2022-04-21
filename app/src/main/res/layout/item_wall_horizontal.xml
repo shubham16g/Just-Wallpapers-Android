@@ -16,5 +16,6 @@
         app:layout_constraintRight_toRightOf="parent"
         android:id="@+id/image_view"
         android:scaleType="centerCrop"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/wallpaper_image_tile" />
 </androidx.constraintlayout.widget.ConstraintLayout>

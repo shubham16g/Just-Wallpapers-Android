@@ -31,14 +31,16 @@
             android:id="@+id/currentWall"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="centerCrop" />
+            android:scaleType="centerCrop"
+            android:contentDescription="@string/current_wallpaper" />
 
         <ImageView
             android:id="@+id/liveWallIcon"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="50dp" />
+            android:layout_marginTop="50dp"
+            android:contentDescription="@string/current_live_wallpaper" />
 
         <TextView
             android:id="@+id/liveWallText"
@@ -70,14 +72,16 @@
             android:id="@+id/currentWall2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="centerCrop" />
+            android:scaleType="centerCrop"
+            android:contentDescription="@string/current_wallpaper" />
 
         <ImageView
             android:id="@+id/liveWallIcon2"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="40dp" />
+            android:layout_marginTop="40dp"
+            android:contentDescription="@string/current_live_wallpaper" />
 
         <TextView
             android:id="@+id/liveWallText2"
@@ -93,7 +97,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Lock"
+        android:text="@string/lock"
         android:textColor="@color/textTertiary"
         android:textSize="12sp"
         android:layout_marginTop="5dp"
@@ -104,7 +108,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Home"
+        android:text="@string/home"
         android:textColor="@color/textTertiary"
         android:textSize="12sp"
         android:layout_marginTop="5dp"

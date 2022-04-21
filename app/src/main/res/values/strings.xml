@@ -16,4 +16,26 @@
     <string name="privacy_policy_url">https://pages.flycricket.io/just-wallpapers/privacy.html</string>
     <string name="terms_and_conditions_url">https://pages.flycricket.io/just-wallpapers/terms.html</string>
     <string name="card_image">Image</string>
+    <string name="no_walls_found">No Wallpapers Found!</string>
+    <string name="current_wallpaper">Current Wallpaper</string>
+    <string name="current_live_wallpaper">Current Live Wallpaper</string>
+    <string name="lock">Lock</string>
+    <string name="header_image">Header Image</string>
+    <string name="icon">Icon</string>
+    <string name="category_image">Category Image</string>
+    <string name="wallpaper_image_tile">Wallpaper Image Tile</string>
+    <string name="choose_theme">Choose Theme</string>
+    <string name="downloads_icon">Downloads Icon</string>
+    <string name="license_icon">License Icon</string>
+    <string name="profile_icon">Profile Icon</string>
+    <string name="set_wallpaper_on">Set Wallpaper on</string>
+    <string name="lock_screen">Lock Screen</string>
+    <string name="both">Both</string>
+    <string name="home_screen">Home Screen</string>
+    <string name="thumbnail">Thumbnail</string>
+    <string name="download_button">Download Button</string>
+    <string name="set_wallpaper_button">Set Wallpaper Button</string>
+    <string name="favorite_button">Favorite Button</string>
+    <string name="share_button">Share Button</string>
+    <string name="info_button">Info Button</string>
 </resources>

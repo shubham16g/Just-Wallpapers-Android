@@ -13,7 +13,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
-        android:text="Unsplash"
         android:textColor="@color/textPrimary"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -26,7 +25,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="2dp"
         android:background="?attr/selectableItemBackground"
-        android:text="https:\/\/unsplash.com\/photos\/8Twe0QOt1Jo"
         android:textColor="@color/primary"
         android:textSize="13sp"
         app:layout_constraintStart_toStartOf="@+id/authority"
@@ -63,14 +61,14 @@
         android:src="@drawable/ic_baseline_arrow_downward_24"
         app:layout_constraintStart_toStartOf="@+id/chipGroup"
         app:layout_constraintTop_toBottomOf="@+id/chipGroup"
-        app:tint="@color/textSecondary" />
+        app:tint="@color/textSecondary"
+        android:contentDescription="@string/downloads_icon" />
 
     <TextView
         android:id="@+id/downloads"
         android:layout_width="wrap_content"
         android:fontFamily="@font/kumbh_medium"
         android:layout_height="wrap_content"
-        android:text="Downloads: 52"
         android:textColor="@color/textSecondary"
         android:textSize="14sp"
         android:layout_marginStart="10dp"
@@ -87,14 +85,14 @@
         app:layout_constraintEnd_toEndOf="@+id/downloads_icon"
         app:layout_constraintStart_toStartOf="@+id/downloads_icon"
         app:layout_constraintTop_toBottomOf="@+id/downloads_icon"
-        app:tint="@color/textSecondary" />
+        app:tint="@color/textSecondary"
+        android:contentDescription="@string/license_icon" />
 
     <TextView
         android:id="@+id/license"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/kumbh_medium"
-        android:text="Unsplash Licesnse"
         android:textColor="@color/textSecondary"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@+id/license_icon"
@@ -116,7 +114,8 @@
             android:id="@+id/author_profile"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:background="@drawable/round_btn" />
+            android:background="@drawable/round_btn"
+            android:contentDescription="@string/profile_icon" />
 
         <TextView
             android:id="@+id/author_name"
@@ -129,7 +128,6 @@
             android:lines="1"
             android:maxWidth="110dp"
             android:minWidth="60dp"
-            android:text="User name"
             android:textColor="@color/textSecondary" />
 
         <ImageView
@@ -137,6 +135,7 @@
             android:layout_width="12dp"
             android:layout_height="12dp"
             android:src="@drawable/ic_open_link"
-            app:tint="@color/primary" />
+            app:tint="@color/primary"
+            android:contentDescription="@string/icon" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

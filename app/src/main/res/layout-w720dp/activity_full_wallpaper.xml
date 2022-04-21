@@ -22,7 +22,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="@string/thumbnail" />
 
         <ImageView
             android:id="@+id/thumb_view_even"
@@ -33,7 +34,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="@string/thumbnail" />
 
         <View
             android:layout_width="0dp"
@@ -90,7 +92,8 @@
                     android:id="@+id/author_profile"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:background="@drawable/round_btn" />
+                    android:background="@drawable/round_btn"
+                    android:contentDescription="@string/profile_icon" />
 
                 <TextView
                     android:id="@+id/author_name"
@@ -119,7 +122,8 @@
                     android:src="@drawable/ic_baseline_arrow_downward_24"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:tint="@color/whiteDull" />
+                    app:tint="@color/whiteDull"
+                    android:contentDescription="@string/downloads_icon" />
 
                 <TextView
                     android:id="@+id/downloads"
@@ -127,7 +131,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:fontFamily="@font/kumbh_medium"
-                    android:text="Downloads: 52"
                     android:textColor="@color/whiteDull"
                     android:textSize="13sp"
                     app:layout_constraintBottom_toBottomOf="@+id/downloads_icon"
@@ -143,14 +146,14 @@
                     app:layout_constraintEnd_toEndOf="@+id/downloads_icon"
                     app:layout_constraintStart_toStartOf="@+id/downloads_icon"
                     app:layout_constraintTop_toBottomOf="@+id/downloads_icon"
-                    app:tint="@color/whiteDull" />
+                    app:tint="@color/whiteDull"
+                    android:contentDescription="@string/license_icon" />
 
                 <TextView
                     android:id="@+id/license"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/kumbh_medium"
-                    android:text="Unsplash Licesnse"
                     android:textColor="@color/whiteDull"
                     android:textSize="13sp"
                     app:layout_constraintBottom_toBottomOf="@+id/license_icon"
@@ -177,7 +180,8 @@
             android:layout_height="@dimen/action_icon_size"
             android:background="@drawable/round_btn_dark"
             android:src="@drawable/ic_baseline_arrow_downward_24"
-            app:tint="@color/white" />
+            app:tint="@color/white"
+            android:contentDescription="@string/download_button" />
 
         <com.google.android.material.progressindicator.CircularProgressIndicator
             android:id="@+id/download_progress"
@@ -209,7 +213,8 @@
             android:layout_height="@dimen/action_icon_size"
             android:background="@drawable/round_btn_dark"
             android:src="@drawable/ic_baseline_wallpaper_24"
-            app:tint="@color/white" />
+            app:tint="@color/white"
+            android:contentDescription="@string/set_wallpaper_button" />
 
         <com.google.android.material.progressindicator.CircularProgressIndicator
             android:id="@+id/set_wallpaper_progress"
@@ -241,7 +246,8 @@
             android:layout_height="@dimen/action_icon_size"
             android:background="@drawable/round_btn_dark"
             android:src="@drawable/ic_favorite"
-            app:tint="@color/white" />
+            app:tint="@color/white"
+            android:contentDescription="@string/favorite_button" />
 
 
         <ImageButton
@@ -250,7 +256,8 @@
             android:layout_height="@dimen/action_icon_size"
             android:background="@drawable/round_btn_dark"
             android:src="@drawable/ic_share"
-            app:tint="@color/white" />
+            app:tint="@color/white"
+            android:contentDescription="@string/share_button" />
 
 
         <ImageButton
@@ -259,7 +266,8 @@
             android:layout_height="@dimen/action_icon_size"
             android:background="@drawable/round_btn_dark"
             android:src="@drawable/ic_three_dots"
-            app:tint="@color/white" />
+            app:tint="@color/white"
+            android:contentDescription="@string/info_button" />
 
         <LinearLayout
             android:id="@+id/navigation_overlay"

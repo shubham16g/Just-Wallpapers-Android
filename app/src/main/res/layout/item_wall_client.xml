@@ -4,5 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/image_view"
-    android:scaleType="centerCrop"/>
+    android:scaleType="centerCrop"
+    android:contentDescription="@string/wallpaper_image_tile" />
 

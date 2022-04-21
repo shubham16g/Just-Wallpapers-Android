@@ -23,11 +23,11 @@
             android:id="@+id/image_view"
             android:scaleType="centerCrop"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:contentDescription="@string/category_image" />
         <TextView
             android:id="@+id/category_name_text"
             android:layout_gravity="center"
-            android:text="Category Name"
             android:textColor="@color/textPrimary"
             android:layout_marginBottom="2dp"
             android:layout_width="wrap_content"
