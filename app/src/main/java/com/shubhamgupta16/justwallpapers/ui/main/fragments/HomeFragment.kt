@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.google.android.material.appbar.AppBarLayout
 import com.shubhamgupta16.justwallpapers.R
@@ -26,19 +25,19 @@ import kotlin.math.abs
 
 
 @AndroidEntryPoint
-class HomeFragment private constructor() : Fragment() {
+class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentMainHomeBinding
 
     private var featured: WallModel? = null
-    private var featured_title: String? = null
-    private var featured_description: String? = null
+    private var featuredTitle: String? = null
+    private var featuredDescription: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             featured = it.getSerializable(FEATURED) as? WallModel
-            featured_title = it.getString(FEATURED_TITLE)
-            featured_description = it.getString(FEATURED_DESCRIPTION)
+            featuredTitle = it.getString(FEATURED_TITLE)
+            featuredDescription = it.getString(FEATURED_DESCRIPTION)
         }
     }
 
@@ -87,7 +86,7 @@ class HomeFragment private constructor() : Fragment() {
                 }
             }
         }
-        binding.headerTitle.text = featured_title
+        binding.headerTitle.text = featuredTitle
 
 
 

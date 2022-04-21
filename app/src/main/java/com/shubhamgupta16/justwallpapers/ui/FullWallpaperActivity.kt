@@ -27,9 +27,6 @@ import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.interstitial.InterstitialAd
-import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.shubhamgupta16.justwallpapers.R
@@ -45,7 +42,6 @@ import com.shubhamgupta16.justwallpapers.viewmodels.live_observer.ListCase
 import dagger.hilt.android.AndroidEntryPoint
 import jp.wasabeef.glide.transformations.ColorFilterTransformation
 import jp.wasabeef.glide.transformations.gpu.BrightnessFilterTransformation
-import javax.inject.Inject
 
 
 @AndroidEntryPoint
@@ -56,7 +52,6 @@ class FullWallpaperActivity : AppCompatActivity() {
     private val viewModel: PagerViewModel by viewModels()
     private var adapter: SingleImageAdapter? = null
     private var screenMeasure: ScreenMeasure? = null
-    @Inject lateinit var appMemory: AppMemory
     private fun initScreenMeasure() {
         if (screenMeasure == null) {
             screenMeasure = ScreenMeasure(this)
@@ -71,7 +66,7 @@ class FullWallpaperActivity : AppCompatActivity() {
         fitFullScreen()
         setTransparentStatusBar()
         setTransparentNavigation()
-        initInterstitial()
+//        initInterstitial()
         setContentView(binding.root)
 
         permissionLauncher = getPermissionLauncher { isAllPermissionGranted, _ ->
@@ -431,7 +426,6 @@ class FullWallpaperActivity : AppCompatActivity() {
             }
             isZoom -> animateZoomOut()
             else -> {
-                showInterstitial()
                 super.onBackPressed()
             }
         }
@@ -453,7 +447,7 @@ class FullWallpaperActivity : AppCompatActivity() {
             .into(binding.authorProfile)
     }
 
-    private var interstitialAd:InterstitialAd?=null
+    /*private var interstitialAd:InterstitialAd?=null
     private fun initInterstitial() {
         h.postDelayed({
             InterstitialAd.load(
@@ -474,7 +468,7 @@ class FullWallpaperActivity : AppCompatActivity() {
             interstitialAd?.show(this)
             appMemory.interstitialAdShowed()
         }
-    }
+    }*/
 
     companion object {
         private const val TAG = "FullWallpaperActivity"
