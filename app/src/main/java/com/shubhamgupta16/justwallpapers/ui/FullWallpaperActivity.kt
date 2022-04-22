@@ -193,7 +193,7 @@ class FullWallpaperActivity : AppCompatActivity() {
         })
     }
 
-    private fun setupInfoAlert(){
+    private fun setupInfoAlert() {
         val infoLayout = LayoutInfoBinding.inflate(layoutInflater)
         val infoDialog = alertDialog(infoLayout)
         binding.infoButton.setOnClickListener {
@@ -219,7 +219,7 @@ class FullWallpaperActivity : AppCompatActivity() {
         }
     }
 
-    private fun setupSetWallAlert(){
+    private fun setupSetWallAlert() {
         val setOnDialog =
             LayoutSetOnBinding.inflate(layoutInflater)
         val dialog = alertDialog(setOnDialog)
@@ -232,7 +232,11 @@ class FullWallpaperActivity : AppCompatActivity() {
             val model = viewModel.list[viewModel.currentPosition]
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 setOnDialog.onHomeScreenBtn.setOnClickListener {
-                    viewModel.applyWallpaper(applicationContext, model, WallpaperManager.FLAG_SYSTEM)
+                    viewModel.applyWallpaper(
+                        applicationContext,
+                        model,
+                        WallpaperManager.FLAG_SYSTEM
+                    )
                     dialog.dismiss()
                 }
                 setOnDialog.onLockScreenBtn.setOnClickListener {
@@ -486,7 +490,7 @@ class FullWallpaperActivity : AppCompatActivity() {
             val intent = Intent(context, FullWallpaperActivity::class.java)
             intent.putExtra("list", listHolder)
             intent.putExtra("position", position)
-            intent.putExtra("page", page)
+            intent.putExtra("page", page + 1)
             intent.putExtra("lastPage", lastPage)
             intent.putExtra("query", query)
             intent.putExtra("color", color)

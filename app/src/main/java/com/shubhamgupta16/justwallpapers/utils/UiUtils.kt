@@ -45,6 +45,7 @@ val Int.px get() :Int = (this * Resources.getSystem().displayMetrics.density).ro
 val Float.px get() = this * Resources.getSystem().displayMetrics.density
 
 fun View.fadeVisibility(visibility: Int, duration: Long = 400) {
+    if (this.visibility == visibility) return
     val transition: Transition = Fade()
     transition.duration = duration
     transition.addTarget(this)
