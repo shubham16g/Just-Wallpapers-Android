@@ -1,6 +1,8 @@
 # Just-Wallpapers
 Gave you Phone an Awesome Look with lots Free Wallpapers.
 
+This is an open-source wallpaper app that I developed to learn to make a production-ready Android App. In this app, I used Kotlin language along with Dagger-Hilt, MVVM pattern, Coroutines, Room Library, Retrofit, In-app-updates, and View-Binding with the latest Android APIs. 
+
 
 ![Image Graphics](./play_images/feature_image.png)
 
