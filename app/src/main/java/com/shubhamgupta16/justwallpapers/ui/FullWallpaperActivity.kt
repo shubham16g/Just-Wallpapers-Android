@@ -373,7 +373,7 @@ class FullWallpaperActivity : AppCompatActivity() {
 
     private var isZoom = false
     val r = Runnable {
-        if (isZoom) hideSystemUI() else showSystemUI()
+//        if (isZoom) hideSystemUI() else showSystemUI()
         val y = if (!isZoom) 0f else screenMeasure!!.actionButtonsRowY()
         binding.buttonsRow?.let {
             val animator = it.animate().translationY(y).setDuration(170)
