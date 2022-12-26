@@ -1,5 +1,6 @@
 package com.shubhamgupta16.justwallpapers.ui.main
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
@@ -26,11 +27,25 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val viewModel: MainViewModel by viewModels()
 
+    /*override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE){
+            binding.root.setPadding()
+        }
+    }*/
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         fullStatusBar()
         setTransparentStatusBar()
 
+      /*  onOrientationChange {
+            navigation.view.updateLayoutParams<MarginLayoutParams> {
+                leftMargin = displayCutout?.leftRect?.right ?: 0
+                rightMargin = displayCutout?.rightRect?.width ?: 0
+            }
+        }
+*/
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         /*binding.bottomNav.layoutParams = (binding.bottomNav.layoutParams as ConstraintLayout.LayoutParams).apply {
