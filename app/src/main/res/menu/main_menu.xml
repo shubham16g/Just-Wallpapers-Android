@@ -20,6 +20,6 @@
 
     <item
         android:icon="@drawable/main_ic_account"
-        android:title="@string/account"
+        android:title="@string/account_more"
         android:id="@+id/action_account"/>
 </menu>

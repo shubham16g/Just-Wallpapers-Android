@@ -1,8 +1,6 @@
 package com.shubhamgupta16.justwallpapers.ui.main.fragments
 
-import android.annotation.SuppressLint
 import android.app.AlertDialog
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -23,18 +21,13 @@ import javax.inject.Inject
 class AccountFragment : Fragment() {
 
     private lateinit var binding: FragmentMainAccountBinding
-    @Inject lateinit var wallpaperHelper: WallpaperHelper
-    @Inject lateinit var appMemory: AppMemory
-    private var themeDialog: AlertDialog? = null
 
-    private val permissionLauncher = getPermissionLauncher { isAllPermissionGranted, _ ->
-        if (isAllPermissionGranted)
-            updateCurrentWallCards()
-    }
-    override fun onStart() {
-        super.onStart()
-        updateCurrentWallCards()
-    }
+    @Inject
+    lateinit var wallpaperHelper: WallpaperHelper
+
+    @Inject
+    lateinit var appMemory: AppMemory
+    private var themeDialog: AlertDialog? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -54,7 +47,10 @@ class AccountFragment : Fragment() {
 
     private val ad = AccountSettingsAdapter(settingsList) {
         when (it) {
-            0 -> requireContext().shareText(getString(R.string.app_name), "Checkout this cool Wallpaper App\n${getString(R.string.app_name)} : https://play.google.com/store/apps/details?id=${requireContext().packageName}")
+            0 -> requireContext().shareText(
+                getString(R.string.app_name),
+                "Checkout this cool Wallpaper App\n${getString(R.string.app_name)} : https://play.google.com/store/apps/details?id=${requireContext().packageName}"
+            )
             1 -> requireContext().openPlayStorePage()
             2 -> themeDialog?.show()
             3 -> requireContext().openLink(getString(R.string.privacy_policy_url))
@@ -74,13 +70,12 @@ class AccountFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         requireActivity().setNormalStatusBar()
 
-        permissionLauncher.launchPermission(requireContext(), true)
         if (!requireActivity().isUsingNightMode()) {
             requireActivity().lightStatusBar()
         }
         binding.root.setPadding(0, requireContext().getStatusBarHeight(), 0, 0)
 
-        binding.deviceName.text = Build.MODEL
+//        binding.deviceName.text = Build.MODEL
         themeDialog = getThemeDialog()
 
         binding.recyclerView.apply {
@@ -91,16 +86,16 @@ class AccountFragment : Fragment() {
         updateThemeName()
     }
 
-    private fun updateThemeName(){
+    private fun updateThemeName() {
         settingsList[2].subTitle = getModeName()
         ad.notifyItemChanged(2)
     }
 
-    private fun getThemeDialog(): AlertDialog? {
+    private fun getThemeDialog(): AlertDialog {
         val themeLayout =
             LayoutChooseThemeBinding.inflate(layoutInflater)
         val dialog = requireContext().alertDialog(themeLayout)
-        themeLayout.dark.setOnClickListener{
+        themeLayout.dark.setOnClickListener {
             setMode(AppCompatDelegate.MODE_NIGHT_YES)
             updateThemeName()
             dialog.dismiss()
@@ -127,39 +122,4 @@ class AccountFragment : Fragment() {
         }
     }
 
-    @SuppressLint("SetTextI18n")
-    private fun updateCurrentWallCards() {
-        wallpaperHelper.getCurrentWall()?.let {
-            if (it.bitmap != null) {
-                binding.currentWall.visibility = View.VISIBLE
-                binding.liveWallIcon.visibility = View.INVISIBLE
-                binding.liveWallText.visibility = View.INVISIBLE
-                binding.currentWall.setImageBitmap(it.bitmap)
-            }
-            else {
-                binding.currentWall.visibility = View.INVISIBLE
-                binding.liveWallIcon.visibility = View.VISIBLE
-                binding.liveWallText.visibility = View.VISIBLE
-                binding.liveWallIcon.setImageDrawable(it.icon)
-                binding.liveWallText.text = "${it.description}\nLive Wallpaper"
-            }
-
-        }
-        wallpaperHelper.getLockScreenWall()?.let {
-            if (it.bitmap != null) {
-                binding.currentWall2.visibility = View.VISIBLE
-                binding.liveWallIcon2.visibility = View.INVISIBLE
-                binding.liveWallText2.visibility = View.INVISIBLE
-                binding.currentWall2.setImageBitmap(it.bitmap)
-            }
-            else {
-                binding.currentWall2.visibility = View.INVISIBLE
-                binding.liveWallIcon2.visibility = View.VISIBLE
-                binding.liveWallText2.visibility = View.VISIBLE
-                binding.liveWallIcon2.setImageDrawable(it.icon)
-                binding.liveWallText2.text = "${it.description}\nLive Wallpaper"
-            }
-
-        }
-    }
 }
