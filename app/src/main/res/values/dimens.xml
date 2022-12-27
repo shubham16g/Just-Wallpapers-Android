@@ -2,34 +2,21 @@
 <resources>
     <integer name="card_span_count">3</integer>
 
-    <dimen name="buttonCornerRadius">14dp</dimen>
     <dimen name="half_gap">3dp</dimen>
     <dimen name="card_corner_radius">10dp</dimen>
 
     <dimen name="full_wall_card_corner_radius">12dp</dimen>
 
     <dimen name="pager_top">74dp</dimen>
-    <dimen name="pager_top_padding">0dp</dimen>
-    <dimen name="pager_author_size">0dp</dimen>
     <dimen name="pager_bottom">240dp</dimen>
 
     <dimen name="action_icon_size">50dp</dimen>
     <dimen name="action_card_height">160dp</dimen>
-    <dimen name="button_progress">80dp</dimen>
 
     <!--    horizontal fragments -->
     <dimen name="hor_half_gap">4dp</dimen>
     <dimen name="hor_padding">16dp</dimen>
     <dimen name="hor_padding_for_item">12dp</dimen>
-
-    <dimen name="hor_category_item_height">16dp</dimen>
-    <dimen name="hor_category_item_width">16dp</dimen>
-
-    <dimen name="hor_color_item_width">60dp</dimen>
-    <dimen name="hor_color_item_height">60dp</dimen>
-
-    <dimen name="hor_wall_item_width">16dp</dimen>
-    <dimen name="hor_wall_item_height">16dp</dimen>
 
     <!--    full view pager-->
     <dimen name="view_pager_item_margin">70dp</dimen>
