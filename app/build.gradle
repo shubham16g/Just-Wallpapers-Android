@@ -15,8 +15,8 @@ android {
         applicationId "com.shubhamgupta16.justwallpapers"
         minSdk 21
         targetSdk 33
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "1.2"
 
         buildConfigField("String", "API_KEY", secretProperties['API_KEY'])
         resValue("string", "BASE_URL", secretProperties['BASE_URL'])

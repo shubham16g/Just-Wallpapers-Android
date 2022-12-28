@@ -1,38 +1,12 @@
 package com.shubhamgupta16.justwallpapers.utils
 
-import android.Manifest
 import android.app.WallpaperManager
 import android.content.Context
-import android.content.pm.PackageManager
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.drawable.Drawable
 import android.media.ThumbnailUtils
 import android.os.Build
-import androidx.annotation.RequiresPermission
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
-import androidx.core.graphics.drawable.toBitmap
-import com.shubhamgupta16.justwallpapers.R
-import dagger.hilt.android.qualifiers.ApplicationContext
 import java.io.IOException
-import javax.inject.Inject
 import kotlin.math.roundToInt
-
-class CurrentWallpaper {
-    var bitmap: Bitmap? = null
-    var description: CharSequence? = null
-    var icon: Drawable? = null
-
-    constructor(bitmap: Bitmap) {
-        this.bitmap = bitmap
-    }
-
-    constructor(description: CharSequence, icon: Drawable?) {
-        this.description = description
-        this.icon = icon
-    }
-}
 
 fun Context.applyWall(bmap2: Bitmap, flag: Int? = null, screenCropped: Boolean = false) {
     val wallpaperManager = WallpaperManager.getInstance(this)
