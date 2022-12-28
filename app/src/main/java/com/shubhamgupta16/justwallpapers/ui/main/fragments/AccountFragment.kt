@@ -23,9 +23,6 @@ class AccountFragment : Fragment() {
     private lateinit var binding: FragmentMainAccountBinding
 
     @Inject
-    lateinit var wallpaperHelper: WallpaperHelper
-
-    @Inject
     lateinit var appMemory: AppMemory
     private var themeDialog: AlertDialog? = null
 
