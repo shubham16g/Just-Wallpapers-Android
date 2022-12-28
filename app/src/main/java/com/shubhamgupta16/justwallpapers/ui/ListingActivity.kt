@@ -19,7 +19,7 @@ class ListingActivity : AppCompatActivity() {
         binding = ActivityListingBinding.inflate(layoutInflater)
 //        fitFullScreen()
         setContentView(binding.root)
-        binding.toolbar.setNavigationOnClickListener { onBackPressed() }
+        binding.toolbar.setNavigationOnClickListener { finish() }
 
         val initialTitle = intent.getStringExtra("title")
         binding.toolbarTitle.text = initialTitle

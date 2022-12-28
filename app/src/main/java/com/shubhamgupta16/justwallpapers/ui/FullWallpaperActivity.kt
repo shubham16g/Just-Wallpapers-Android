@@ -14,6 +14,7 @@ import android.util.Log
 import android.view.View
 import android.view.animation.DecelerateInterpolator
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -69,6 +70,11 @@ class FullWallpaperActivity : AppCompatActivity() {
 //        initInterstitial()
         setContentView(binding.root)
 
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                handleFinish()
+            }
+        })
         permissionLauncher = getPermissionLauncher { isAllPermissionGranted, _ ->
             if (isAllPermissionGranted)
                 processDownloadWallpaper()
@@ -85,8 +91,13 @@ class FullWallpaperActivity : AppCompatActivity() {
         val data: Uri? = intent.data
         when {
             intent.hasExtra("list") -> {
-                val wallModelListHolder = intent.getSerializableExtra("list") as WallModelListHolder
-                initOnList(wallModelListHolder.list)
+                val wallModelListHolder = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    intent.getSerializableExtra("list", WallModelListHolder::class.java)
+                } else {
+                    @Suppress("DEPRECATION")
+                    intent.getSerializableExtra("list") as WallModelListHolder?
+                }
+                initOnList(wallModelListHolder!!.list)
                 binding.viewPager2.setCurrentItem(position, true)
                 renderOtherComponents(position)
             }
@@ -122,6 +133,7 @@ class FullWallpaperActivity : AppCompatActivity() {
                     ListCase.EMPTY -> {
 
                     }
+                    else -> {}
                 }
             }
         }
@@ -143,12 +155,12 @@ class FullWallpaperActivity : AppCompatActivity() {
         }
 
         viewModel.downloadBitmapLoading.observe(this) {
-            when {
-                it == null -> {
+            when (it) {
+                null -> {
                     binding.downloadButton.isEnabled = true
                     binding.downloadProgress.fadeVisibility(View.INVISIBLE)
                 }
-                it -> {
+                true -> {
                     binding.downloadButton.isEnabled = false
                     binding.downloadProgress.visibility = View.VISIBLE
                 }
@@ -159,7 +171,7 @@ class FullWallpaperActivity : AppCompatActivity() {
         }
 
         binding.backButton.setOnClickListener {
-            onBackPressed()
+            handleFinish()
         }
 
         binding.favButton.setOnClickListener {
@@ -193,6 +205,7 @@ class FullWallpaperActivity : AppCompatActivity() {
         })
     }
 
+    @SuppressLint("SetTextI18n")
     private fun setupInfoAlert() {
         val infoLayout = LayoutInfoBinding.inflate(layoutInflater)
         val infoDialog = alertDialog(infoLayout)
@@ -216,6 +229,21 @@ class FullWallpaperActivity : AppCompatActivity() {
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(infoLayout.authorProfile)
             infoDialog.show()
+        }
+    }
+
+    private fun handleFinish(){
+        when {
+            viewModel.isShowingSharedImage() -> {
+                val intent = Intent(this@FullWallpaperActivity, SplashActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                startActivity(intent)
+                finish()
+            }
+            isZoom -> animateZoomOut()
+            else -> {
+                finish()
+            }
         }
     }
 
@@ -373,7 +401,7 @@ class FullWallpaperActivity : AppCompatActivity() {
 
     private var isZoom = false
     val r = Runnable {
-        if (isZoom) hideSystemUI() else showSystemUI()
+//        if (isZoom) hideSystemUI() else showSystemUI()
         val y = if (!isZoom) 0f else screenMeasure!!.actionButtonsRowY()
         binding.buttonsRow?.let {
             val animator = it.animate().translationY(y).setDuration(170)
@@ -418,22 +446,6 @@ class FullWallpaperActivity : AppCompatActivity() {
             animator.start()
             isActionCardVisible = isVisible
         }
-    }
-
-    override fun onBackPressed() {
-        when {
-            viewModel.isShowingSharedImage() -> {
-                val intent = Intent(this, SplashActivity::class.java)
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                startActivity(intent)
-                finish()
-            }
-            isZoom -> animateZoomOut()
-            else -> {
-                super.onBackPressed()
-            }
-        }
-
     }
 
     @SuppressLint("SetTextI18n")

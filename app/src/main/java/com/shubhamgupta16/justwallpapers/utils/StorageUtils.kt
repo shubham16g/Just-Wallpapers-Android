@@ -18,15 +18,15 @@ import java.io.OutputStream
 
 /** Permissions */
 
-fun ComponentActivity.getPermissionLauncher(listener: (isAllPermissionGranted:Boolean, Map<String,Boolean>)->Unit): ActivityResultLauncher<Array<String>> {
+fun ComponentActivity.getPermissionLauncher(listener: (isAllPermissionGranted: Boolean, Map<String, Boolean>) -> Unit): ActivityResultLauncher<Array<String>> {
     return registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) {
-        listener(it.values.all { value-> value }, it)
+        listener(it.values.all { value -> value }, it)
     }
 }
 
-fun Fragment.getPermissionLauncher(listener: (isAllPermissionGranted:Boolean, Map<String,Boolean>)->Unit): ActivityResultLauncher<Array<String>> {
+fun Fragment.getPermissionLauncher(listener: (isAllPermissionGranted: Boolean, Map<String, Boolean>) -> Unit): ActivityResultLauncher<Array<String>> {
     return registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) {
-        listener(it.values.all { value-> value }, it)
+        listener(it.values.all { value -> value }, it)
     }
 }
 
@@ -34,17 +34,19 @@ fun ActivityResultLauncher<Array<String>>.launchPermission(
     context: Context,
     read: Boolean = false,
     write: Boolean = false,
-    extraPermissions:Array<String>? = null
+    extraPermissions: Array<String>? = null
 ) {
     val permissionToRequest = mutableListOf<String>()
     if (!context.isHaveWriteExternalStoragePermission() && write)
         permissionToRequest.add(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
-    if (!context.isHaveReadExternalStoragePermission() && read)
+    if (!context.isHaveReadExternalStoragePermission() && read) {
         permissionToRequest.add(android.Manifest.permission.READ_EXTERNAL_STORAGE)
-        extraPermissions?.forEach {
-            if (it != android.Manifest.permission.READ_EXTERNAL_STORAGE || it != android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+    }
+    extraPermissions?.forEach {
+        if (it != android.Manifest.permission.READ_EXTERNAL_STORAGE || it != android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
             permissionToRequest.add(it)
-        }
+    }
+
     if (permissionToRequest.isNotEmpty())
         launch(permissionToRequest.toTypedArray())
 }

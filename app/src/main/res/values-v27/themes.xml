@@ -13,10 +13,8 @@
         <item name="android:statusBarColor">@color/status_bar</item>
         <item name="android:navigationBarColor">@color/navigation_bar</item>
         <item name="android:colorEdgeEffect">@color/toolbar</item>
-    </style>
-
-    <style name="Theme.WallpaperUI.Main">
-        <item name="android:navigationBarColor">@color/bottom_nav</item>
+        <!--extras-->
+        <item name="android:windowLayoutInDisplayCutoutMode">shortEdges</item>
     </style>
 
     <style name="Theme.WallpaperUI.FullWallpaper" parent="Theme.MaterialComponents.NoActionBar">
@@ -29,5 +27,7 @@
         <item name="android:textViewStyle">@style/TextViewStyle</item>
         <item name="android:statusBarColor">@color/status_bar</item>
         <item name="android:windowBackground">@color/fullWallpaperBackground</item>
+        <!--extras-->
+        <item name="android:windowLayoutInDisplayCutoutMode">shortEdges</item>
     </style>
 </resources>

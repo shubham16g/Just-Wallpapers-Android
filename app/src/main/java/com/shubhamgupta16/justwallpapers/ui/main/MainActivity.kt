@@ -1,7 +1,9 @@
 package com.shubhamgupta16.justwallpapers.ui.main
 
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -26,17 +28,48 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val viewModel: MainViewModel by viewModels()
 
+    /*override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE){
+            binding.root.setPadding()
+        }
+    }*/
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         fullStatusBar()
         setTransparentStatusBar()
 
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                // Back is pressed... Finishing the activity
+                if (viewModel.currentFrag != R.id.action_home)
+                    binding.bottomNav.selectedItemId = R.id.action_home
+                else
+                    finish()
+            }
+        })
+
+        /*  onOrientationChange {
+              navigation.view.updateLayoutParams<MarginLayoutParams> {
+                  leftMargin = displayCutout?.leftRect?.right ?: 0
+                  rightMargin = displayCutout?.rightRect?.width ?: 0
+              }
+          }
+  */
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         /*binding.bottomNav.layoutParams = (binding.bottomNav.layoutParams as ConstraintLayout.LayoutParams).apply {
             bottomMargin = getNavigationBarHeight()
         }*/
-        viewModel.initBaseModel(intent.getSerializableExtra("baseModel") as BaseModel)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            intent.getSerializableExtra("baseModel", BaseModel::class.java)
+                ?.let { viewModel.initBaseModel(it) }
+        } else {
+            @Suppress("DEPRECATION")
+            viewModel.initBaseModel(intent.getSerializableExtra("baseModel") as BaseModel)
+
+        }
 
         Log.d(TAG, "onCreate: ${getCurrentFragName()}")
 
@@ -80,7 +113,7 @@ class MainActivity : AppCompatActivity() {
     private fun getCategoryFragment(categoryName: String? = null) =
         CategoriesFragment().apply { this.categoryName = categoryName }
 
-    private fun swapFragment(id: Int, frag: Fragment, animate: Boolean = true): Boolean {
+    private fun swapFragment(id: Int, frag: Fragment): Boolean {
         Log.d(TAG, "swapFragment: swapFragment()")
         viewModel.currentFrag = id
 //        todo animation
@@ -119,12 +152,5 @@ class MainActivity : AppCompatActivity() {
         super.onStart()
         Log.d(TAG, "onStart: ${getCurrentFragName()}")
     }*/
-
-    override fun onBackPressed() {
-        if (viewModel.currentFrag != R.id.action_home)
-            binding.bottomNav.selectedItemId = R.id.action_home
-        else
-            super.onBackPressed()
-    }
 
 }
