@@ -39,6 +39,8 @@ class CategoriesFragment : Fragment() {
         }
         if (!requireActivity().isUsingNightMode()) {
             requireActivity().lightStatusBar()
+        } else {
+            requireActivity().nonLightStatusBar()
         }
         binding.root.setPadding(0,requireContext().getStatusBarHeight(),0,0)
         adapter = ViewPager2Adapter(childFragmentManager, lifecycle)
